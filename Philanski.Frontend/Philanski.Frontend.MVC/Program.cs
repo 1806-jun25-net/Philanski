@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-namespace Philanski.MVC
+namespace Philanski.Frontend.MVC
 {
     public class Program
     {

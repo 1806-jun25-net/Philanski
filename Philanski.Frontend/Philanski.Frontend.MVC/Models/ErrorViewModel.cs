@@ -1,6 +1,6 @@
 using System;
 
-namespace Philanski.MVC.Models
+namespace Philanski.Frontend.MVC.Models
 {
     public class ErrorViewModel
     {

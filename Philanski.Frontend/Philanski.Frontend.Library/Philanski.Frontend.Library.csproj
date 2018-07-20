@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>a71d73cf-f937-47d6-877c-26127ca78862</ProjectGuid>
+    <ProjectGuid>eeb2bd56-d198-4430-adca-2fade1793ca9</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Philanski.Library</RootNamespace>
-    <AssemblyName>Philanski.Library</AssemblyName>
+    <RootNamespace>Philanski.Frontend.Library</RootNamespace>
+    <AssemblyName>Philanski.Frontend.Library</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Philanski.Library
+namespace Philanski.Frontend.Library
 {
     public class Class1
     {
-        //does nothing
     }
 }

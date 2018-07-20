@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Philanski.Library")]
+[assembly: AssemblyTitle("Philanski.Frontend.Library")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Philanski.Library")]
+[assembly: AssemblyProduct("Philanski.Frontend.Library")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("a71d73cf-f937-47d6-877c-26127ca78862")]
+[assembly: Guid("eeb2bd56-d198-4430-adca-2fade1793ca9")]
 
 // Version information for an assembly consists of the following four values:
 //
