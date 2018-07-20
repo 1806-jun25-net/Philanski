@@ -1,0 +1,32 @@
+Presentation outline
+
+
+
+Login as Lance Von Ah
+Make note of Welcome back
+Place an order
+Make note of suggested order 
+Make note of only 12 pizzas
+Make note of display details
+Try to make another order (should top you becacuse 2 hr window)
+Switch locations
+Make another order
+Display order history of myself by price
+Display order history of a location by recency
+Search for Lance 
+Search for Nick
+Login as Nick and choose default location
+Search for Nick
+Make note of no suggested order for new user 
+Make order
+Change user to Papa John
+Change Inventory 
+Try to make an order 
+Change locations
+Change price
+Try to make an order
+Change price
+Make order
+Show tables in SMSS
+Show XML file
+
