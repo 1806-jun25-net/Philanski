@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Philanski.Backend.Library.Models
 {
-    class Worksite
+    public class Worksite
     {
     }
 }
