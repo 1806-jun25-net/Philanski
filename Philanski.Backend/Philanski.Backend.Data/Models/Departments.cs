@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Philanski.Backend.Data
+namespace Philanski.Backend.Data.Models
 {
-    public partial class Department
+    public partial class Departments
     {
         public int Id { get; set; }
         public string Name { get; set; }

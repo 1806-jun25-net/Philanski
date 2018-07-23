@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Philanski.Backend.Data
+namespace Philanski.Backend.Data.Models
 {
-    public partial class TimeSheetApproval
+    public partial class TimeSheetApprovals
     {
         public int Id { get; set; }
         public DateTime WeekStart { get; set; }
@@ -14,7 +14,7 @@ namespace Philanski.Backend.Data
         public DateTime TimeSubmitted { get; set; }
         public int EmployeeId { get; set; }
 
-        public Manager ApprovingManager { get; set; }
-        public Employee Employee { get; set; }
+        public Managers ApprovingManager { get; set; }
+        public Employees Employee { get; set; }
     }
 }
