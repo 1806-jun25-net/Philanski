@@ -8,8 +8,4 @@
     <ProjectReference Include="..\Philanski.Backend.Data\Philanski.Backend.Data.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
-
 </Project>

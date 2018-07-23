@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Philanski.Backend.Data
+namespace Philanski.Backend.Data.Models
 {
     public partial class TimeSheetApprovals
     {
