@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace Philanski.Backend.Data
 {
-    public partial class Worksite
+    public partial class Worksites
     {
-        public Worksite()
+        public Worksites()
         {
-            Employee = new HashSet<Employee>();
+            Employees = new HashSet<Employees>();
         }
 
         public int Id { get; set; }
@@ -17,6 +17,6 @@ namespace Philanski.Backend.Data
         public string State { get; set; }
         public string Zip { get; set; }
 
-        public ICollection<Employee> Employee { get; set; }
+        public ICollection<Employees> Employees { get; set; }
     }
 }

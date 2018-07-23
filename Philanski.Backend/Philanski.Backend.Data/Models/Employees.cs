@@ -3,13 +3,13 @@ using System.Collections.Generic;
 
 namespace Philanski.Backend.Data
 {
-    public partial class Employee
+    public partial class Employees
     {
-        public Employee()
+        public Employees()
         {
-            Manager = new HashSet<Manager>();
-            TimeSheet = new HashSet<TimeSheet>();
-            TimeSheetApproval = new HashSet<TimeSheetApproval>();
+            Managers = new HashSet<Managers>();
+            TimeSheetApprovals = new HashSet<TimeSheetApprovals>();
+            TimeSheets = new HashSet<TimeSheets>();
         }
 
         public int Id { get; set; }
@@ -22,9 +22,9 @@ namespace Philanski.Backend.Data
         public DateTime HireDate { get; set; }
         public DateTime? TerminationDate { get; set; }
 
-        public Worksite Worksite { get; set; }
-        public ICollection<Manager> Manager { get; set; }
-        public ICollection<TimeSheet> TimeSheet { get; set; }
-        public ICollection<TimeSheetApproval> TimeSheetApproval { get; set; }
+        public Worksites Worksite { get; set; }
+        public ICollection<Managers> Managers { get; set; }
+        public ICollection<TimeSheetApprovals> TimeSheetApprovals { get; set; }
+        public ICollection<TimeSheets> TimeSheets { get; set; }
     }
 }

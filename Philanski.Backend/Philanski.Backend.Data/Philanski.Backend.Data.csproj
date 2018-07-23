@@ -123,16 +123,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Department.cs" />
-    <Compile Include="Employee.cs" />
-    <Compile Include="EmployeeDepartment.cs" />
-    <Compile Include="Manager.cs" />
-    <Compile Include="ManagerDepartment.cs" />
-    <Compile Include="PhilanskiManagementSolutionsContext.cs" />
+    <Compile Include="Models\Department.cs" />
+    <Compile Include="Models\Employee.cs" />
+    <Compile Include="Models\EmployeeDepartment.cs" />
+    <Compile Include="Models\Manager.cs" />
+    <Compile Include="Models\ManagerDepartment.cs" />
+    <Compile Include="Models\PhilanskiManagementSolutionsContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TimeSheet.cs" />
-    <Compile Include="TimeSheetApproval.cs" />
-    <Compile Include="Worksite.cs" />
+    <Compile Include="Models\TimeSheet.cs" />
+    <Compile Include="Models\TimeSheetApproval.cs" />
+    <Compile Include="Models\Worksite.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
