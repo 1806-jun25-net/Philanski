@@ -4,7 +4,10 @@ using System.Text;
 
 namespace Philanski.Backend.Library.Models
 {
-    class TimeSheet
+    public class TimeSheet
     {
+        public int EmployeeId { get; set; }
+        public DateTime Date { get; set; }
+        public decimal RegularHours { get; set; }
     }
 }

@@ -4,7 +4,8 @@ using System.Text;
 
 namespace Philanski.Backend.Library.Models
 {
-    class Mapper
+    public class Mapper
     {
+
     }
 }

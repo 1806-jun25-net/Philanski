@@ -4,7 +4,8 @@ using System.Text;
 
 namespace Philanski.Backend.Library.Models
 {
-    class Department
+    public class Department
     {
+        public string Name { get; set; }
     }
 }
