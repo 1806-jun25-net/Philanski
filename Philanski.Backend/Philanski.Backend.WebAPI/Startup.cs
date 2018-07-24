@@ -6,10 +6,13 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Philanski.Backend.Data.Models;
+using Philanski.Backend.Library.Repositories;
 
 namespace Philanski.Backend.WebAPI
 {
@@ -22,9 +25,26 @@ namespace Philanski.Backend.WebAPI
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+
+        public string GetDBConnectionString()
         {
+            string connectionString = string.Empty;
+            
+            connectionString = Configuration["ConnectionStrings"];
+
+            return connectionString;
+
+        }
+
+                // This method gets called by the runtime. Use this method to add services to the container.
+                public void ConfigureServices(IServiceCollection services)
+        {
+
+            //services.AddScoped<Repository>();
+            //services.AddDbContext<PhilanskiManagementSolutionsContext>(options =>
+            //    options.UseSqlServer(Configuration.GetConnectionString(GetDBConnectionString())));
+
+          
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
