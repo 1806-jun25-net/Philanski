@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using Philanski.Backend.Library.Models;
 
 namespace Philanski.Backend.Library.Repositories
 {
@@ -32,6 +33,12 @@ namespace Philanski.Backend.Library.Repositories
 
             return employeename;
 
+        }
+
+        public int GetTimeSheetIdByDateAndEmpId(DateTime date, int employeeId)
+        {
+            TimeSheet timeSheet = Mapper.Map(_db.TimeSheets.First(i => i.EmployeeId == employeeId && i.Date == date));
+            return timeSheet.Id;
         }
 
 
