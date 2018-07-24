@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Philanski.Backend.Library.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -38,6 +39,31 @@ namespace Philanski.Backend.Library.Models
             }
             return NextDate;
         }
+
+        //Method that takes week start and employeeID
+        //Returns an array of ID's that represent all the time punches for a specific week by that employee
+        public int[] GetWeekTimePunches(int employeeId, DateTime weekStart)
+        {
+            DateTime[] weekArray = new DateTime[7];
+
+            //creates an array with all the days in the timesheet
+            for (int i = 0; i < 6; i++)
+            {
+                weekArray[i] = weekStart.AddDays(i);
+            }
+
+            int[] timePunchIDs = new int[7];
+
+            //creates an array of IDs of the time punches by the employee for the given week
+            for(int i = 0; i < weekArray.Length; i++)
+            {
+                timePunchIDs[i] = Repository.GetTimeSheetIdByDateAndEmpId(weekArray[i], employeeId);
+            }
+
+        }
+
+
+
     }
 
 

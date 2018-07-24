@@ -35,6 +35,12 @@ namespace Philanski.Backend.Library.Repositories
 
         }
 
+<<<<<<< HEAD
+        public int GetTimeSheetIdByDateAndEmpId(DateTime date, int employeeId)
+        {
+            TimeSheet timeSheet = Mapper.Map(_db.TimeSheets.First(i => i.EmployeeId == employeeId && i.Date == date));
+            return timeSheet.Id;
+=======
         public Employee GetEmployeeByID(int ID)
         {
             Employees employeefromiddb = (from employee in _db.Employees
@@ -45,6 +51,7 @@ namespace Philanski.Backend.Library.Repositories
 
             return employeefromid;
 
+>>>>>>> 701dc6956abe789905aea57a674778dbfd404e22
         }
 
 
