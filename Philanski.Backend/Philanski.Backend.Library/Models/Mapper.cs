@@ -119,5 +119,15 @@ namespace Philanski.Backend.Library.Models
         public static IEnumerable<PBD.Models.Departments> Map(IEnumerable<Department> departments) => departments.Select(Map);
 
         //Map an IEnumerable of library Managers to context Managers. Vice versa.
+        public static IEnumerable<Manager> Map(IEnumerable<PBD.Models.Managers> managers) => managers.Select(Map);
+        public static IEnumerable<PBD.Models.Managers> Map(IEnumerable<Manager> managers) => managers.Select(Map);
+
+        //Map an IEnumerable of library TimeSheets and context TimeSheets. Vice versa.
+        public static IEnumerable<TimeSheet> Map(IEnumerable<PBD.Models.TimeSheets> timesheets) => timesheets.Select(Map);
+        public static IEnumerable<PBD.Models.TimeSheets> Map(IEnumerable<TimeSheet> timesheets) => timesheets.Select(Map);
+
+        //Map an IEnumerable of library Timesheet Approvals to Conext TimeSheet Approvals. ViceVersa.
+        public static IEnumerable<TimeSheetApproval> Map(IEnumerable<PBD.Models.TimeSheetApprovals> timesheetApprovals) => timesheetApprovals.Select(Map);
+        public static IEnumerable<PBD.Models.TimeSheetApprovals> Map(IEnumerable<TimeSheetApproval> timesheetApprovals) => timesheetApprovals.Select(Map);
     }
 }
