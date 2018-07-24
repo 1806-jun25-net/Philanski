@@ -7,7 +7,7 @@ namespace Philanski.Backend.Library.Models
 {
     public class TimeSheetApproval
     {
- 
+        public int Id { get; set; }
         public DateTime WeekStart { get; set; }
         public DateTime WeekEnd { get; set; }
         public decimal WeekTotalRegular { get; set; }

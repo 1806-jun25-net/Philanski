@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using PBD = Philanski.Backend.Data;
 
@@ -16,6 +17,7 @@ namespace Philanski.Backend.Library.Models
         //Maps context employee to library employee
         public static Employee Map(PBD.Models.Employees employee) => new Employee
         {
+            Id = employee.Id,
             FirstName = employee.FirstName,
             LastName = employee.LastName,
             Email = employee.Email,
@@ -42,6 +44,7 @@ namespace Philanski.Backend.Library.Models
         //Maps context department to library department
         public static Department Map(PBD.Models.Departments department) => new Department
         {
+            Id = department.Id,
             Name = department.Name
         };
 
@@ -54,6 +57,7 @@ namespace Philanski.Backend.Library.Models
         //Maps context manager to library manager
         public static Manager Map(PBD.Models.Managers manager) => new Manager
         {
+            Id = manager.Id,
             EmployeeId = manager.EmployeeId
         };
 
@@ -66,6 +70,7 @@ namespace Philanski.Backend.Library.Models
         //Maps context timesheet to library timesheet
         public static TimeSheet Map(PBD.Models.TimeSheets timesheet) => new TimeSheet
         {
+            Id = timesheet.Id,
             EmployeeId = timesheet.EmployeeId,
             Date = timesheet.Date,
             RegularHours = timesheet.RegularHours
@@ -82,6 +87,7 @@ namespace Philanski.Backend.Library.Models
         //Maps context TimeSheetApproval to library TimeSheetApproval
         public static TimeSheetApproval Map(PBD.Models.TimeSheetApprovals timesheetApproval) => new TimeSheetApproval
         {
+            Id = timesheetApproval.Id,
             WeekStart = timesheetApproval.WeekStart,
             WeekEnd = timesheetApproval.WeekEnd,
             WeekTotalRegular = timesheetApproval.WeekTotalRegular,
@@ -103,5 +109,15 @@ namespace Philanski.Backend.Library.Models
             TimeSubmitted = timesheetApproval.TimeSubmitted,
             EmployeeId = timesheetApproval.EmployeeId
         };
+
+        //Map an IEnumerable of libary employees to context employees. Vice versa
+        public static IEnumerable<Employee> Map(IEnumerable<PBD.Models.Employees> employees) => employees.Select(Map);
+        public static IEnumerable<PBD.Models.Employees> Map(IEnumerable<Employee> employees) => employees.Select(Map);
+
+        //Map an IEnumerable of context departments to library departments. Vice versa
+        public static IEnumerable<Department> Map(IEnumerable<PBD.Models.Departments> departments) => departments.Select(Map);
+        public static IEnumerable<PBD.Models.Departments> Map(IEnumerable<Department> departments) => departments.Select(Map);
+
+        //Map an IEnumerable of library Managers to context Managers. Vice versa.
     }
 }
