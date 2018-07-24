@@ -16,6 +16,8 @@ namespace Philanski.Backend.Library.Models
         public DateTime TimeSubmitted { get; set; }
         public int EmployeeId { get; set; }
 
+        public Repository Repo { get; }
+
         
         //Method that takes a datetime and returns the sunday of that date's week. Will return with same time
         public DateTime GetPreviousSundayOfWeek(DateTime DateInWeek)
@@ -54,13 +56,13 @@ namespace Philanski.Backend.Library.Models
 
             int[] timePunchIDs = new int[7];
 
-            Repository repo = new Repository()
-
             //creates an array of IDs of the time punches by the employee for the given week
             for(int i = 0; i < weekArray.Length; i++)
             {
-                timePunchIDs[i] = Repository.GetTimeSheetIdByDateAndEmpId(weekArray[i], employeeId);
+                timePunchIDs[i] = Repo.GetTimeSheetIdByDateAndEmpId(weekArray[i], employeeId);
             }
+
+            return timePunchIDs;
 
         }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Philanski.Backend.Library.Models;
 using Philanski.Backend.Library.Repositories;
 
 
@@ -15,6 +16,7 @@ namespace Philanski.Backend.WebAPI.Controllers
 
 
         public Repository Repo { get; }
+        public TimeSheetApproval tsa { get; }
 
         public ValuesController(Repository repo)
         {
@@ -27,6 +29,15 @@ namespace Philanski.Backend.WebAPI.Controllers
 
             string nametest = Repo.testGetFirstEmployee();
             return new string[] { "value1", "value2", nametest};
+        }
+
+        [HttpGet]
+        public ActionResult<int> Get()
+        {
+            DateTime weekStart = tsa.GetPreviousSundayOfWeek(DateTime.Today);
+            int idTest = Repo.GetTimeSheetIdByDateAndEmpId(weekStart, 1);
+
+            return idTest;
         }
 
         // GET api/values/5
