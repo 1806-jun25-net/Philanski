@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using PBD = Philanski.Backend.Data;
 
@@ -16,6 +17,7 @@ namespace Philanski.Backend.Library.Models
         //Maps context employee to library employee
         public static Employee Map(PBD.Models.Employees employee) => new Employee
         {
+            Id = employee.Id,
             FirstName = employee.FirstName,
             LastName = employee.LastName,
             Email = employee.Email,
@@ -103,5 +105,15 @@ namespace Philanski.Backend.Library.Models
             TimeSubmitted = timesheetApproval.TimeSubmitted,
             EmployeeId = timesheetApproval.EmployeeId
         };
+
+        //Map an IEnumerable of libary employees to context employees. Vice versa
+        public static IEnumerable<Employee> Map(IEnumerable<PBD.Models.Employees> employees) => employees.Select(Map);
+        public static IEnumerable<PBD.Models.Employees> Map(IEnumerable<Employee> employees) => employees.Select(Map);
+
+        //Map an IEnumerable of context departments to library departments. Vice versa
+        public static IEnumerable<Department> Map(IEnumerable<PBD.Models.Departments> departments) => departments.Select(Map);
+        public static IEnumerable<PBD.Models.Departments> Map(IEnumerable<Department> departments) => departments.Select(Map);
+
+        //Map an IEnumerable of library Managers to context Managers. Vice versa.
     }
 }
