@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Philanski.Backend.Library.Repositories;
+
 
 namespace Philanski.Backend.WebAPI.Controllers
 {
@@ -10,11 +12,21 @@ namespace Philanski.Backend.WebAPI.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
+
+
+        public Repository Repo { get; }
+
+        public ValuesController(Repository repo)
+        {
+            Repo = repo;
+        }
         // GET api/values
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            return new string[] { "value1", "value2" };
+
+            string nametest = Repo.testGetFirstEmployee();
+            return new string[] { "value1", "value2", nametest};
         }
 
         // GET api/values/5

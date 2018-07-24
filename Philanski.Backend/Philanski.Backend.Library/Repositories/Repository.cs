@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace Philanski.Backend.Library.Repositories
 {
@@ -21,14 +22,17 @@ namespace Philanski.Backend.Library.Repositories
         }
 
 
-        //public int testGetEmployee()
-        //{
-        //    int herndoninvfromdb = (from employees in _db.Employees
-        //                            select herndoninv.StoredPizza).SingleOrDefault();
+        //IT WORKS
 
-        //    return herndoninvfromdb;
+        public string testGetFirstEmployee()
+        {
+            string employeename = (from employee in _db.Employees
+                                    where employee.Id.Equals(1)
+                                   select employee.FirstName).SingleOrDefault();
 
-        //}
+            return employeename;
+
+        }
 
 
     }

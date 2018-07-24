@@ -30,7 +30,7 @@ namespace Philanski.Backend.WebAPI
         {
             string connectionString = string.Empty;
             
-            connectionString = Configuration["ConnectionStrings"];
+            connectionString = Configuration["ConnectionStrings:dev_db"];
 
             return connectionString;
 
@@ -40,11 +40,13 @@ namespace Philanski.Backend.WebAPI
                 public void ConfigureServices(IServiceCollection services)
         {
 
-            //services.AddScoped<Repository>();
-            //services.AddDbContext<PhilanskiManagementSolutionsContext>(options =>
-            //    options.UseSqlServer(Configuration.GetConnectionString(GetDBConnectionString())));
+            string connectionstring = GetDBConnectionString();
 
-          
+            services.AddScoped<Repository>();
+            services.AddDbContext<PhilanskiManagementSolutionsContext>(options =>
+                options.UseSqlServer(connectionstring));
+
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
