@@ -44,6 +44,7 @@ namespace Philanski.Backend.Library.Models
         //Maps context department to library department
         public static Department Map(PBD.Models.Departments department) => new Department
         {
+            Id = department.Id,
             Name = department.Name
         };
 
@@ -56,6 +57,7 @@ namespace Philanski.Backend.Library.Models
         //Maps context manager to library manager
         public static Manager Map(PBD.Models.Managers manager) => new Manager
         {
+            Id = manager.Id,
             EmployeeId = manager.EmployeeId
         };
 
@@ -68,6 +70,7 @@ namespace Philanski.Backend.Library.Models
         //Maps context timesheet to library timesheet
         public static TimeSheet Map(PBD.Models.TimeSheets timesheet) => new TimeSheet
         {
+            Id = timesheet.Id,
             EmployeeId = timesheet.EmployeeId,
             Date = timesheet.Date,
             RegularHours = timesheet.RegularHours
@@ -84,6 +87,7 @@ namespace Philanski.Backend.Library.Models
         //Maps context TimeSheetApproval to library TimeSheetApproval
         public static TimeSheetApproval Map(PBD.Models.TimeSheetApprovals timesheetApproval) => new TimeSheetApproval
         {
+            Id = timesheetApproval.Id,
             WeekStart = timesheetApproval.WeekStart,
             WeekEnd = timesheetApproval.WeekEnd,
             WeekTotalRegular = timesheetApproval.WeekTotalRegular,
