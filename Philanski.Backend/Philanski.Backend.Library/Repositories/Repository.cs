@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using Philanski.Backend.Library.Models;
 
 namespace Philanski.Backend.Library.Repositories
 {
@@ -31,6 +32,18 @@ namespace Philanski.Backend.Library.Repositories
                                    select employee.FirstName).SingleOrDefault();
 
             return employeename;
+
+        }
+
+        public Employee GetEmployeeByID(int ID)
+        {
+            Employees employeefromiddb = (from employee in _db.Employees
+                                 where employee.Id.Equals(ID)
+                                 select employee).SingleOrDefault();
+
+            Employee employeefromid = Mapper.Map(employeefromiddb);
+
+            return employeefromid;
 
         }
 
