@@ -28,17 +28,13 @@ namespace Philanski.Backend.WebAPI.Controllers
         {
 
             string nametest = Repo.testGetFirstEmployee();
-            return new string[] { "value1", "value2", nametest};
+            //return new string[] { "value1", "value2", nametest};
+            DateTime today = DateTime.Today;
+            DateTime weekStart = tsa.GetPreviousSundayOfWeek(today);
+            int idTest = Repo.GetTimeSheetIdByDateAndEmpId(weekStart.AddDays(1), 1);
+            return new string[] { Convert.ToString(idTest) };
         }
 
-        [HttpGet]
-        public ActionResult<int> Get()
-        {
-            DateTime weekStart = tsa.GetPreviousSundayOfWeek(DateTime.Today);
-            int idTest = Repo.GetTimeSheetIdByDateAndEmpId(weekStart, 1);
-
-            return idTest;
-        }
 
         // GET api/values/5
         [HttpGet("{id}")]
