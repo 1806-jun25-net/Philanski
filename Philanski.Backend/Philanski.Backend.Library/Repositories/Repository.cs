@@ -41,6 +41,8 @@ namespace Philanski.Backend.Library.Repositories
             return timeSheet.Id;
         }
 
+
+        //needs validation to make sure it works. 
         public Employee GetEmployeeByID(int ID)
         {
             Employees employeefromiddb = (from employee in _db.Employees
@@ -50,6 +52,22 @@ namespace Philanski.Backend.Library.Repositories
             Employee employeefromid = Mapper.Map(employeefromiddb);
 
             return employeefromid;
+        }
+
+
+        //need validation to make sure it works.
+        public Department GetDepartmentByID(int ID)
+        {
+            Departments deptfromdb = (from dept in _db.Departments
+                                      where dept.Id.Equals(ID)
+                                      select dept).SingleOrDefault();
+
+            Department department = Mapper.Map(deptfromdb);
+
+            return department;
+
+
+
         }
 
 
