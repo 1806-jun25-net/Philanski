@@ -111,23 +111,23 @@ namespace Philanski.Backend.Library.Models
         };
 
         //Map an IEnumerable of libary employees to context employees. Vice versa
-        public static IEnumerable<Employee> Map(IEnumerable<PBD.Models.Employees> employees) => employees.Select(Map);
-        public static IEnumerable<PBD.Models.Employees> Map(IEnumerable<Employee> employees) => employees.Select(Map);
+        public static List<Employee> Map(IEnumerable<PBD.Models.Employees> employees) => employees.Select(Map).ToList();
+        public static List<PBD.Models.Employees> Map(IEnumerable<Employee> employees) => employees.Select(Map).ToList();
 
         //Map an IEnumerable of context departments to library departments. Vice versa
-        public static IEnumerable<Department> Map(IEnumerable<PBD.Models.Departments> departments) => departments.Select(Map);
-        public static IEnumerable<PBD.Models.Departments> Map(IEnumerable<Department> departments) => departments.Select(Map);
+        public static List<Department> Map(IEnumerable<PBD.Models.Departments> departments) => departments.Select(Map).ToList();
+        public static List<PBD.Models.Departments> Map(IEnumerable<Department> departments) => departments.Select(Map).ToList();
 
         //Map an IEnumerable of library Managers to context Managers. Vice versa.
-        public static IEnumerable<Manager> Map(IEnumerable<PBD.Models.Managers> managers) => managers.Select(Map);
-        public static IEnumerable<PBD.Models.Managers> Map(IEnumerable<Manager> managers) => managers.Select(Map);
+        public static List<Manager> Map(IEnumerable<PBD.Models.Managers> managers) => managers.Select(Map).ToList();
+        public static List<PBD.Models.Managers> Map(IEnumerable<Manager> managers) => managers.Select(Map).ToList();
 
         //Map an IEnumerable of library TimeSheets and context TimeSheets. Vice versa.
-        public static IEnumerable<TimeSheet> Map(IEnumerable<PBD.Models.TimeSheets> timesheets) => timesheets.Select(Map);
-        public static IEnumerable<PBD.Models.TimeSheets> Map(IEnumerable<TimeSheet> timesheets) => timesheets.Select(Map);
+        public static List<TimeSheet> Map(IEnumerable<PBD.Models.TimeSheets> timesheets) => timesheets.Select(Map).ToList();
+        public static List<PBD.Models.TimeSheets> Map(IEnumerable<TimeSheet> timesheets) => timesheets.Select(Map).ToList();
 
         //Map an IEnumerable of library Timesheet Approvals to Conext TimeSheet Approvals. ViceVersa.
-        public static IEnumerable<TimeSheetApproval> Map(IEnumerable<PBD.Models.TimeSheetApprovals> timesheetApprovals) => timesheetApprovals.Select(Map);
-        public static IEnumerable<PBD.Models.TimeSheetApprovals> Map(IEnumerable<TimeSheetApproval> timesheetApprovals) => timesheetApprovals.Select(Map);
+        public static List<TimeSheetApproval> Map(IEnumerable<PBD.Models.TimeSheetApprovals> timesheetApprovals) => timesheetApprovals.Select(Map).ToList();
+        public static List<PBD.Models.TimeSheetApprovals> Map(IEnumerable<TimeSheetApproval> timesheetApprovals) => timesheetApprovals.Select(Map).ToList();
     }
 }

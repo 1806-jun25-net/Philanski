@@ -23,7 +23,6 @@ namespace Philanski.Backend.Library.Repositories
             _db = db ?? throw new ArgumentNullException(nameof(db));
         }
 
-
         //IT WORKS
 
         public string testGetFirstEmployee()
@@ -42,7 +41,6 @@ namespace Philanski.Backend.Library.Repositories
             return timeSheet.Id;
         }
 
-
         //should work
         public Employee GetEmployeeByID(int ID)
         {
@@ -57,19 +55,6 @@ namespace Philanski.Backend.Library.Repositories
             return null;
         }
 
-
-        //need validation to make sure it works. testing save
-    /*    public Department GetDepartmentByID(int ID)
-        {
-            Departments deptfromdb = (from dept in _db.Departments
-                                      where dept.Id.Equals(ID)
-                                      select dept).SingleOrDefault();
-
-            Department department = Mapper.Map(deptfromdb);
-
-            return department;
-        }*/
-
         public Department GetDepartmentByID(int id)
         {
             var departments = _db.Departments;
@@ -81,6 +66,12 @@ namespace Philanski.Backend.Library.Repositories
                 }
             }
             return null;
+        }
+
+        public IEnumerable<Department> GetAllDepartments()
+        {
+            var departments = _db.Departments.AsNoTracking();
+            return Mapper.Map(departments);
         }
 
         public int GetDepartmentIdByName(string name)
@@ -101,6 +92,18 @@ namespace Philanski.Backend.Library.Repositories
             _db.Add(Mapper.Map(department));
            
         } 
+
+        public void UpdateDepartment(Department department)
+        {
+            _db.Entry(_db.Departments.Find(department.Id)).CurrentValues.SetValues(Mapper.Map(department));
+        }
+
+        public void DeleteDepartment(int id)
+
+        {
+            _db.Remove(_db.Departments.Find(id));
+            
+        }
 
         public void Save()
         {
