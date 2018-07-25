@@ -10,6 +10,7 @@ using Philanski.Backend.Library.Repositories;
 namespace Philanski.Backend.WebAPI.Controllers
 {
     [Route("api/[controller]")]
+    [ApiController]
     public class EmployeeController : Controller
     {
 

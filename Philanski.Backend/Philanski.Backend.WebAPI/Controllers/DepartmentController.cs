@@ -11,6 +11,7 @@ using Philanski.Backend.Library.Repositories;
 namespace Philanski.Backend.WebAPI.Controllers
 {
     [Route("api/[controller]")]
+    [ApiController]
     public class DepartmentController : Controller
     {
 
@@ -21,7 +22,7 @@ namespace Philanski.Backend.WebAPI.Controllers
             Repo = repo;
         }
         // GET: api/<controller>
-        [HttpGet]
+       /* [HttpGet]
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };
@@ -32,13 +33,36 @@ namespace Philanski.Backend.WebAPI.Controllers
         public string Get(int id)
         {
             return "value";
+        }*/
+
+        //response that gathers all departments
+        [HttpGet]
+        public ActionResult<List<Department>> GetAll()
+        {
+            List<Department> Departments = Repo.GetAllDepartments().ToList();
+            return Departments;
+        }
+        
+        //response that gathers a department by id
+        //will route to /api/department/id
+        [HttpGet("{id}", Name = "GetDepartment")]
+        public ActionResult<Department> GetById(int id)
+        {
+            var dept = Repo.GetDepartmentByID(id);
+            if (dept == null)
+            {
+                return NotFound();
+            }
+            return dept;
         }
 
+
+
         // POST api/<controller>
-      /*  [HttpPost]
-        public void Post([FromBody]string value)
-        {
-        }*/
+        /*  [HttpPost]
+          public void Post([FromBody]string value)
+          {
+          }*/
 
         [HttpPost]
         public IActionResult Post(Department department)
@@ -47,30 +71,39 @@ namespace Philanski.Backend.WebAPI.Controllers
             Repo.Save();
             department.Id = Repo.GetDepartmentIdByName(department.Name);
 
-            return CreatedAtRoute("Create", new { id = department.Id }, department);
+            return CreatedAtRoute("GetDepartment", new { id = department.Id }, department);
         }
 
-        [HttpGet("{id}", Name = "Create")]
-        public ActionResult<Department> GetById(int id)
-        {
-            var item = Repo.GetDepartmentByID(id);
-            if (item == null)
-            {
-                return NotFound();
-            }
-            return item;
-        }
 
         // PUT api/<controller>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public IActionResult Put(int id, Department department)
         {
+            var dept = Repo.GetDepartmentByID(id);
+            if (dept == null)
+            {
+                return NotFound();
+            }
+            //might need to add ID here.
+            dept.Name = department.Name;
+            Repo.UpdateDepartment(dept);
+            Repo.Save();
+            return NoContent();
+
         }
 
         // DELETE api/<controller>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
+            var dept = Repo.GetDepartmentByID(id);
+            if (dept == null)
+            {
+                return NotFound();
+            }
+            Repo.DeleteDepartment(id);
+            Repo.Save();
+            return NoContent();
         }
     }
 }

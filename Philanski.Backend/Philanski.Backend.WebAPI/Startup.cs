@@ -41,6 +41,9 @@ namespace Philanski.Backend.WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
 
+         
+
+
             string connectionstring = GetDBConnectionString();
 
             services.AddScoped<Repository>();
