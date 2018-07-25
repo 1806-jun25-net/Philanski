@@ -38,33 +38,14 @@ namespace Philanski.Backend.WebAPI.Controllers
 
 
         // GET api/values/5
-        [HttpGet("{id}")]
+       /* [HttpGet("{id}")]
         public ActionResult<string> Get(int id)
         {
             return "value";
-        }
+        }*/
 
-        // POST api/values
-        [HttpPost]
-        public IActionResult Post(Department department)
-        {
-            Repo.CreateDepartment(department);
-            Repo.Save();
-            department.Id = Repo.GetDepartmentIdByName(department.Name);
-
-            return CreatedAtRoute("CreateTest", new { id = department.Id }, department);
-        }
-
-        [HttpGet("{id}", Name = "CreateTest")]
-        public ActionResult<Department> GetById(int id)
-        {
-            var item = Repo.GetDepartmentByID(id);
-            if (item == null)
-            {
-                return NotFound();
-            }
-            return item;
-        }
+        // POST api/values for departments
+     
 
         // PUT api/values/5
         [HttpPut("{id}")]
