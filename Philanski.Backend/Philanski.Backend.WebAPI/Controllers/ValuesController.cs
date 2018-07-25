@@ -16,13 +16,13 @@ namespace Philanski.Backend.WebAPI.Controllers
 
 
         public Repository Repo { get; }
-        public TimeSheetApproval tsa { get; }
 
         public ValuesController(Repository repo)
         {
             Repo = repo;
         }
-        // GET api/values
+        // GET api/values 
+        //test code
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
@@ -30,7 +30,8 @@ namespace Philanski.Backend.WebAPI.Controllers
             string nametest = Repo.testGetFirstEmployee();
             //return new string[] { "value1", "value2", nametest};
             DateTime today = DateTime.Today;
-            DateTime weekStart = tsa.GetPreviousSundayOfWeek(today);
+            var TSA = new TimeSheetApproval();
+            DateTime weekStart = TSA.GetPreviousSundayOfWeek(today);
             int idTest = Repo.GetTimeSheetIdByDateAndEmpId(weekStart.AddDays(1), 1);
             return new string[] { Convert.ToString(idTest) };
         }
@@ -45,8 +46,24 @@ namespace Philanski.Backend.WebAPI.Controllers
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Post(Department department)
         {
+            Repo.CreateDepartment(department);
+            Repo.Save();
+            department.Id = Repo.GetDepartmentIdByName(department.Name);
+
+            return CreatedAtRoute("CreateTest", new { id = department.Id }, department);
+        }
+
+        [HttpGet("{id}", Name = "CreateTest")]
+        public ActionResult<Department> GetById(int id)
+        {
+            var item = Repo.GetDepartmentByID(id);
+            if (item == null)
+            {
+                return NotFound();
+            }
+            return item;
         }
 
         // PUT api/values/5

@@ -63,20 +63,20 @@ select * from ManagerDepartments
 ALTER TABLE Employee
 ADD FOREIGN KEY (WorksiteID) REFERENCES Worksite(ID);
 
-Alter TABLE EmployeeDepartment
-ADD FOREIGN KEY (EmployeeID) REFERENCES Employee(ID)
+Alter TABLE EmployeeDepartments
+ADD FOREIGN KEY (EmployeeID) REFERENCES Employees(ID)
 
-Alter TABLE EmployeeDepartment
-ADD FOREIGN KEY (DepartmentID) REFERENCES Department(ID)
+Alter TABLE EmployeeDepartments
+ADD FOREIGN KEY (DepartmentID) REFERENCES Departments(ID)
 
 Alter TABLE Manager
 ADD FOREIGN KEY (EmployeeID) REFERENCES Employee(ID)
 
-Alter TABLE ManagerDepartment
-ADD FOREIGN KEY (ManagerID) REFERENCES Manager(ID)
+Alter TABLE ManagerDepartments
+ADD FOREIGN KEY (ManagerID) REFERENCES Managers(ID)
 
-Alter TABLE ManagerDepartment
-ADD FOREIGN KEY (DepartmentID) REFERENCES Department(ID)
+Alter TABLE ManagerDepartments
+ADD FOREIGN KEY (DepartmentID) REFERENCES Departments(ID)
 
 Alter TABLE TimeSheets
 ADD FOREIGN KEY (EmployeeID) REFERENCES Employees(ID)

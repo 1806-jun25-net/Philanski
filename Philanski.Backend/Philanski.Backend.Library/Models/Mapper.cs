@@ -11,7 +11,7 @@ namespace Philanski.Backend.Library.Models
 
         //notes on mapper
         //No object contains a whole other object
-        //everything will be done by id
+        //ids are sent from dbcontext to library, not other way around to avoid identity errors
         //This may need to change later
 
         //Maps context employee to library employee
