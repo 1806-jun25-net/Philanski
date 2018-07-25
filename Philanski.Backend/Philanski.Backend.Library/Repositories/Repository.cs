@@ -42,16 +42,18 @@ namespace Philanski.Backend.Library.Repositories
         }
 
 
-        //needs validation to make sure it works. 
+        //should work
         public Employee GetEmployeeByID(int ID)
         {
-            Employees employeefromiddb = (from employee in _db.Employees
-                                 where employee.Id.Equals(ID)
-                                 select employee).SingleOrDefault();
-
-            Employee employeefromid = Mapper.Map(employeefromiddb);
-
-            return employeefromid;
+            var employees = _db.Employees;
+            foreach (var emp in employees)
+            {
+                if (emp.Id.Equals(ID))
+                {
+                    return Mapper.Map(emp);
+                }
+            }
+            return null;
         }
 
 
