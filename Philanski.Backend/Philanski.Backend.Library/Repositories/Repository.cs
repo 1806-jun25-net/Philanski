@@ -1,4 +1,4 @@
-﻿using Philanski.Backend.Data.Models;
+﻿using Philanski.Backend.DataContext.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -69,7 +69,7 @@ namespace Philanski.Backend.Library.Repositories
             return null;
         }
 
-        public IEnumerable<Department> GetAllDepartments()
+        public List<Department> GetAllDepartments()
         {
             var departments = _db.Departments.AsNoTracking();
             return Mapper.Map(departments);

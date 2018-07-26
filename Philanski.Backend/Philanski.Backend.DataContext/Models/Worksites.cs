@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Philanski.Backend.Data.Models
+namespace Philanski.Backend.DataContext.Models
 {
     public partial class Worksites
     {

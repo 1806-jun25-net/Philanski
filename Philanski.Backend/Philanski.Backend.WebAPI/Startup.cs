@@ -11,7 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Philanski.Backend.Data.Models;
+using Philanski.Backend.DataContext.Models;
 using Philanski.Backend.Library.Repositories;
 using Swashbuckle.AspNetCore.Swagger;
 

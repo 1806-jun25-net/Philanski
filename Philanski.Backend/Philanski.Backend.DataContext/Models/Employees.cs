@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Philanski.Backend.Data.Models
+namespace Philanski.Backend.DataContext.Models
 {
     public partial class Employees
     {
         public Employees()
         {
+            EmployeeDepartments = new HashSet<EmployeeDepartments>();
             Managers = new HashSet<Managers>();
             TimeSheetApprovals = new HashSet<TimeSheetApprovals>();
             TimeSheets = new HashSet<TimeSheets>();
@@ -23,6 +24,7 @@ namespace Philanski.Backend.Data.Models
         public DateTime? TerminationDate { get; set; }
 
         public Worksites Worksite { get; set; }
+        public ICollection<EmployeeDepartments> EmployeeDepartments { get; set; }
         public ICollection<Managers> Managers { get; set; }
         public ICollection<TimeSheetApprovals> TimeSheetApprovals { get; set; }
         public ICollection<TimeSheets> TimeSheets { get; set; }

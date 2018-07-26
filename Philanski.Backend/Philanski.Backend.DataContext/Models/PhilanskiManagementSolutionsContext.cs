@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace Philanski.Backend.Data.Models
+namespace Philanski.Backend.DataContext.Models
 {
     public partial class PhilanskiManagementSolutionsContext : DbContext
     {
@@ -26,11 +26,9 @@ namespace Philanski.Backend.Data.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
+          /*  if (!optionsBuilder.IsConfigured)
             {
-
-               
-            }
+            }*/
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -51,6 +49,18 @@ namespace Philanski.Backend.Data.Models
                 entity.Property(e => e.DepartmentId).HasColumnName("DepartmentID");
 
                 entity.Property(e => e.EmployeeId).HasColumnName("EmployeeID");
+
+                entity.HasOne(d => d.Department)
+                    .WithMany(p => p.EmployeeDepartments)
+                    .HasForeignKey(d => d.DepartmentId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__EmployeeD__Depar__1DB06A4F");
+
+                entity.HasOne(d => d.Employee)
+                    .WithMany(p => p.EmployeeDepartments)
+                    .HasForeignKey(d => d.EmployeeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__EmployeeD__Emplo__1CBC4616");
             });
 
             modelBuilder.Entity<Employees>(entity =>
@@ -85,7 +95,7 @@ namespace Philanski.Backend.Data.Models
                     .WithMany(p => p.Employees)
                     .HasForeignKey(d => d.WorksiteId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Employee__Worksi__787EE5A0");
+                    .HasConstraintName("FK__Employee__Worksi__66603565");
             });
 
             modelBuilder.Entity<ManagerDepartments>(entity =>
@@ -95,6 +105,18 @@ namespace Philanski.Backend.Data.Models
                 entity.Property(e => e.DepartmentId).HasColumnName("DepartmentID");
 
                 entity.Property(e => e.ManagerId).HasColumnName("ManagerID");
+
+                entity.HasOne(d => d.Department)
+                    .WithMany(p => p.ManagerDepartments)
+                    .HasForeignKey(d => d.DepartmentId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__ManagerDe__Depar__1BC821DD");
+
+                entity.HasOne(d => d.Manager)
+                    .WithMany(p => p.ManagerDepartments)
+                    .HasForeignKey(d => d.ManagerId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__ManagerDe__Manag__1AD3FDA4");
             });
 
             modelBuilder.Entity<Managers>(entity =>
@@ -128,18 +150,18 @@ namespace Philanski.Backend.Data.Models
 
                 entity.Property(e => e.WeekStart).HasColumnType("date");
 
-                entity.Property(e => e.WeekTotalRegular).HasColumnType("decimal(3, 2)");
+                entity.Property(e => e.WeekTotalRegular).HasColumnType("decimal(5, 2)");
 
                 entity.HasOne(d => d.ApprovingManager)
                     .WithMany(p => p.TimeSheetApprovals)
                     .HasForeignKey(d => d.ApprovingManagerId)
-                    .HasConstraintName("FK__TimeSheet__Appro__778AC167");
+                    .HasConstraintName("FK__TimeSheet__Appro__18EBB532");
 
                 entity.HasOne(d => d.Employee)
                     .WithMany(p => p.TimeSheetApprovals)
                     .HasForeignKey(d => d.EmployeeId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__TimeSheet__Emplo__7F2BE32F");
+                    .HasConstraintName("FK__TimeSheet__Emplo__17F790F9");
             });
 
             modelBuilder.Entity<TimeSheets>(entity =>
@@ -150,13 +172,13 @@ namespace Philanski.Backend.Data.Models
 
                 entity.Property(e => e.EmployeeId).HasColumnName("EmployeeID");
 
-                entity.Property(e => e.RegularHours).HasColumnType("decimal(2, 2)");
+                entity.Property(e => e.RegularHours).HasColumnType("decimal(4, 2)");
 
                 entity.HasOne(d => d.Employee)
                     .WithMany(p => p.TimeSheets)
                     .HasForeignKey(d => d.EmployeeId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__TimeSheet__Emplo__7E37BEF6");
+                    .HasConstraintName("FK__TimeSheet__Emplo__0F624AF8");
             });
 
             modelBuilder.Entity<Worksites>(entity =>

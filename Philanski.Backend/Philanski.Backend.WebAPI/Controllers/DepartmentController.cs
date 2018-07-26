@@ -39,7 +39,7 @@ namespace Philanski.Backend.WebAPI.Controllers
         [HttpGet]
         public ActionResult<List<Department>> GetAll()
         {
-            List<Department> Departments = Repo.GetAllDepartments().ToList();
+            List<Department> Departments = Repo.GetAllDepartments();
             return Departments;
         }
         
@@ -64,6 +64,8 @@ namespace Philanski.Backend.WebAPI.Controllers
           {
           }*/
 
+
+            //creates a department
         [HttpPost]
         public async Task<IActionResult> Post(Department department)
         {
