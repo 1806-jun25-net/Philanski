@@ -24,7 +24,10 @@
 
 
   <ItemGroup>
+<<<<<<< HEAD
     <ProjectReference Include="..\Philanski.Backend.DataContext\Philanski.Backend.DataContext.csproj" />
+=======
+>>>>>>> 7c3546b2d1d9441aa56eaef47aa0667d1bd3d922
     <ProjectReference Include="..\Philanski.Backend.Library\Philanski.Backend.Library.csproj" />
   </ItemGroup>
 
