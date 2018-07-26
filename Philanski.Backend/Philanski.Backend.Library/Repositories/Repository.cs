@@ -1,4 +1,4 @@
-﻿using Philanski.Backend.Data.Models;
+﻿using Philanski.Backend.DataContext.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
