@@ -13,7 +13,7 @@ namespace Philanski.Frontend.MVC.Controllers
     public class DepartmentController : Controller
     {
 
-        public readonly static string ServiceUri = "https://localhost:44386/api/";
+        public readonly static string ServiceUri = "https://philanksi.azurewebsites.net/api/";
 
         public HttpClient HttpClient { get; }
         // GET: Department
