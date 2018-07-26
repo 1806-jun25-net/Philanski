@@ -27,13 +27,13 @@ namespace Philanski.Backend.WebAPI.Controllers
         public ActionResult<IEnumerable<string>> Get()
         {
 
-        /*    string nametest = Repo.testGetFirstEmployee();
-            //return new string[] { "value1", "value2", nametest};
-            DateTime today = DateTime.Today;
-            var TSA = new TimeSheetApproval();
-            DateTime weekStart = TSA.GetPreviousSundayOfWeek(today);
-            int idTest = Repo.GetTimeSheetIdByDateAndEmpId(weekStart.AddDays(1), 1);*/
-            return new string[] { "Please work" };
+        //    string nametest = Repo.testGetFirstEmployee();
+            return new string[] { "value1", "value2", "please work"};
+            //DateTime today = DateTime.Today;
+          //  var TSA = new TimeSheetApproval();
+         //   DateTime weekStart = TSA.GetPreviousSundayOfWeek(today);
+         //   int idTest = Repo.GetTimeSheetIdByDateAndEmpId(weekStart.AddDays(1), 1);*/
+           // return new string[] { "Please work" };
         }
 
 
