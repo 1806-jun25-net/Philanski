@@ -64,6 +64,8 @@ namespace Philanski.Backend.WebAPI.Controllers
           {
           }*/
 
+
+            //creates a department
         [HttpPost]
         public async Task<IActionResult> Post(Department department)
         {
