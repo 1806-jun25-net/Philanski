@@ -33,5 +33,15 @@ namespace Philanski.Backend.Testing
             Assert.Equal(Convert.ToDateTime(actual), result);
 
         }
+
+
+        [Fact]
+        public void GetEmployeeByIDRepoMethodShouldWork()
+        {
+
+
+        }
+
+
     }
 }

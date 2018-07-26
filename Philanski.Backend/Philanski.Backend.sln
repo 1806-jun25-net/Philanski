@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Philanski.Backend.Testing",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Philanski.Backend.WebAPI", "Philanski.Backend.WebAPI\Philanski.Backend.WebAPI.csproj", "{7B600F8C-D655-4E52-A605-E5E06F91A4BF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Philanski.Backend.DataContext", "Philanski.Backend.DataContext\Philanski.Backend.DataContext.csproj", "{55D7B938-02AA-4DD0-92B0-1D61DEBD726E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Philanski.Backend.DataContext", "Philanski.Backend.DataContext\Philanski.Backend.DataContext.csproj", "{55D7B938-02AA-4DD0-92B0-1D61DEBD726E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
