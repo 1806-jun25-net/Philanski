@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -50,7 +53,43 @@ namespace Philanski.Backend.WebAPI
             services.AddDbContext<PhilanskiManagementSolutionsContext>(options =>
                 options.UseSqlServer(connectionstring));
 
+           services.AddDbContext<IdentityDbContext>(options =>
+                options.UseSqlServer(connectionstring,
+                b => b.MigrationsAssembly("Philanski.Backend.DataContext"))); // for "TodoApi2", put your data project.*/
+
             // Register the Swagger generator, defining 1 or more Swagger documents
+            services.AddIdentity<IdentityUser, IdentityRole>(options =>
+            {
+                // Password settings (defaults - optional)
+                options.Password.RequireDigit = true;
+                options.Password.RequiredLength = 6;
+                options.Password.RequiredUniqueChars = 1;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequireUppercase = true;
+
+                options.User.AllowedUserNameCharacters =
+                    "abcdefghijklmnopqrstuvwxyz" +
+                    "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+                    "0123456789" +
+                    "-._@+";
+            })
+             .AddEntityFrameworkStores<IdentityDbContext>();
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
+                options.Events = new CookieAuthenticationEvents
+                {
+                    OnRedirectToLogin = ctx =>
+                    {
+                        ctx.Response.StatusCode = 401; // Unauthorized
+                        return Task.FromResult(0);
+                    }
+                };
+            });
+
+            services.AddAuthentication();
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
@@ -59,6 +98,7 @@ namespace Philanski.Backend.WebAPI
             {
                 c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
             });
+
 
         }
 
@@ -73,7 +113,7 @@ namespace Philanski.Backend.WebAPI
             {
                 app.UseHsts();
             }
-
+            app.UseAuthentication();
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
 
