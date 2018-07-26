@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Philanski.Backend.Data\Philanski.Backend.Data.csproj" />
+    <ProjectReference Include="..\Philanski.Backend.DataContext\Philanski.Backend.DataContext.csproj" />
   </ItemGroup>
 
 </Project>
