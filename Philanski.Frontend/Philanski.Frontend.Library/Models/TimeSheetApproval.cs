@@ -15,7 +15,7 @@ namespace Philanski.Frontend.Library.Models
         public DateTime TimeSubmitted { get; set; }
         public int EmployeeId { get; set; }
 
-        public Repository Repo { get; }
+    /*    public Repository Repo { get; }
 
 
         //Method that takes a datetime and returns the sunday of that date's week. Will return with same time
@@ -63,7 +63,7 @@ namespace Philanski.Frontend.Library.Models
 
             return timePunchIDs;
 
-        }
+        }*/
 
 
 
