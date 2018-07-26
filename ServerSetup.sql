@@ -58,7 +58,10 @@ select * from TimeSheets
 select * from TimeSheetApprovals
 select * from EmployeeDepartments
 select * from ManagerDepartments
+select * from Departments
 
+Delete from Departments
+Where id = 3
 
 ALTER TABLE Employee
 ADD FOREIGN KEY (WorksiteID) REFERENCES Worksite(ID);

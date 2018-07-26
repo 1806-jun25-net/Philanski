@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Philanski.Backend.Library.Models
+namespace Philanski.Frontend.Library.Models
 {
     public class TimeSheet
     {
