@@ -65,10 +65,10 @@ namespace Philanski.Backend.WebAPI.Controllers
           }*/
 
         [HttpPost]
-        public IActionResult Post(Department department)
+        public async Task<IActionResult> Post(Department department)
         {
             Repo.CreateDepartment(department);
-            Repo.Save();
+            await Repo.Save();
             department.Id = Repo.GetDepartmentIdByName(department.Name);
 
             return CreatedAtRoute("GetDepartment", new { id = department.Id }, department);
@@ -77,7 +77,7 @@ namespace Philanski.Backend.WebAPI.Controllers
 
         // PUT api/<controller>/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, Department department)
+        public async Task<IActionResult> Put(int id, Department department)
         {
             var dept = Repo.GetDepartmentByID(id);
             if (dept == null)
@@ -87,14 +87,14 @@ namespace Philanski.Backend.WebAPI.Controllers
             //might need to add ID here.
             dept.Name = department.Name;
             Repo.UpdateDepartment(dept);
-            Repo.Save();
+            await Repo.Save();
             return NoContent();
 
         }
 
         // DELETE api/<controller>/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             var dept = Repo.GetDepartmentByID(id);
             if (dept == null)
@@ -102,7 +102,7 @@ namespace Philanski.Backend.WebAPI.Controllers
                 return NotFound();
             }
             Repo.DeleteDepartment(id);
-            Repo.Save();
+            await Repo.Save();
             return NoContent();
         }
     }

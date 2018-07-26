@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using Philanski.Backend.Library.Models;
+using System.Threading.Tasks;
 
 namespace Philanski.Backend.Library.Repositories
 {
@@ -105,9 +106,9 @@ namespace Philanski.Backend.Library.Repositories
             
         }
 
-        public void Save()
+        public Task Save()
         {
-            _db.SaveChanges();
+           return _db.SaveChangesAsync();
         }
 
 
