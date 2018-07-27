@@ -9,18 +9,20 @@ namespace Philanski.Backend.Library.Repositories
    public interface IRepository
     {
 
-        int GetTimeSheetIdByDateAndEmpId(DateTime date, int employeeId);
+        Task<int> GetTimeSheetIdByDateAndEmpId(DateTime date, int employeeId);
+        Task<TimeSheet> GetTimeSheetByID(int id);
         List<TimeSheet> GetAllTimeSheets();
         List<TimeSheet> GetEmployeeTimeSheetWeekFromDate(DateTime date, int employeeId);
         void CreateTimeSheet(TimeSheet timesheet);
         List<TimeSheetApproval> GetAllTimeSheetApprovals();
-        TimeSheetApproval GetTimeSheetApprovalById(int id);
+        Task<TimeSheetApproval> GetTimeSheetApprovalById(int id);
+        Task<int> GetTimeSheetApprovalIdByDateSubmitted(DateTime submitted);
         List<TimeSheetApproval> GetAllTimeSheetsFromEmployee(int EmployeeId);
-        Employee GetEmployeeByID(int ID);
+        Task<Employee> GetEmployeeByID(int ID);
         List<Employee> GetAllEmployees();
         List<Manager> GetAllManagers();
         Manager GetManagerById(int id);
-        Department GetDepartmentByID(int id);
+        Task<Department> GetDepartmentByID(int id);
         List<Department> GetAllDepartments();
         int GetDepartmentIdByName(string name);
         void CreateDepartment(Department department);

@@ -91,7 +91,8 @@ namespace Philanski.Backend.Testing
                 
 
             var mockRepo = new Mock<Repository>();
-            mockRepo.Setup(x => x.GetEmployeeByID(1)).Returns(employeebyID);
+           // mockRepo.Setup(x => x.GetEmployeeByID(1)).Returns(employeebyID);
+           //Get Employee By ID is now async
 
            
                

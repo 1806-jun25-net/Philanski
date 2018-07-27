@@ -33,9 +33,9 @@ namespace Philanski.Backend.WebAPI.Controllers
         //response that gathers a department by id
         //will route to /api/department/id
         [HttpGet("{id}", Name = "GetDepartment")]
-        public ActionResult<Department> GetById(int id)
+        public async Task<ActionResult<Department>> GetById(int id)
         {
-            var dept = Repo.GetDepartmentByID(id);
+            var dept = await Repo.GetDepartmentByID(id);
             if (dept == null)
             {
                 return NotFound();
@@ -62,7 +62,7 @@ namespace Philanski.Backend.WebAPI.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, Department department)
         {
-            var dept = Repo.GetDepartmentByID(id);
+            var dept = await Repo.GetDepartmentByID(id);
             if (dept == null)
             {
                 return NotFound();

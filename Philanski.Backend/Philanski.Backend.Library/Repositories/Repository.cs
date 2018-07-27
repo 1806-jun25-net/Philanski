@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Philanski.Backend.Library.Repositories
 {
 
-    public class Repository:IRepository
+    public class Repository: IRepository
     {
 
         private readonly PhilanskiManagementSolutionsContext _db;
@@ -26,22 +26,12 @@ namespace Philanski.Backend.Library.Repositories
 
 
 
-        /* public string testGetFirstEmployee()
-         {
-             string employeename = (from employee in _db.Employees
-                                     where employee.Id.Equals(1)
-                                    select employee.FirstName).SingleOrDefault();
-
-             return employeename;
-
-         }*/
-
 
         //Timesheet methods
 
-        public int GetTimeSheetIdByDateAndEmpId(DateTime date, int employeeId) //fix because mapper cant deal with null
+        public async Task<int> GetTimeSheetIdByDateAndEmpId(DateTime date, int employeeId) //fix because mapper cant deal with null
         {
-            TimeSheet timeSheet = Mapper.Map(_db.TimeSheets.FirstOrDefault(i => i.EmployeeId == employeeId && i.Date == date));
+            var timeSheet = await _db.TimeSheets.FirstOrDefaultAsync(i => i.EmployeeId == employeeId && i.Date == date);
             if (timeSheet == null)
             {
                 return 0;
@@ -49,17 +39,15 @@ namespace Philanski.Backend.Library.Repositories
             return timeSheet.Id;
         }
 
-        public TimeSheet GetTimeSheetByID(int id)
+        public async Task<TimeSheet> GetTimeSheetByID(int id)
         {
-            var timesheets = _db.TimeSheets.AsNoTracking();
-            foreach (var timesheet in timesheets)
+
+            var timesheet = await _db.TimeSheets.FirstOrDefaultAsync(x => x.Id == id);
+            if (timesheet == null)
             {
-                if(timesheet.Id.Equals(id))
-                {
-                    return Mapper.Map(timesheet);
-                }
+                return null;
             }
-            return null;
+            return Mapper.Map(timesheet);
         }
 
 
@@ -74,7 +62,7 @@ namespace Philanski.Backend.Library.Repositories
             //use date.date to get midnight
             var DateStart = TimeSheetApproval.GetPreviousSundayOfWeek(date.Date);
             var DateEnd = TimeSheetApproval.GetNextSaturdayOfWeek(date.Date);
-            var TimeSheets = _db.TimeSheets.Where(x => ((x.EmployeeId == employeeId) && (x.Date.CompareTo(DateStart) >= 0) && (x.Date.CompareTo(DateEnd) <= 0))).AsNoTracking();
+            var TimeSheets =  _db.TimeSheets.Where(x => ((x.EmployeeId == employeeId) && (x.Date.CompareTo(DateStart) >= 0) && (x.Date.CompareTo(DateEnd) <= 0))).AsNoTracking();
             if (TimeSheets == null)
             {
                 return null;
@@ -96,22 +84,19 @@ namespace Philanski.Backend.Library.Repositories
             return Mapper.Map(TimeSheetApprovals);
         }
 
-        public TimeSheetApproval GetTimeSheetApprovalById(int id)
+        public async Task<TimeSheetApproval> GetTimeSheetApprovalById(int id)
         {
-            var TimeSheetApprovals = _db.TimeSheetApprovals;
-            foreach (var TSA in TimeSheetApprovals)
+            var TimeSheetApprovals = await _db.TimeSheetApprovals.FirstOrDefaultAsync(x => x.Id == id);
+            if (TimeSheetApprovals == null)
             {
-                if (TSA.Id.Equals(id))
-                {
-                    return Mapper.Map(TSA);
-                }
+                return null;
             }
-            return null;
+            return Mapper.Map(TimeSheetApprovals);
         }
 
-        public int GetTimeSheetApprovalIdByDateSubmitted(DateTime submitted)
+        public async Task<int> GetTimeSheetApprovalIdByDateSubmitted(DateTime submitted)
         {
-            var TSA = Mapper.Map(_db.TimeSheetApprovals.FirstOrDefault(i => i.TimeSubmitted == submitted));
+            var TSA = await _db.TimeSheetApprovals.FirstOrDefaultAsync(i => i.TimeSubmitted == submitted);
             if (TSA == null)
             {
                 return 0;
@@ -135,17 +120,14 @@ namespace Philanski.Backend.Library.Repositories
         }
 
         //Employee Methods
-        public Employee GetEmployeeByID(int ID) //maybe change to find. NVM DONT USE FIND
+        public async Task<Employee> GetEmployeeByID(int ID) //maybe change to find. NVM DONT USE FIND
         {
-            var employees = _db.Employees;
-            foreach (var emp in employees)
+            var employee = await _db.Employees.FirstOrDefaultAsync(x => x.Id == ID);
+            if (employee == null)
             {
-                if (emp.Id.Equals(ID))
-                {
-                    return Mapper.Map(emp);
-                }
+                return null;
             }
-            return null;
+            return Mapper.Map(employee);
         }
 
         public List<Employee> GetAllEmployees()
@@ -178,17 +160,15 @@ namespace Philanski.Backend.Library.Repositories
 
 
         //Department methods
-        public Department GetDepartmentByID(int id)
+        public async Task<Department> GetDepartmentByID(int id)
         {
-            var departments = _db.Departments;
-            foreach (var dept in departments)
+            var department = await _db.Departments.FirstOrDefaultAsync(x => x.Id == id);
+            if (department == null)
             {
-                if (dept.Id.Equals(id))
-                {
-                    return Mapper.Map(dept);
-                }
+                return null;
             }
-            return null;
+            return Mapper.Map(department);
+
         }
 
         public List<Department> GetAllDepartments()
