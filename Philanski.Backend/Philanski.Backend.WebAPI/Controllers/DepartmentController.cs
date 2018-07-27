@@ -24,15 +24,24 @@ namespace Philanski.Backend.WebAPI.Controllers
 
         //response that gathers all departments
         [HttpGet]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
         public ActionResult<List<Department>> GetAll()
         {
             List<Department> Departments = Repo.GetAllDepartments();
+            //catch null and send 404
+            if (Departments == null)
+            {
+                return NotFound();
+            }
             return Departments;
         }
         
         //response that gathers a department by id
         //will route to /api/department/id
         [HttpGet("{id}", Name = "GetDepartment")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
         public async Task<ActionResult<Department>> GetById(int id)
         {
             var dept = await Repo.GetDepartmentByID(id);
@@ -47,6 +56,8 @@ namespace Philanski.Backend.WebAPI.Controllers
 
             //creates a department
         [HttpPost]
+        [ProducesResponseType(201)]
+       // [ProducesResponseType(409)]
         public async Task<IActionResult> Post(Department department)
         {
             //check to see if department already exists (fix)
@@ -60,6 +71,8 @@ namespace Philanski.Backend.WebAPI.Controllers
 
         // PUT api/<controller>/5
         [HttpPut("{id}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
         public async Task<IActionResult> Put(int id, Department department)
         {
             var dept = await Repo.GetDepartmentByID(id);
@@ -77,6 +90,8 @@ namespace Philanski.Backend.WebAPI.Controllers
 
         // DELETE api/<controller>/5
         [HttpDelete("{id}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
         public async Task<IActionResult> Delete(int id)
         {
             var dept = Repo.GetDepartmentByID(id);

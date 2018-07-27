@@ -23,9 +23,12 @@ namespace Philanski.Backend.WebAPI.Controllers
         }
         // GET: api/<controller>
         [HttpGet]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
         public ActionResult<List<Manager>> GetAll()
         {
             List<Manager> managers = Repo.GetAllManagers();
+            //catch null and throw 404
             if (managers == null)
             {
                 return NotFound();
@@ -35,9 +38,12 @@ namespace Philanski.Backend.WebAPI.Controllers
 
         // GET api/<controller>/5
         [HttpGet("{id}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
         public async Task<ActionResult<Manager>> Get(int id)
         {
             Manager manager = await Repo.GetManagerById(id);
+            //catch null and throw 404
             if (manager == null)
             {
                 return NotFound();

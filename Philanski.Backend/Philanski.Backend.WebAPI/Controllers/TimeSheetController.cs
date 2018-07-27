@@ -24,18 +24,28 @@ namespace Philanski.Backend.WebAPI.Controllers
         // GET: api/<controller>
         // get all time sheets. works
         [HttpGet]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
         public ActionResult<List<TimeSheet>> GetAll()
         {
             List<TimeSheet> TimeSheets = Repo.GetAllTimeSheets();
+            //catch null and throw 404
+            if (TimeSheets == null)
+            {
+                return NotFound();
+            }
             return TimeSheets;
 
         }
 
         // GET api/<controller>/5
         [HttpGet("{id}", Name = "GetTimeSheet")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
         public async Task<ActionResult<TimeSheet>> GetById(int id)
         {
             var timesheet =  await Repo.GetTimeSheetByID(id);
+            //catch null and throw 404
             if (timesheet == null)
             {
                 return NotFound();
@@ -44,6 +54,8 @@ namespace Philanski.Backend.WebAPI.Controllers
         }
 
         [HttpGet("GetFullWeek")] //api/timesheet/GetFullWeek?EmployeeId=id&&date={date}
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
         public ActionResult<List<TimeSheet>> GetFullWeek(int EmployeeId, DateTime date)
         {
             List<TimeSheet> TimeSheets = Repo.GetEmployeeTimeSheetWeekFromDate(date, EmployeeId);
@@ -57,18 +69,22 @@ namespace Philanski.Backend.WebAPI.Controllers
 
         // POST api/<controller>
         [HttpPost]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(409)]
         public async Task<IActionResult> Post(TimeSheet timesheet)
         {
-            //check db if it already exists (fix)
+            //check db if it already exists and throw 409 if it does
             var DoesIdExist = await Repo.GetTimeSheetIdByDateAndEmpId(timesheet.Date, timesheet.EmployeeId);
             if (DoesIdExist == 0)
             {
                 return Conflict();
             }
+
+            //Create time sheet
             Repo.CreateTimeSheet(timesheet);
             await Repo.Save();
             timesheet.Id = await Repo.GetTimeSheetIdByDateAndEmpId(timesheet.Date, timesheet.EmployeeId);
-
+            //describes route it is save too
             return CreatedAtRoute("GetTimeSheet", new { id = timesheet.Id }, timesheet);
         }
 
