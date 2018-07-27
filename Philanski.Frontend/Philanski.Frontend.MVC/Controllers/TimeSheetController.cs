@@ -23,7 +23,9 @@ namespace Philanski.Frontend.MVC.Controllers
 
         public async Task<ActionResult> Index()
         {
-            var uri = ServiceUri + "timesheet";
+            //api/timesheet/GetFullWeek?EmployeeId=id&&date={date}
+
+            var uri = ServiceUri + "timesheet/GetFullWeek?EmployeeId=1&&date="+DateTime.Now.Date;
             var request = new HttpRequestMessage(HttpMethod.Get, uri);
 
             try
