@@ -15,24 +15,32 @@ namespace Philanski.Backend.WebAPI.Controllers
     [ApiController]
     public class TimeSheetApprovalController : Controller
     {
-        public Repository Repo { get; }
-    
-        public TimeSheetApprovalController(Repository repo)
+        public IRepository Repo { get; }
+
+        public TimeSheetApprovalController(IRepository repo)
         {
             Repo = repo;
         }
 
-
         // GET: api/<controller>
         [HttpGet]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
         public ActionResult<List<TimeSheetApproval>> GetAll()
         {
            List<TimeSheetApproval> TimeSheetApprovals = Repo.GetAllTimeSheetApprovals();
+            //catch null and send 404
+            if (TimeSheetApprovals == null)
+            {
+                return NotFound();
+            }
            return TimeSheetApprovals;
         }
 
         // GET api/<controller>/5
         [HttpGet("{id}", Name = "GetTimeSheetApproval")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
         public async Task<ActionResult<TimeSheetApproval>> Get(int id)
         {
             var TimeSheetApproval = await Repo.GetTimeSheetApprovalById(id);
@@ -46,11 +54,22 @@ namespace Philanski.Backend.WebAPI.Controllers
 
         // POST api/<controller>
         [HttpPost]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(409)]
         public async Task<IActionResult> Post(TimeSheetApproval TSA)
         {
+            //add check to see if TSA exists and throw 409 (fix)
             Repo.CreateTimeSheetApproval(TSA);
             await Repo.Save();
+<<<<<<< HEAD
             TSA.Id = await Repo.GetTimeSheetApprovalIdByDateSubmitted(TSA.TimeSubmitted);
+=======
+
+            TSA.Id = await Repo.GetTimeSheetApprovalIdByDateSubmitted(TSA.TimeSubmitted);
+
+            //describes the route TSA is created at.
+
+>>>>>>> a00abfb68c35d1dfbc132db60cf4f1103a51ccd5
             return CreatedAtRoute("GetTimeSheetApproval", new { id = TSA.Id }, TSA);         
         }
 

@@ -14,9 +14,9 @@ namespace Philanski.Backend.WebAPI.Controllers
     [ApiController]
     public class TimeSheetController : Controller
     {
-        public Repository Repo { get; }
+        public IRepository Repo { get; }
 
-        public TimeSheetController(Repository repo)
+        public TimeSheetController(IRepository repo)
         {
             Repo = repo;
         }
@@ -24,18 +24,28 @@ namespace Philanski.Backend.WebAPI.Controllers
         // GET: api/<controller>
         // get all time sheets. works
         [HttpGet]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
         public ActionResult<List<TimeSheet>> GetAll()
         {
             List<TimeSheet> TimeSheets = Repo.GetAllTimeSheets();
+            //catch null and throw 404
+            if (TimeSheets == null)
+            {
+                return NotFound();
+            }
             return TimeSheets;
 
         }
 
         // GET api/<controller>/5
         [HttpGet("{id}", Name = "GetTimeSheet")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
         public async Task<ActionResult<TimeSheet>> GetById(int id)
         {
             var timesheet =  await Repo.GetTimeSheetByID(id);
+            //catch null and throw 404
             if (timesheet == null)
             {
                 return NotFound();
@@ -44,6 +54,8 @@ namespace Philanski.Backend.WebAPI.Controllers
         }
 
         [HttpGet("GetFullWeek")] //api/timesheet/GetFullWeek?EmployeeId=id&&date={date}
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
         public ActionResult<List<TimeSheet>> GetFullWeek(int EmployeeId, DateTime date)
         {
             List<TimeSheet> TimeSheets = Repo.GetEmployeeTimeSheetWeekFromDate(date, EmployeeId);
@@ -57,22 +69,23 @@ namespace Philanski.Backend.WebAPI.Controllers
 
         // POST api/<controller>
         [HttpPost]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(409)]
         public async Task<IActionResult> Post(TimeSheet timesheet)
         {
-<<<<<<< HEAD
-            if (Repo.GetTimeSheetIdByDateAndEmpId(timesheet.Date, timesheet.EmployeeId) == 0)
-=======
+
             //check db if it already exists (fix)
             var DoesIdExist = await Repo.GetTimeSheetIdByDateAndEmpId(timesheet.Date, timesheet.EmployeeId);
-            if (DoesIdExist == 0)
->>>>>>> 697be343cd0faeb0e19b4a96d141de4223ad080f
+            if (DoesIdExist != 0)
             {
                 return Conflict();
             }
+
+            //Create time sheet
             Repo.CreateTimeSheet(timesheet);
             await Repo.Save();
             timesheet.Id = await Repo.GetTimeSheetIdByDateAndEmpId(timesheet.Date, timesheet.EmployeeId);
-
+            //describes route it is save too
             return CreatedAtRoute("GetTimeSheet", new { id = timesheet.Id }, timesheet);
         }
 
