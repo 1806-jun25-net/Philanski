@@ -62,15 +62,11 @@ namespace Philanski.Backend.WebAPI.Controllers
             //add check to see if TSA exists and throw 409 (fix)
             Repo.CreateTimeSheetApproval(TSA);
             await Repo.Save();
-<<<<<<< HEAD
-            //TSA.Id = Repo.GetTimeSheetApprovalIdByDateSubmitted(TSA.TimeSubmitted);
-=======
+
             TSA.Id = await Repo.GetTimeSheetApprovalIdByDateSubmitted(TSA.TimeSubmitted);
-<<<<<<< HEAD
+
             //describes the route TSA is created at.
-=======
->>>>>>> 697be343cd0faeb0e19b4a96d141de4223ad080f
->>>>>>> c96f302dbe5245d2e9606ca64def5d69756d547d
+
             return CreatedAtRoute("GetTimeSheetApproval", new { id = TSA.Id }, TSA);         
         }
 
