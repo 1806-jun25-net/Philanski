@@ -14,9 +14,9 @@ namespace Philanski.Backend.WebAPI.Controllers
     [ApiController]
     public class TimeSheetController : Controller
     {
-        public Repository Repo { get; }
+        public IRepository Repo { get; }
 
-        public TimeSheetController(Repository repo)
+        public TimeSheetController(IRepository repo)
         {
             Repo = repo;
         }
@@ -76,7 +76,7 @@ namespace Philanski.Backend.WebAPI.Controllers
 
             //check db if it already exists (fix)
             var DoesIdExist = await Repo.GetTimeSheetIdByDateAndEmpId(timesheet.Date, timesheet.EmployeeId);
-            if (DoesIdExist == 0)
+            if (DoesIdExist != 0)
             {
                 return Conflict();
             }

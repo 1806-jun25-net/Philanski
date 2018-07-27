@@ -21,7 +21,7 @@ namespace Philanski.Backend.WebAPI.Controllers
             _signInManager = signInManager;
         }
 
-        [HttpPost]
+        [HttpPost("Login")]
         [ProducesResponseType(204)]
         [ProducesResponseType(403)]
         public async Task<ActionResult> Login(User input)
@@ -37,7 +37,7 @@ namespace Philanski.Backend.WebAPI.Controllers
             return NoContent();
         }
 
-        [HttpPost]
+        [HttpPost("Logout")]
         [ProducesResponseType(204)]
         public async Task<NoContentResult> Logout()
         {
@@ -46,7 +46,7 @@ namespace Philanski.Backend.WebAPI.Controllers
             return NoContent();
         }
 
-        [HttpPost]
+        [HttpPost("Register")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         public async Task<ActionResult> Register(User input,

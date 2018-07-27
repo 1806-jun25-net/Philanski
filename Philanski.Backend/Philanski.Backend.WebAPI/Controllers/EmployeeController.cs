@@ -15,9 +15,9 @@ namespace Philanski.Backend.WebAPI.Controllers
     public class EmployeeController : Controller
     {
 
-        public Repository Repo { get; }
+        public IRepository Repo { get; }
 
-        public EmployeeController(Repository repo)
+        public EmployeeController(IRepository repo)
         {
             Repo = repo;
         }

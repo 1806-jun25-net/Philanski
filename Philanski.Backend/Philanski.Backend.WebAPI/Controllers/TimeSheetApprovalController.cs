@@ -15,13 +15,12 @@ namespace Philanski.Backend.WebAPI.Controllers
     [ApiController]
     public class TimeSheetApprovalController : Controller
     {
-        public Repository Repo { get; }
-    
-        public TimeSheetApprovalController(Repository repo)
+        public IRepository Repo { get; }
+
+        public TimeSheetApprovalController(IRepository repo)
         {
             Repo = repo;
         }
-
 
         // GET: api/<controller>
         [HttpGet]
