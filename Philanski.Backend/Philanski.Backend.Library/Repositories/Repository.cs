@@ -106,7 +106,7 @@ namespace Philanski.Backend.Library.Repositories
 
         public List<TimeSheetApproval> GetAllTimeSheetsFromEmployee(int EmployeeId)
         {
-            var TimeSheetApprovals = _db.TimeSheetApprovals.Where(x => x.EmployeeId == EmployeeId);
+            var TimeSheetApprovals = _db.TimeSheetApprovals.Where(x => x.EmployeeId == EmployeeId).AsNoTracking();
             if (TimeSheetApprovals == null)
             {
                 return null;
@@ -144,18 +144,14 @@ namespace Philanski.Backend.Library.Repositories
             return Mapper.Map(managers);
         }
 
-        public Manager GetManagerById(int id)
+        public async Task<Manager> GetManagerById(int id)
         {
-            var managers = _db.Managers;
-            foreach (var manager in managers)
+            var manager = await _db.Managers.FirstOrDefaultAsync(x => x.Id == id);
+            if (manager == null)
             {
-                if (manager.Id.Equals(id))
-                {
-                    return Mapper.Map(manager);
-                }
+                return null;
             }
-            return null;
-
+            return Mapper.Map(manager);
         }
 
 
@@ -177,17 +173,14 @@ namespace Philanski.Backend.Library.Repositories
             return Mapper.Map(departments);
         }
 
-        public int GetDepartmentIdByName(string name)
+        public async Task<int> GetDepartmentIdByName(string name)
         {
-            var departments = _db.Departments;
-            foreach (var dept in departments)
+            var department = await _db.Departments.FirstOrDefaultAsync(x => x.Name == name);
+            if (department == null)
             {
-                if (dept.Name.Equals(name))
-                {
-                    return dept.Id;
-                }
+                return 0;
             }
-            return 0;
+            return department.Id;
         }
 
         public void CreateDepartment(Department department)

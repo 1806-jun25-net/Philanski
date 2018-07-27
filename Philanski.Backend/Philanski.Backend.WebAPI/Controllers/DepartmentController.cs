@@ -52,7 +52,7 @@ namespace Philanski.Backend.WebAPI.Controllers
             //check to see if department already exists (fix)
             Repo.CreateDepartment(department);
             await Repo.Save();
-            department.Id = Repo.GetDepartmentIdByName(department.Name);
+            department.Id = await Repo.GetDepartmentIdByName(department.Name);
 
             return CreatedAtRoute("GetDepartment", new { id = department.Id }, department);
         }

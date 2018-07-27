@@ -35,9 +35,9 @@ namespace Philanski.Backend.WebAPI.Controllers
 
         // GET api/<controller>/5
         [HttpGet("{id}")]
-        public ActionResult<Manager> Get(int id)
+        public async Task<ActionResult<Manager>> Get(int id)
         {
-            Manager manager = Repo.GetManagerById(id);
+            Manager manager = await Repo.GetManagerById(id);
             if (manager == null)
             {
                 return NotFound();
