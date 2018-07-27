@@ -59,9 +59,13 @@ namespace Philanski.Backend.WebAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(TimeSheet timesheet)
         {
+<<<<<<< HEAD
+            if (Repo.GetTimeSheetIdByDateAndEmpId(timesheet.Date, timesheet.EmployeeId) == 0)
+=======
             //check db if it already exists (fix)
             var DoesIdExist = await Repo.GetTimeSheetIdByDateAndEmpId(timesheet.Date, timesheet.EmployeeId);
             if (DoesIdExist == 0)
+>>>>>>> 697be343cd0faeb0e19b4a96d141de4223ad080f
             {
                 return Conflict();
             }
