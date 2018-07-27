@@ -32,7 +32,7 @@ namespace Philanski.Backend.WebAPI.Controllers
         }
 
         // GET api/<controller>/5
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetTimeSheetApproval")]
         public ActionResult<TimeSheetApproval> Get(int id)
         {
             var TimeSheetApproval = Repo.GetTimeSheetApprovalById(id);
@@ -46,8 +46,12 @@ namespace Philanski.Backend.WebAPI.Controllers
 
         // POST api/<controller>
         [HttpPost]
-        public void Post([FromBody]string value)
+        public async Task<IActionResult> Post(TimeSheetApproval TSA)
         {
+            Repo.CreateTimeSheetApproval(TSA);
+            await Repo.Save();
+            TSA.Id = Repo.GetTimeSheetApprovalIdByDateSubmitted(TSA.TimeSubmitted);
+            return CreatedAtRoute("GetTimeSheetApproval", new { id = TSA.Id }, TSA);         
         }
 
         // PUT api/<controller>/5

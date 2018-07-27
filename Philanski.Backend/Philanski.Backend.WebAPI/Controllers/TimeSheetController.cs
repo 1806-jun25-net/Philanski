@@ -32,11 +32,16 @@ namespace Philanski.Backend.WebAPI.Controllers
         }
 
         // GET api/<controller>/5
-        /*[HttpGet("{id}")]
-        public string GetById(int id)
+        [HttpGet("{id}", Name = "GetTimeSheet")]
+        public ActionResult<TimeSheet> GetById(int id)
         {
-            return "value";
-        }*/
+            var timesheet = Repo.GetTimeSheetByID(id);
+            if (timesheet == null)
+            {
+                return NotFound();
+            }
+            return timesheet;
+        }
 
         [HttpGet("GetFullWeek")] //api/timesheet/GetFullWeek?EmployeeId=id&&date={date}
         public ActionResult<List<TimeSheet>> GetFullWeek(int EmployeeId, DateTime date)
@@ -55,11 +60,15 @@ namespace Philanski.Backend.WebAPI.Controllers
         public async Task<IActionResult> Post(TimeSheet timesheet)
         {
             //check db if it already exists (fix)
+            if (Repo.GetTimeSheetIdByDateAndEmpId(timesheet.Date, timesheet.EmployeeId) == 0)
+            {
+                return Conflict();
+            }
             Repo.CreateTimeSheet(timesheet);
             await Repo.Save();
             timesheet.Id = Repo.GetTimeSheetIdByDateAndEmpId(timesheet.Date, timesheet.EmployeeId);
 
-            return CreatedAtRoute("GetDepartment", new { id = timesheet.Id }, timesheet);
+            return CreatedAtRoute("GetTimeSheet", new { id = timesheet.Id }, timesheet);
         }
 
         // PUT api/<controller>/5

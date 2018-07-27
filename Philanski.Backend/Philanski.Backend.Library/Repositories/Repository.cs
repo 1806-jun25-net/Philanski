@@ -41,8 +41,25 @@ namespace Philanski.Backend.Library.Repositories
 
         public int GetTimeSheetIdByDateAndEmpId(DateTime date, int employeeId) //fix because mapper cant deal with null
         {
-            TimeSheet timeSheet = Mapper.Map(_db.TimeSheets.FirstOrDefault(i => i.EmployeeId == employeeId && i.Date == date)); 
+            TimeSheet timeSheet = Mapper.Map(_db.TimeSheets.FirstOrDefault(i => i.EmployeeId == employeeId && i.Date == date));
+            if (timeSheet == null)
+            {
+                return 0;
+            }
             return timeSheet.Id;
+        }
+
+        public TimeSheet GetTimeSheetByID(int id)
+        {
+            var timesheets = _db.TimeSheets.AsNoTracking();
+            foreach (var timesheet in timesheets)
+            {
+                if(timesheet.Id.Equals(id))
+                {
+                    return Mapper.Map(timesheet);
+                }
+            }
+            return null;
         }
 
 
@@ -96,6 +113,10 @@ namespace Philanski.Backend.Library.Repositories
             return Mapper.Map(TimeSheetApprovals);
         }
 
+        public void CreateTimeSheetApproval(TimeSheetApproval TSA)
+        {
+            _db.Add(Mapper.Map(TSA));
+        }
 
         //Employee Methods
         public Employee GetEmployeeByID(int ID) //maybe change to find. NVM DONT USE FIND
