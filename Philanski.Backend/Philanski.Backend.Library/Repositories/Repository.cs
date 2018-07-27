@@ -45,6 +45,19 @@ namespace Philanski.Backend.Library.Repositories
             return timeSheet.Id;
         }
 
+        public TimeSheet GetTimeSheetByID(int id)
+        {
+            var timesheets = _db.TimeSheets.AsNoTracking();
+            foreach (var timesheet in timesheets)
+            {
+                if(timesheet.Id.Equals(id))
+                {
+                    return Mapper.Map(timesheet);
+                }
+            }
+            return null;
+        }
+
 
         public List<TimeSheet> GetAllTimeSheets()
         {
@@ -96,6 +109,10 @@ namespace Philanski.Backend.Library.Repositories
             return Mapper.Map(TimeSheetApprovals);
         }
 
+        public void CreateTimeSheetApproval(TimeSheetApproval TSA)
+        {
+            _db.Add(Mapper.Map(TSA));
+        }
 
         //Employee Methods
         public Employee GetEmployeeByID(int ID) //maybe change to find. NVM DONT USE FIND
