@@ -1,7 +1,7 @@
 
 
 Insert Departments 
-Values ('Kodo Riders')
+Values ('Engineering')
 
 Insert Worksites
 Values ('123 Thunderbluff St.', null, 'Thunderbluff', 'AZ', '42696')

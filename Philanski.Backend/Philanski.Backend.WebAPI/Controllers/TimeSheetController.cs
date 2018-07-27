@@ -32,13 +32,13 @@ namespace Philanski.Backend.WebAPI.Controllers
         }
 
         // GET api/<controller>/5
-       /* [HttpGet("{id}")]
-        public string Get(int id)
+        /*[HttpGet("{id}")]
+        public string GetById(int id)
         {
             return "value";
         }*/
 
-        [HttpGet("GetFullWeek")]
+        [HttpGet("GetFullWeek")] //api/timesheet/GetFullWeek?EmployeeId=id&&date={date}
         public ActionResult<List<TimeSheet>> GetFullWeek(int EmployeeId, DateTime date)
         {
             List<TimeSheet> TimeSheets = Repo.GetEmployeeTimeSheetWeekFromDate(date, EmployeeId);

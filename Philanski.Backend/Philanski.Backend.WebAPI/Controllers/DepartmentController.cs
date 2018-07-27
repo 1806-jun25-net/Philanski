@@ -21,19 +21,6 @@ namespace Philanski.Backend.WebAPI.Controllers
         {
             Repo = repo;
         }
-        // GET: api/<controller>
-       /* [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET api/<controller>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }*/
 
         //response that gathers all departments
         [HttpGet]
