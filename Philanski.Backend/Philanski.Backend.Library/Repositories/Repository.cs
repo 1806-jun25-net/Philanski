@@ -102,6 +102,12 @@ namespace Philanski.Backend.Library.Repositories
             return null;
         }
 
+        public int GetTimeSheetApprovalIdByDateSubmitted(DateTime submitted)
+        {
+            var TSA = Mapper.Map(_db.TimeSheetApprovals.FirstOrDefault(i => i.TimeSubmitted == submitted));
+            return TSA.Id;
+        }
+
         public List<TimeSheetApproval> GetAllTimeSheetsFromEmployee(int EmployeeId)
         {
             var TimeSheetApprovals = _db.TimeSheetApprovals.Where(x => x.EmployeeId == EmployeeId);
