@@ -50,11 +50,7 @@ namespace Philanski.Backend.WebAPI.Controllers
         {
             Repo.CreateTimeSheetApproval(TSA);
             await Repo.Save();
-<<<<<<< HEAD
-            //TSA.Id = Repo.GetTimeSheetApprovalIdByDateSubmitted(TSA.TimeSubmitted);
-=======
             TSA.Id = await Repo.GetTimeSheetApprovalIdByDateSubmitted(TSA.TimeSubmitted);
->>>>>>> 697be343cd0faeb0e19b4a96d141de4223ad080f
             return CreatedAtRoute("GetTimeSheetApproval", new { id = TSA.Id }, TSA);         
         }
 
