@@ -41,7 +41,11 @@ namespace Philanski.Backend.Library.Repositories
 
         public int GetTimeSheetIdByDateAndEmpId(DateTime date, int employeeId) //fix because mapper cant deal with null
         {
-            TimeSheet timeSheet = Mapper.Map(_db.TimeSheets.FirstOrDefault(i => i.EmployeeId == employeeId && i.Date == date)); 
+            TimeSheet timeSheet = Mapper.Map(_db.TimeSheets.FirstOrDefault(i => i.EmployeeId == employeeId && i.Date == date));
+            if (timeSheet == null)
+            {
+                return 0;
+            }
             return timeSheet.Id;
         }
 
