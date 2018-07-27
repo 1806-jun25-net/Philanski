@@ -18,7 +18,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Philanski.Backend.DataContext\Philanski.Backend.DataContext.csproj" />
     <ProjectReference Include="..\Philanski.Backend.Library\Philanski.Backend.Library.csproj" />
+    <ProjectReference Include="..\Philanski.Backend.WebAPI\Philanski.Backend.WebAPI.csproj" />
   </ItemGroup>
 
 </Project>

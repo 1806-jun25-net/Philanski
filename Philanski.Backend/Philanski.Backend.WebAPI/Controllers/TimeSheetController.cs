@@ -33,9 +33,9 @@ namespace Philanski.Backend.WebAPI.Controllers
 
         // GET api/<controller>/5
         [HttpGet("{id}", Name = "GetTimeSheet")]
-        public ActionResult<TimeSheet> GetById(int id)
+        public async Task<ActionResult<TimeSheet>> GetById(int id)
         {
-            var timesheet = Repo.GetTimeSheetByID(id);
+            var timesheet =  await Repo.GetTimeSheetByID(id);
             if (timesheet == null)
             {
                 return NotFound();
@@ -59,13 +59,19 @@ namespace Philanski.Backend.WebAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(TimeSheet timesheet)
         {
+<<<<<<< HEAD
             if (Repo.GetTimeSheetIdByDateAndEmpId(timesheet.Date, timesheet.EmployeeId) == 0)
+=======
+            //check db if it already exists (fix)
+            var DoesIdExist = await Repo.GetTimeSheetIdByDateAndEmpId(timesheet.Date, timesheet.EmployeeId);
+            if (DoesIdExist == 0)
+>>>>>>> 697be343cd0faeb0e19b4a96d141de4223ad080f
             {
                 return Conflict();
             }
             Repo.CreateTimeSheet(timesheet);
             await Repo.Save();
-            timesheet.Id = Repo.GetTimeSheetIdByDateAndEmpId(timesheet.Date, timesheet.EmployeeId);
+            timesheet.Id = await Repo.GetTimeSheetIdByDateAndEmpId(timesheet.Date, timesheet.EmployeeId);
 
             return CreatedAtRoute("GetTimeSheet", new { id = timesheet.Id }, timesheet);
         }

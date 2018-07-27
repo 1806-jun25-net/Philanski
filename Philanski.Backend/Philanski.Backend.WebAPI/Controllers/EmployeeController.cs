@@ -31,9 +31,9 @@ namespace Philanski.Backend.WebAPI.Controllers
 
         // GET api/<controller>/5
         [HttpGet("{id}")]
-        public ActionResult<Employee> Get(int id)
+        public async Task<ActionResult<Employee>> Get(int id)
         {
-            Employee employee = Repo.GetEmployeeByID(id);
+            var employee = await Repo.GetEmployeeByID(id);
             //catch null and send 404
             if (employee == null)
             {

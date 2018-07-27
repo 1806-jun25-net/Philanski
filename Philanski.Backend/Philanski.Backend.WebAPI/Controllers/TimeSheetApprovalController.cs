@@ -33,9 +33,9 @@ namespace Philanski.Backend.WebAPI.Controllers
 
         // GET api/<controller>/5
         [HttpGet("{id}", Name = "GetTimeSheetApproval")]
-        public ActionResult<TimeSheetApproval> Get(int id)
+        public async Task<ActionResult<TimeSheetApproval>> Get(int id)
         {
-            var TimeSheetApproval = Repo.GetTimeSheetApprovalById(id);
+            var TimeSheetApproval = await Repo.GetTimeSheetApprovalById(id);
             //catch null and send 404
             if (TimeSheetApproval == null)
             {
@@ -50,7 +50,11 @@ namespace Philanski.Backend.WebAPI.Controllers
         {
             Repo.CreateTimeSheetApproval(TSA);
             await Repo.Save();
+<<<<<<< HEAD
             //TSA.Id = Repo.GetTimeSheetApprovalIdByDateSubmitted(TSA.TimeSubmitted);
+=======
+            TSA.Id = await Repo.GetTimeSheetApprovalIdByDateSubmitted(TSA.TimeSubmitted);
+>>>>>>> 697be343cd0faeb0e19b4a96d141de4223ad080f
             return CreatedAtRoute("GetTimeSheetApproval", new { id = TSA.Id }, TSA);         
         }
 
