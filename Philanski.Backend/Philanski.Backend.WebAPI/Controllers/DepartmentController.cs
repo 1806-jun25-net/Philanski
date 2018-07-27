@@ -15,9 +15,9 @@ namespace Philanski.Backend.WebAPI.Controllers
     public class DepartmentController : Controller
     {
 
-        public Repository Repo { get; }
+        public IRepository Repo { get; }
 
-        public DepartmentController(Repository repo)
+        public DepartmentController(IRepository repo)
         {
             Repo = repo;
         }

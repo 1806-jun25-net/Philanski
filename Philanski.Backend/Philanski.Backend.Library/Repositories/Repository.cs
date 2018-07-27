@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Philanski.Backend.Library.Repositories
 {
 
-    public class Repository
+    public class Repository:IRepository
     {
 
         private readonly PhilanskiManagementSolutionsContext _db;

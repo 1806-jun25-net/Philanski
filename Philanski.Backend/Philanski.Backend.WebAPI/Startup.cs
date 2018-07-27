@@ -49,7 +49,7 @@ namespace Philanski.Backend.WebAPI
 
             string connectionstring = GetDBConnectionString();
 
-            services.AddScoped<Repository>();
+            services.AddScoped<IRepository, Repository>();
             services.AddDbContext<PhilanskiManagementSolutionsContext>(options =>
                 options.UseSqlServer(connectionstring));
 

@@ -1,7 +1,11 @@
+using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Philanski.Backend.Library.Models;
 using Philanski.Backend.Library.Repositories;
+using Philanski.Backend.WebAPI.Controllers;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 
 namespace Philanski.Backend.Testing
@@ -37,6 +41,39 @@ namespace Philanski.Backend.Testing
         }
 
 
+        //TESTING DEPARTMENT API CONTROLLER
+        [Fact]
+        public void GetAllShouldReturnAllDepartments()
+        {
+            // arrange
+            var deptList = new List<Department>
+            {
+                new Department { Id = 1, Name = "Blacksmithing" },
+                new Department { Id = 2, Name = "Jewelcrafting" }
+            };
+            var mockRepo = new Mock<IRepository>();
+            mockRepo.Setup(x => x.GetAllDepartments()).Returns(deptList);
+            DepartmentController controller = new DepartmentController(mockRepo.Object);
+
+            // act
+            var actionResult = controller.GetAll();
+
+            // assert
+            var view = Assert.IsType<ViewResult>(actionResult);
+            var model = Assert.IsAssignableFrom<List<Department>>
+                (view.Model).ToList();
+            Assert.Equal(deptList.Count, model.Count);
+            for (int i = 0; i < model.Count; i++)
+            {
+                Assert.Equal(deptList[i].Id, model[i].Id);
+                Assert.Equal(deptList[i].Name, model[i].Name);
+            }
+        }
+
+
+
+
+
         [Fact]
         public void GetEmployeeByIDRepoMethodShouldWork()
         {
@@ -61,6 +98,9 @@ namespace Philanski.Backend.Testing
             
 
         }
+
+
+
 
 
 
