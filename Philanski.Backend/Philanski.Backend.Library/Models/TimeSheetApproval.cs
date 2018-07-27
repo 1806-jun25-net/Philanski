@@ -16,12 +16,12 @@ namespace Philanski.Backend.Library.Models
         public DateTime TimeSubmitted { get; set; }
         public int EmployeeId { get; set; }
 
-        public Repository Repo { get; }
+      //  public Repository Repo { get; }
 
         
         //Method that takes a datetime and returns the sunday of that date's week. Will return with same time
-        public DateTime GetPreviousSundayOfWeek(DateTime DateInWeek)
-        {
+        public static DateTime GetPreviousSundayOfWeek(DateTime DateInWeek)
+        { 
 
             DateTime PreviousDate = DateInWeek;
             while (PreviousDate.DayOfWeek != DayOfWeek.Sunday)
@@ -32,7 +32,7 @@ namespace Philanski.Backend.Library.Models
         }
 
         //Method that takes a datetime and returns the saturday of that date's week. Will return with same time
-        public DateTime GetNextSaturdayOfWeek(DateTime DateInWeek)
+        public static DateTime GetNextSaturdayOfWeek(DateTime DateInWeek)
         {
             DateTime NextDate = DateInWeek;
             while (NextDate.DayOfWeek != DayOfWeek.Saturday)
@@ -44,7 +44,11 @@ namespace Philanski.Backend.Library.Models
 
         //Method that takes week start and employeeID
         //Returns an array of ID's that represent all the time punches for a specific week by that employee
-        public int[] GetWeekTimePunches(int employeeId, DateTime weekStart)
+
+        //Dont call repo in Library classes.
+        //We can do all this in the repo
+
+     /*   public int[] GetWeekTimePunches(int employeeId, DateTime weekStart)
         {
             DateTime[] weekArray = new DateTime[7];
 
@@ -59,12 +63,12 @@ namespace Philanski.Backend.Library.Models
             //creates an array of IDs of the time punches by the employee for the given week
             for(int i = 0; i < weekArray.Length; i++)
             {
-                timePunchIDs[i] = Repo.GetTimeSheetIdByDateAndEmpId(weekArray[i], employeeId);
+                timePunchIDs[i] = Repository.GetTimeSheetIdByDateAndEmpId(weekArray[i], employeeId);
             }
 
             return timePunchIDs;
 
-        }
+        }*/
 
 
 

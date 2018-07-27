@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Philanski.Backend.Library.Models;
 using Philanski.Backend.Library.Repositories;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -21,23 +22,44 @@ namespace Philanski.Backend.WebAPI.Controllers
         }
 
         // GET: api/<controller>
+        // get all time sheets. works
         [HttpGet]
-        public IEnumerable<string> Get()
+        public ActionResult<List<TimeSheet>> GetAll()
         {
-            return new string[] { "value1", "value2" };
+            List<TimeSheet> TimeSheets = Repo.GetAllTimeSheets();
+            return TimeSheets;
+
         }
 
         // GET api/<controller>/5
-        [HttpGet("{id}")]
+       /* [HttpGet("{id}")]
         public string Get(int id)
         {
             return "value";
+        }*/
+
+        [HttpGet("GetFullWeek")]
+        public ActionResult<List<TimeSheet>> GetFullWeek(int EmployeeId, DateTime date)
+        {
+            List<TimeSheet> TimeSheets = Repo.GetEmployeeTimeSheetWeekFromDate(date, EmployeeId);
+            //catch null and send 404
+            if (TimeSheets == null)
+            {
+                return NotFound();
+            }
+            return TimeSheets;
         }
 
         // POST api/<controller>
         [HttpPost]
-        public void Post([FromBody]string value)
+        public async Task<IActionResult> Post(TimeSheet timesheet)
         {
+            //check db if it already exists (fix)
+            Repo.CreateTimeSheet(timesheet);
+            await Repo.Save();
+            timesheet.Id = Repo.GetTimeSheetIdByDateAndEmpId(timesheet.Date, timesheet.EmployeeId);
+
+            return CreatedAtRoute("GetDepartment", new { id = timesheet.Id }, timesheet);
         }
 
         // PUT api/<controller>/5

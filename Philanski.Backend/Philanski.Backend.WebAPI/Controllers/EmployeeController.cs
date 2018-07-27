@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Philanski.Backend.Library.Models;
 using Philanski.Backend.Library.Repositories;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -22,16 +23,23 @@ namespace Philanski.Backend.WebAPI.Controllers
         }
         // GET: api/<controller>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public ActionResult<List<Employee>> GetAll()
         {
-            return new string[] { "value1", "value2" };
+            List<Employee> employees = Repo.GetAllEmployees();
+            return employees;
         }
 
         // GET api/<controller>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public ActionResult<Employee> Get(int id)
         {
-            return "value";
+            Employee employee = Repo.GetEmployeeByID(id);
+            //catch null and send 404
+            if (employee == null)
+            {
+                return NotFound();
+            }
+            return employee;
         }
 
         // POST api/<controller>

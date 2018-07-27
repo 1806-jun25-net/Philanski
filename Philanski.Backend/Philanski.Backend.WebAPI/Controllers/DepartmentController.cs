@@ -58,17 +58,11 @@ namespace Philanski.Backend.WebAPI.Controllers
 
 
 
-        // POST api/<controller>
-        /*  [HttpPost]
-          public void Post([FromBody]string value)
-          {
-          }*/
-
-
             //creates a department
         [HttpPost]
         public async Task<IActionResult> Post(Department department)
         {
+            //check to see if department already exists (fix)
             Repo.CreateDepartment(department);
             await Repo.Save();
             department.Id = Repo.GetDepartmentIdByName(department.Name);
@@ -86,7 +80,7 @@ namespace Philanski.Backend.WebAPI.Controllers
             {
                 return NotFound();
             }
-            //might need to add ID here.
+            //might need to add ID here. UPDATE: I put id handling in repo. We will need to set it to update it
             dept.Name = department.Name;
             Repo.UpdateDepartment(dept);
             await Repo.Save();

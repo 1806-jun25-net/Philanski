@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Philanski.Backend.Library.Repositories
 {
-    
+
     public class Repository
     {
 
@@ -24,26 +24,81 @@ namespace Philanski.Backend.Library.Repositories
             _db = db ?? throw new ArgumentNullException(nameof(db));
         }
 
-        //IT WORKS
 
-        public string testGetFirstEmployee()
+
+        /* public string testGetFirstEmployee()
+         {
+             string employeename = (from employee in _db.Employees
+                                     where employee.Id.Equals(1)
+                                    select employee.FirstName).SingleOrDefault();
+
+             return employeename;
+
+         }*/
+
+
+        //Timesheet methods
+
+        public int GetTimeSheetIdByDateAndEmpId(DateTime date, int employeeId) //fix because mapper cant deal with null
         {
-            string employeename = (from employee in _db.Employees
-                                    where employee.Id.Equals(1)
-                                   select employee.FirstName).SingleOrDefault();
-
-            return employeename;
-
-        }
-
-        public int GetTimeSheetIdByDateAndEmpId(DateTime date, int employeeId)
-        {
-            TimeSheet timeSheet = Mapper.Map(_db.TimeSheets.First(i => i.EmployeeId == employeeId && i.Date == date));
+            TimeSheet timeSheet = Mapper.Map(_db.TimeSheets.FirstOrDefault(i => i.EmployeeId == employeeId && i.Date == date)); 
             return timeSheet.Id;
         }
 
-        //should work
-        public Employee GetEmployeeByID(int ID)
+
+        public List<TimeSheet> GetAllTimeSheets()
+        {
+            var TimeSheets = _db.TimeSheets.AsNoTracking();
+            return Mapper.Map(TimeSheets);
+        }
+
+        public List<TimeSheet> GetEmployeeTimeSheetWeekFromDate(DateTime date, int employeeId)
+        {
+            //use date.date to get midnight
+            var DateStart = TimeSheetApproval.GetPreviousSundayOfWeek(date.Date);
+            var DateEnd = TimeSheetApproval.GetNextSaturdayOfWeek(date.Date);
+            var TimeSheets = _db.TimeSheets.Where(x => ((x.EmployeeId == employeeId) && (x.Date.CompareTo(DateStart) >= 0) && (x.Date.CompareTo(DateEnd) <= 0))).AsNoTracking();
+            //fix mapper cant handle null
+            return Mapper.Map(TimeSheets);
+        }
+
+        public void CreateTimeSheet(TimeSheet timesheet)
+        {
+            _db.Add(Mapper.Map(timesheet));
+        }
+
+        //TimeSheet Approval Methods
+
+
+        public List<TimeSheetApproval> GetAllTimeSheetApprovals()
+        {
+            var TimeSheetApprovals = _db.TimeSheetApprovals.AsNoTracking();
+            return Mapper.Map(TimeSheetApprovals);
+        }
+
+        public TimeSheetApproval GetTimeSheetApprovalById(int id)
+        {
+            var TimeSheetApprovals = _db.TimeSheetApprovals;
+            foreach (var TSA in TimeSheetApprovals)
+            {
+                if (TSA.Id.Equals(id))
+                {
+                    return Mapper.Map(TSA);
+                }
+            }
+            return null;
+        }
+
+        public List<TimeSheetApproval> GetAllTimeSheetsFromEmployee(int EmployeeId)
+        {
+            var TimeSheetApprovals = _db.TimeSheetApprovals.Where(x => x.EmployeeId == EmployeeId);
+            //fix mapper cant handle null
+            return Mapper.Map(TimeSheetApprovals);
+        }
+
+
+        //Employee Methods
+        public Employee GetEmployeeByID(int ID) //maybe change to find. NVM DONT USE FIND
         {
             var employees = _db.Employees;
             foreach (var emp in employees)
@@ -56,6 +111,36 @@ namespace Philanski.Backend.Library.Repositories
             return null;
         }
 
+        public List<Employee> GetAllEmployees()
+        {
+            var employees = _db.Employees.AsNoTracking();
+            return Mapper.Map(employees);
+        }
+
+
+        //Manager Methods
+        public List<Manager> GetAllManagers()
+        {
+            var managers = _db.Managers.AsNoTracking();
+            return Mapper.Map(managers);
+        }
+
+        public Manager GetManagerById(int id)
+        {
+            var managers = _db.Managers;
+            foreach (var manager in managers)
+            {
+                if (manager.Id.Equals(id))
+                {
+                    return Mapper.Map(manager);
+                }
+            }
+            return null;
+
+        }
+
+
+        //Department methods
         public Department GetDepartmentByID(int id)
         {
             var departments = _db.Departments;
@@ -96,7 +181,12 @@ namespace Philanski.Backend.Library.Repositories
 
         public void UpdateDepartment(Department department)
         {
-            _db.Entry(_db.Departments.Find(department.Id)).CurrentValues.SetValues(Mapper.Map(department));
+            //mapper doesnt include library -> context id keeping. need Id for update
+            //also dont want names that are already in database, so need to check that too
+            //potential fix later
+            var dbDept = Mapper.Map(department);
+            dbDept.Id = department.Id;
+            _db.Entry(_db.Departments.Find(department.Id)).CurrentValues.SetValues(dbDept);
         }
 
         public void DeleteDepartment(int id)
