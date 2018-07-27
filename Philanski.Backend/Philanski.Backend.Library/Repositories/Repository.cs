@@ -41,7 +41,11 @@ namespace Philanski.Backend.Library.Repositories
 
         public int GetTimeSheetIdByDateAndEmpId(DateTime date, int employeeId) //fix because mapper cant deal with null
         {
-            TimeSheet timeSheet = Mapper.Map(_db.TimeSheets.FirstOrDefault(i => i.EmployeeId == employeeId && i.Date == date)); 
+            TimeSheet timeSheet = Mapper.Map(_db.TimeSheets.FirstOrDefault(i => i.EmployeeId == employeeId && i.Date == date));
+            if (timeSheet == null)
+            {
+                return 0;
+            }
             return timeSheet.Id;
         }
 
@@ -71,7 +75,10 @@ namespace Philanski.Backend.Library.Repositories
             var DateStart = TimeSheetApproval.GetPreviousSundayOfWeek(date.Date);
             var DateEnd = TimeSheetApproval.GetNextSaturdayOfWeek(date.Date);
             var TimeSheets = _db.TimeSheets.Where(x => ((x.EmployeeId == employeeId) && (x.Date.CompareTo(DateStart) >= 0) && (x.Date.CompareTo(DateEnd) <= 0))).AsNoTracking();
-            //fix mapper cant handle null
+            if (TimeSheets == null)
+            {
+                return null;
+            }
             return Mapper.Map(TimeSheets);
         }
 
@@ -105,13 +112,20 @@ namespace Philanski.Backend.Library.Repositories
         public int GetTimeSheetApprovalIdByDateSubmitted(DateTime submitted)
         {
             var TSA = Mapper.Map(_db.TimeSheetApprovals.FirstOrDefault(i => i.TimeSubmitted == submitted));
+            if (TSA == null)
+            {
+                return 0;
+            }
             return TSA.Id;
         }
 
         public List<TimeSheetApproval> GetAllTimeSheetsFromEmployee(int EmployeeId)
         {
             var TimeSheetApprovals = _db.TimeSheetApprovals.Where(x => x.EmployeeId == EmployeeId);
-            //fix mapper cant handle null
+            if (TimeSheetApprovals == null)
+            {
+                return null;
+            }
             return Mapper.Map(TimeSheetApprovals);
         }
 
