@@ -55,7 +55,7 @@ namespace Philanski.Backend.WebAPI
 
            services.AddDbContext<IdentityDbContext>(options =>
                 options.UseSqlServer(connectionstring,
-                b => b.MigrationsAssembly("Philanski.Backend.DataContext"))); // for "TodoApi2", put your data project.*/
+                b => b.MigrationsAssembly("Philanski.Backend.DataContext"))); 
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddIdentity<IdentityUser, IdentityRole>(options =>
