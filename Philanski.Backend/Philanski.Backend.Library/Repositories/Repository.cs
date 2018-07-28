@@ -127,6 +127,52 @@ namespace Philanski.Backend.Library.Repositories
             _db.Add(Mapper.Map(TSA));
         }
 
+        //get approvals by manager id
+        //logic 
+        //What do I have: manager id->all departments they are part of. 
+        //employee ids on TSAs. check their department and and if part of managers. add to list
+        public List<TimeSheetApproval> GetAllTSAsThatCanBeApprovedByManager(int id)
+        {
+            var TSAs = _db.TimeSheetApprovals.AsNoTracking();
+            var ManagerDeptIds = GetAllDepartmentIdsByManagerId(id);
+            List<TimeSheetApprovals> TSAForManager = new List<TimeSheetApprovals>();
+            foreach (var TSA in TSAs)
+            {
+                //gather employee departments, compare their departments to manager depts. if a match add to list of tsas.
+                var EmployeeDeptIds = GetAllDepartmentIdsByEmployee(TSA.EmployeeId);
+                if (ManagerDeptIds.Intersect(EmployeeDeptIds).Any())
+                {
+                    TSAForManager.Append(TSA);
+                }
+            }
+            return Mapper.Map(TSAForManager);
+        }
+
+        //Employee-Department methods
+        public List<int> GetAllDepartmentIdsByEmployee(int id)
+        {
+            var departments = _db.EmployeeDepartments.Where(x => x.EmployeeId == id).AsNoTracking();
+            List<int> deptIds = new List<int>();
+            foreach (var dept in departments)
+            {
+                deptIds.Append(dept.DepartmentId);
+            }
+            return deptIds;
+        }
+
+        //Manager-Department methods
+
+        public List<int> GetAllDepartmentIdsByManagerId(int id)
+        {
+            var departments = _db.ManagerDepartments.Where(x => x.ManagerId == id).AsNoTracking();
+            List<int> deptIds = new List<int>();
+            foreach (var dept in departments)
+            {
+                deptIds.Append(dept.DepartmentId);
+            }
+            return deptIds;
+        }
+
         //Employee Methods
         public async Task<Employee> GetEmployeeByID(int ID) //maybe change to find. NVM DONT USE FIND
         {
