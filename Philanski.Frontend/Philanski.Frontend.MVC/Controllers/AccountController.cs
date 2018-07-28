@@ -10,8 +10,7 @@ using Philanski.Frontend.MVC.Models;
 
 namespace Philanski.Frontend.MVC.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
+
     public class AccountController : AServiceController
     {
 
@@ -33,7 +32,7 @@ namespace Philanski.Frontend.MVC.Controllers
                 return View("Error");
             }
 
-            HttpRequestMessage apiRequest = CreateRequestToService(HttpMethod.Post, "api/Account/Login", account);
+            HttpRequestMessage apiRequest = CreateRequestToService(HttpMethod.Post, "api/Account/Register", account);
 
             HttpResponseMessage apiResponse;
             try

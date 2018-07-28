@@ -29,7 +29,7 @@ namespace Philanski.Backend.WebAPI.Controllers
         {
             List<Manager> managers = Repo.GetAllManagers();
             //catch null and throw 404
-            if (managers == null)
+            if (!managers.Any())
             {
                 return NotFound();
             }

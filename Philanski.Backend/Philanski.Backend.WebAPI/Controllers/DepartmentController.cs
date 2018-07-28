@@ -30,7 +30,7 @@ namespace Philanski.Backend.WebAPI.Controllers
         {
             List<Department> Departments = Repo.GetAllDepartments();
             //catch null and send 404
-            if (Departments == null)
+            if (!Departments.Any())
             {
                 return NotFound();
             }

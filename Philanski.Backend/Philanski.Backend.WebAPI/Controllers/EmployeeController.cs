@@ -29,7 +29,7 @@ namespace Philanski.Backend.WebAPI.Controllers
         {
             List<Employee> employees = Repo.GetAllEmployees();
             //catch null and send 404
-            if (employees == null)
+            if (!employees.Any())
             {
                 return NotFound();
             }

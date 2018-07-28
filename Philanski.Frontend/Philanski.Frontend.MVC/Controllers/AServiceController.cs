@@ -11,14 +11,12 @@ using Newtonsoft.Json;
 
 namespace Philanski.Frontend.MVC.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
     public class AServiceController : Controller
     {
 
 
-        private static readonly Uri s_serviceUri = new Uri("http://localhost:61443/");
-        protected static readonly string s_CookieName = "TodoApiAuth";
+        private static readonly Uri s_serviceUri = new Uri("https://philanksi.azurewebsites.net/");
+        protected static readonly string s_CookieName = "PhilanskiApiAuth";
 
         protected HttpClient HttpClient { get; }
 

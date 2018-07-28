@@ -65,7 +65,7 @@ namespace Philanski.Backend.WebAPI
                 options.Password.RequiredLength = 6;
                 options.Password.RequiredUniqueChars = 1;
                 options.Password.RequireLowercase = true;
-                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = true;
 
                 options.User.AllowedUserNameCharacters =
@@ -78,6 +78,7 @@ namespace Philanski.Backend.WebAPI
 
             services.ConfigureApplicationCookie(options =>
             {
+                options.Cookie.Name = "PhilanskiApiAuth";
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
                 options.Events = new CookieAuthenticationEvents
                 {
