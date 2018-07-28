@@ -62,6 +62,7 @@ namespace Philanski.Backend.WebAPI.Controllers
             Repo.CreateTimeSheetApproval(TSA);
             await Repo.Save();
 
+
             TSA.Id = await Repo.GetTimeSheetApprovalIdByDateSubmitted(TSA.TimeSubmitted);
 
             //describes the route TSA is created at.

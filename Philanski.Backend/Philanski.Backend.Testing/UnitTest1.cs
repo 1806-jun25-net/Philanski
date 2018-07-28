@@ -59,9 +59,15 @@ namespace Philanski.Backend.Testing
             var actionResult = controller.GetAll();
 
             // assert
-            var view = Assert.IsType<ViewResult>(actionResult);
-            var model = Assert.IsAssignableFrom<List<Department>>
-                (view.Model).ToList();
+            // assert that actionResult.Value is not null
+
+            Assert.NotNull(actionResult.Value);
+
+            // instead of view.model, actionResult.Value
+
+         
+            //var view = Assert.IsType<ViewResult>(actionResult);
+            var model = Assert.IsAssignableFrom<List<Department>>(actionResult.Value).ToList();
             Assert.Equal(deptList.Count, model.Count);
             for (int i = 0; i < model.Count; i++)
             {
