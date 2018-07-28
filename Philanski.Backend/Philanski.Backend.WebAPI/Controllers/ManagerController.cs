@@ -51,6 +51,17 @@ namespace Philanski.Backend.WebAPI.Controllers
             return manager;
         }
 
+        [HttpGet("{id}/TimeSheetApproval")]
+        public ActionResult<List<TimeSheetApproval>> GetAllTimeSheetApprovalByManagerId(int id)
+        {
+            var TSAByManager = Repo.GetAllTSAsThatCanBeApprovedByManager(id);
+            if (!TSAByManager.Any())
+            {
+                return NotFound();
+            }
+            return TSAByManager;
+        }
+
         // POST api/<controller>
         [HttpPost]
         public void Post([FromBody]string value)

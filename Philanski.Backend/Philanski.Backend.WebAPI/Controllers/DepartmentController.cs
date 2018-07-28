@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Philanski.Backend.Library.Models;
 using Philanski.Backend.Library.Repositories;
@@ -12,7 +13,7 @@ namespace Philanski.Backend.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class DepartmentController : Controller
+    public class DepartmentController : ControllerBase
     {
 
         public IRepository Repo { get; }
@@ -23,6 +24,8 @@ namespace Philanski.Backend.WebAPI.Controllers
         }
 
         //response that gathers all departments
+
+        [FormatFilter]
         [HttpGet]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
@@ -34,7 +37,15 @@ namespace Philanski.Backend.WebAPI.Controllers
             {
                 return NotFound();
             }
-            return Departments;
+
+            if (User.Identity.Name != "Phil")
+            {
+                return StatusCode(403);
+            }
+            else
+            {
+                return Departments;
+            }
         }
         
         //response that gathers a department by id
