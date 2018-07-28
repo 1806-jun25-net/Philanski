@@ -1,4 +1,4 @@
-﻿@model List<Philanski.Frontend.MVC.Models.TimeSheets>
+﻿@model List<Philanski.Frontend.MVC.Models.TimeSheets>[]
 
 @{
     ViewData["Title"] = "Index";
@@ -10,43 +10,37 @@
 <hr />
 
 <div>
-    <form asp-action="Index">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>
-                        <div>Date</div>
-                    </th>
-                    <th></th>
-                    <th>
-                        <div>Hours</div>
-                    </th>
-                    @foreach (var item in Model)
-                    {
-                    <tr>
-                        <th>
-                            <div>@item.Date.Month/@item.Date.Day </div>
-                        </th>
-                        <th></th>
-                        <th>
-                            <div class="form-group">
-                                <input asp-for="@item.RegularHours" class="form-control" />
-                            </div>
-                        </th>
-                    </tr>
-                     }
-                </thead>
-            </table>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
-                <input type="submit" value="Submit" class="btn btn-default" />
-        </form>
+    <div class="form-group">
+        
     </div>
+    <div>
+        <div>
+            <header>
+                <h2>TimeSheets</h2>
+                <a class="nav-link" asp-area="" asp-controller="TimeSheet" asp-action="Create">Current Time Sheet</a>
+            </header>
+        </div>
+            <ul>
+                @for(int i = 0; i < 5; i++)
+                {
+                    <li>
+                        @Model[i][0].Date.Month/@Model[i][0].Date.Day to @Model[i][6].Date.Month/@Model[i][6].Date.Day
+                    </li>
+                }
+                <li>
 
-<div>
-    <a asp-action="Index">Back to List</a>
+                </li>
+            </ul>
+        <div>
+
+        </div>
+    </div>
 </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
