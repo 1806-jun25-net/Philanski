@@ -30,7 +30,7 @@ namespace Philanski.Backend.WebAPI.Controllers
         {
             List<TimeSheet> TimeSheets = Repo.GetAllTimeSheets();
             //catch null and throw 404
-            if (TimeSheets == null)
+            if (!TimeSheets.Any())
             {
                 return NotFound();
             }
@@ -60,7 +60,7 @@ namespace Philanski.Backend.WebAPI.Controllers
         {
             List<TimeSheet> TimeSheets = Repo.GetEmployeeTimeSheetWeekFromDate(date, EmployeeId);
             //catch null and send 404
-            if (TimeSheets == null)
+            if (!TimeSheets.Any())
             {
                 return NotFound();
             }

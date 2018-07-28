@@ -54,10 +54,6 @@ namespace Philanski.Backend.Library.Repositories
         public List<TimeSheet> GetAllTimeSheets()
         {
             var TimeSheets = _db.TimeSheets.AsNoTracking();
-            if (TimeSheets == null)
-            {
-                return null;
-            }
             return Mapper.Map(TimeSheets);
         }
 
@@ -67,10 +63,6 @@ namespace Philanski.Backend.Library.Repositories
             var DateStart = TimeSheetApproval.GetPreviousSundayOfWeek(date.Date);
             var DateEnd = TimeSheetApproval.GetNextSaturdayOfWeek(date.Date);
             var TimeSheets =  _db.TimeSheets.Where(x => ((x.EmployeeId == employeeId) && (x.Date.CompareTo(DateStart) >= 0) && (x.Date.CompareTo(DateEnd) <= 0))).AsNoTracking();
-            if (TimeSheets == null)
-            {
-                return null;
-            }
             return Mapper.Map(TimeSheets);
         }
 
@@ -85,10 +77,6 @@ namespace Philanski.Backend.Library.Repositories
         public List<TimeSheetApproval> GetAllTimeSheetApprovals()
         {
             var TimeSheetApprovals = _db.TimeSheetApprovals.AsNoTracking();
-            if (TimeSheetApprovals == null)
-            {
-                return null;
-            }
             return Mapper.Map(TimeSheetApprovals);
         }
 
@@ -115,10 +103,6 @@ namespace Philanski.Backend.Library.Repositories
         public List<TimeSheetApproval> GetAllTimeSheetsFromEmployee(int EmployeeId)
         {
             var TimeSheetApprovals = _db.TimeSheetApprovals.Where(x => x.EmployeeId == EmployeeId).AsNoTracking();
-            if (TimeSheetApprovals == null)
-            {
-                return null;
-            }
             return Mapper.Map(TimeSheetApprovals);
         }
 
@@ -141,10 +125,6 @@ namespace Philanski.Backend.Library.Repositories
         public List<Employee> GetAllEmployees()
         {
             var employees = _db.Employees.AsNoTracking();
-            if (employees == null)
-            {
-                return null;
-            }
             return Mapper.Map(employees);
         }
 
@@ -153,10 +133,6 @@ namespace Philanski.Backend.Library.Repositories
         public List<Manager> GetAllManagers()
         {
             var managers = _db.Managers.AsNoTracking();
-            if (managers == null)
-            {
-                return null;
-            }
             return Mapper.Map(managers);
         }
 
@@ -186,10 +162,6 @@ namespace Philanski.Backend.Library.Repositories
         public List<Department> GetAllDepartments()
         {
             var departments = _db.Departments.AsNoTracking();
-            if (departments == null)
-            {
-                return null;
-            }
             return Mapper.Map(departments);
         }
 

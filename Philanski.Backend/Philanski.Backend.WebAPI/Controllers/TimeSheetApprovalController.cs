@@ -30,7 +30,7 @@ namespace Philanski.Backend.WebAPI.Controllers
         {
            List<TimeSheetApproval> TimeSheetApprovals = Repo.GetAllTimeSheetApprovals();
             //catch null and send 404
-            if (TimeSheetApprovals == null)
+            if (!TimeSheetApprovals.Any())
             {
                 return NotFound();
             }
