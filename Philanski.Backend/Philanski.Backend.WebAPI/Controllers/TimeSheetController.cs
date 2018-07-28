@@ -90,6 +90,7 @@ namespace Philanski.Backend.WebAPI.Controllers
         }
 
         // PUT api/<controller>/5
+        [ProducesResponseType(204)]
         [ProducesResponseType(404)]
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, TimeSheet UpdatedTimeSheet)

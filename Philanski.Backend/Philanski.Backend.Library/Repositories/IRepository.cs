@@ -13,6 +13,7 @@ namespace Philanski.Backend.Library.Repositories
         Task<int> GetTimeSheetIdByDateAndEmpId(DateTime date, int employeeId);
         Task<TimeSheet> GetTimeSheetByID(int id);
         List<TimeSheet> GetAllTimeSheets();
+        List<TimeSheet> GetTimeSheetsByEmployeeId(int employeeId);
         List<TimeSheet> GetEmployeeTimeSheetWeekFromDate(DateTime date, int employeeId);
         void CreateTimeSheet(TimeSheet timesheet);
         void UpdateTimeSheet(TimeSheet timesheet);

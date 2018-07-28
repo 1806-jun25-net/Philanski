@@ -57,6 +57,12 @@ namespace Philanski.Backend.Library.Repositories
             return Mapper.Map(TimeSheets);
         }
 
+        public List<TimeSheet> GetTimeSheetsByEmployeeId(int employeeId)
+        {
+            var TimeSheets = _db.TimeSheets.Where(x => x.EmployeeId == employeeId).AsNoTracking();
+            return Mapper.Map(TimeSheets);
+        }
+
         public List<TimeSheet> GetEmployeeTimeSheetWeekFromDate(DateTime date, int employeeId)
         {
             //use date.date to get midnight
