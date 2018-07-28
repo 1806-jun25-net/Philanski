@@ -90,9 +90,19 @@ namespace Philanski.Backend.WebAPI.Controllers
         }
 
         // PUT api/<controller>/5
+        [ProducesResponseType(404)]
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public async Task<IActionResult> Put(int id, TimeSheet UpdatedTimeSheet)
         {
+            var TimeSheet = await Repo.GetTimeSheetByID(id);
+            if (TimeSheet == null)
+            {
+                return NotFound();
+            }
+            Repo.UpdateTimeSheet(UpdatedTimeSheet);
+            await Repo.Save();
+            return NoContent();
+
         }
 
         // DELETE api/<controller>/5

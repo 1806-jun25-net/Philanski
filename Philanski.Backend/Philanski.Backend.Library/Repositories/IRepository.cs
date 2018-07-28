@@ -15,6 +15,7 @@ namespace Philanski.Backend.Library.Repositories
         List<TimeSheet> GetAllTimeSheets();
         List<TimeSheet> GetEmployeeTimeSheetWeekFromDate(DateTime date, int employeeId);
         void CreateTimeSheet(TimeSheet timesheet);
+        void UpdateTimeSheet(TimeSheet timesheet);
 
 
         //Time Sheet Approvals

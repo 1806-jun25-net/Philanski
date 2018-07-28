@@ -71,6 +71,16 @@ namespace Philanski.Backend.Library.Repositories
             _db.Add(Mapper.Map(timesheet));
         }
 
+        public void UpdateTimeSheet(TimeSheet timesheet)
+        {
+            //mapper doesnt include library -> context id keeping. need Id for update
+            //also dont want names that are already in database, so need to check that too
+            //potential fix later
+            var dbTimeSheet = Mapper.Map(timesheet);
+            dbTimeSheet.Id = timesheet.Id;
+            _db.Entry(_db.Departments.Find(timesheet.Id)).CurrentValues.SetValues(dbTimeSheet);
+        }
+
         //TimeSheet Approval Methods
 
 
