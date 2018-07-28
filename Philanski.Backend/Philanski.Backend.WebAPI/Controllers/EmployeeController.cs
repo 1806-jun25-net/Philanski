@@ -50,6 +50,21 @@ namespace Philanski.Backend.WebAPI.Controllers
             }
             return employee;
         }
+        [HttpGet("{id}/timesheet")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        public ActionResult<List<TimeSheet>> GetTimeSheetsOfEmployee (int id)
+        {
+            List<TimeSheet> TimeSheets = Repo.GetTimeSheetsByEmployeeId(id);
+            //catch null and send 404
+            if (!TimeSheets.Any())
+            {
+                return NotFound();
+            }
+            return TimeSheets;
+        }
+    
+
 
         // POST api/<controller>
         [HttpPost]
