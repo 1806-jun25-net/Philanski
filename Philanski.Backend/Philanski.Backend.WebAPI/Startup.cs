@@ -30,15 +30,17 @@ namespace Philanski.Backend.WebAPI
         public IConfiguration Configuration { get; }
 
 
-        public string GetDBConnectionString()
+      /*  public List<string> GetDBConnectionString()
         {
-            string connectionString = string.Empty;
+            List<string> connectionStrings = new List<string>();
             
-            connectionString = Configuration["ConnectionStrings:dev_db"];
+            string connectionString1 = Configuration["ConnectionStrings:dev_db"];
+            connectionStrings.Append(connectionString1);
+            string connectionString2 = Configuration["ConnectionStrings:identity_db"];
+            connectionStrings.Append(connectionString2);
+            return connectionStrings;
 
-            return connectionString;
-
-        }
+        }*/
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -47,14 +49,14 @@ namespace Philanski.Backend.WebAPI
          
 
 
-            string connectionstring = GetDBConnectionString();
+           // List<string> connectionstring = GetDBConnectionString();
 
             services.AddScoped<IRepository, Repository>();
             services.AddDbContext<PhilanskiManagementSolutionsContext>(options =>
-                options.UseSqlServer(connectionstring));
+                options.UseSqlServer(Configuration.GetConnectionString("dev_db")));
 
            services.AddDbContext<IdentityDbContext>(options =>
-                options.UseSqlServer(connectionstring,
+                options.UseSqlServer(Configuration.GetConnectionString("identity_db"),
                 b => b.MigrationsAssembly("Philanski.Backend.DataContext"))); 
 
             // Register the Swagger generator, defining 1 or more Swagger documents

@@ -13,6 +13,7 @@ namespace Philanski.Backend.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class DepartmentController : ControllerBase
     {
 
