@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Philanski.Backend.WebAPI.Models
 {
-    public class User : IdentityUser 
+    public class User 
     {
         [Required]
         public string Username { get; set; }
