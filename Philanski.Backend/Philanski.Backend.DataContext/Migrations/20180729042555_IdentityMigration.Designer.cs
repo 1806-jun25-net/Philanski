@@ -7,12 +7,11 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-
 namespace Philanski.Backend.DataContext.Migrations
 {
     [DbContext(typeof(IdentityDbContext))]
-    [Migration("20180726191334_Identity")]
-    partial class Identity
+    [Migration("20180729042555_IdentityMigration")]
+    partial class IdentityMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

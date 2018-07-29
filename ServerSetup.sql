@@ -59,6 +59,10 @@ select * from TimeSheetApprovals
 select * from EmployeeDepartments
 select * from ManagerDepartments
 select * from Departments
+select * from AspNetRoleClaims
+select * from AspNetUsers
+select * from AspNetUserLogins
+select * from AspNetRoles
 
 Delete from Departments
 Where id = 3
