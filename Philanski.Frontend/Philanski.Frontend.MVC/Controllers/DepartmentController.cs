@@ -10,30 +10,30 @@ using Philanski.Frontend.MVC.Models;
 
 namespace Philanski.Frontend.MVC.Controllers
 {
-    public class DepartmentController : Controller
+    public class DepartmentController : AServiceController
     {
 
         public readonly static string ServiceUri = "https://philanski.azurewebsites.net/api/";
 
-        public HttpClient HttpClient { get; }
+       // public HttpClient HttpClient { get; }
         // GET: Department
 
-        public DepartmentController(HttpClient httpClient)
+        public DepartmentController(HttpClient httpClient) : base(httpClient)
         {
-            HttpClient = httpClient;
+            
         }
         public async Task<ActionResult> Index()
         {
-            var uri = ServiceUri + "department";
-            var request = new HttpRequestMessage(HttpMethod.Get, uri);
-
+           // var uri = ServiceUri + "department";
+            var request = CreateRequestToService(HttpMethod.Get, "api/department");
+          
             try
             {
                 var response = await HttpClient.SendAsync(request);
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    return View("Error");
+                    return View("Whoops");
                 }
 
                 string jsonString = await response.Content.ReadAsStringAsync();
