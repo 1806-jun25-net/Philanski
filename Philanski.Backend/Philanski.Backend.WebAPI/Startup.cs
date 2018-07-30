@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -80,8 +81,10 @@ namespace Philanski.Backend.WebAPI
 
             services.ConfigureApplicationCookie(options =>
             {
-                options.Cookie.Name = "PhilanskiApiAuth";
-                options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
+                //  options.Cookie.HttpOnly = false;
+                options.CookieSecure = CookieSecurePolicy.None;
+                options.Cookie.Name = "PhilanskiApiAuth2";
+                options.ExpireTimeSpan = TimeSpan.FromDays(100);
                 options.Events = new CookieAuthenticationEvents
                 {
                     OnRedirectToLogin = ctx =>
@@ -129,7 +132,7 @@ namespace Philanski.Backend.WebAPI
                 c.RoutePrefix = string.Empty;
             });
 
-         //   app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
             app.UseMvc();
         }
     }

@@ -27,7 +27,7 @@ namespace Philanski.Backend.WebAPI.Controllers
 
         //response that gathers all departments
 
-        [AllowAnonymous]
+        [Authorize]
         [HttpGet]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
@@ -40,14 +40,9 @@ namespace Philanski.Backend.WebAPI.Controllers
                 return NotFound();
             }
 
-            if (User.Identity.Name != "Phil")
-            {
-                return StatusCode(403);
-            }
-            else
-            {
+       
                 return Departments;
-            }
+            
         }
         
         //response that gathers a department by id

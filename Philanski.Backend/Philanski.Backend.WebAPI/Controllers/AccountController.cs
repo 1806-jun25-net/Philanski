@@ -30,7 +30,7 @@ namespace Philanski.Backend.WebAPI.Controllers
         public async Task<ActionResult> Login(User input)
         {
             var result = await _signInManager.PasswordSignInAsync(input.Username, input.Password,
-                isPersistent: false, lockoutOnFailure: false);
+                isPersistent: true, lockoutOnFailure: false);
 
             if (!result.Succeeded)
             {
@@ -86,7 +86,7 @@ namespace Philanski.Backend.WebAPI.Controllers
                 }
             }
 
-            await _signInManager.SignInAsync(user, isPersistent: false);
+            await _signInManager.SignInAsync(user, isPersistent: true);
 
             return NoContent();
         }

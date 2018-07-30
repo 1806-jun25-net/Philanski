@@ -10,20 +10,21 @@ using Philanski.Frontend.MVC.Models;
 
 namespace Philanski.Frontend.MVC.Controllers
 {
-    public class TimeSheetController : Controller
+    public class TimeSheetController : AServiceController
     {
-        public readonly static string ServiceUri = "https://philanksi.azurewebsites.net/api/";
+     
 
-        public HttpClient HttpClient { get; }
+       // public HttpClient HttpClient { get; }
         // GET: Department
 
-        public TimeSheetController(HttpClient httpClient)
+        public TimeSheetController(HttpClient httpClient) : base(httpClient)
         {
-            HttpClient = httpClient;
+          
         }
 
         public async Task<ActionResult> Index()
         {
+<<<<<<< HEAD
 
             //get employeeId from Identity (not the same as employeeId in DB)
             //var claimsIdentity = User.Identity as ClaimsIdentity;
@@ -44,6 +45,10 @@ namespace Philanski.Frontend.MVC.Controllers
             
             var uri = ServiceUri + "employee/1/timesheet";
             var request = new HttpRequestMessage(HttpMethod.Get, uri);
+=======
+            var uri =  "api/employee/1/timesheet";
+            var request = CreateRequestToService(HttpMethod.Get, uri);
+>>>>>>> 79b2853ed98649f88cbbc73f5f7587fb9ff48c16
 
             try
             {
@@ -88,8 +93,8 @@ namespace Philanski.Frontend.MVC.Controllers
         {
             //api/timesheet/GetFullWeek?EmployeeId=id&&date={date}
 
-            var uri = ServiceUri + "timesheet/GetFullWeek?EmployeeId=1&&date=" + DateTime.Now.Date;
-            var request = new HttpRequestMessage(HttpMethod.Get, uri);
+            var uri ="api/timesheet/GetFullWeek?EmployeeId=1&&date=" + DateTime.Now.Date;
+            var request = CreateRequestToService(HttpMethod.Get, uri);
 
             try
             {
