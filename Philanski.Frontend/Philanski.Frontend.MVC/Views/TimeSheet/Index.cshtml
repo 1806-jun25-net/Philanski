@@ -17,19 +17,25 @@
         <div>
             <header>
                 <h2>TimeSheets</h2>
-                <a class="nav-link" asp-area="" asp-controller="TimeSheet" asp-action="Create">Current Time Sheet</a>
+                <a class="btn btn-default" class="nav-link" asp-area="" asp-controller="TimeSheet" asp-action="Create">Current Time Sheet</a>
             </header>
         </div>
-            <ul class="table">
-                @for(int i = 0; i < 3; i++)
-                {
-                    <a asp-area="" asp-controller="TimeSheet" asp-action="Create">
-                        <li class="list-group-item">
-                            @Model[i][6].Date.Month/@Model[i][6].Date.Day to @Model[i][0].Date.Month/@Model[i][0].Date.Day
-                        </li>
-                    </a>
-                }
-            </ul>
+            <table class="table table-hover">
+                <tbody>
+                    @for (int i = 0; i < Model.Length; i++)
+                    {
+                        <tr class="table-primary">
+
+                            <td>
+                                @Model[i][6].Date.Month/@Model[i][6].Date.Day to @Model[i][0].Date.Month/@Model[i][0].Date.Day
+                            </td>
+                            <td>
+                                <a class="btn btn-default" asp-area="" asp-controller="TimeSheet" asp-action="Create">View</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
         <div>
 
         </div>
