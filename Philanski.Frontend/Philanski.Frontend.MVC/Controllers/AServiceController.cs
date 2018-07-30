@@ -14,16 +14,11 @@ namespace Philanski.Frontend.MVC.Controllers
     public class AServiceController : Controller
     {
 
-<<<<<<< HEAD
-    //    private static readonly Uri s_serviceUri = new Uri("https://localhost:44386/");
 
-        private static readonly Uri s_serviceUri = new Uri("https://philanksi.azurewebsites.net/");
-        protected static readonly string s_CookieName = "PhilanskiApiAuth";
-=======
        //private static readonly Uri s_serviceUri = new Uri("https://localhost:44386/");
      private static readonly Uri s_serviceUri = new Uri("https://philanksi.azurewebsites.net/");
         protected static readonly string s_CookieName = "PhilanskiApiAuth2";
->>>>>>> 79b2853ed98649f88cbbc73f5f7587fb9ff48c16
+
 
         protected HttpClient HttpClient { get; }
 
