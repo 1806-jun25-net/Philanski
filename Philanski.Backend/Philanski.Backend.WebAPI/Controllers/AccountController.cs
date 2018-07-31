@@ -99,6 +99,7 @@ namespace Philanski.Backend.WebAPI.Controllers
             libraryEmployee.Salary = input.Salary;
             libraryEmployee.HireDate = DateTime.Now;
             Repo.CreateEmployee(libraryEmployee);
+            await Repo.Save();
             
                 
 
