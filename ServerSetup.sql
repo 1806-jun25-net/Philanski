@@ -64,8 +64,8 @@ select * from AspNetUsers
 select * from AspNetUserLogins
 select * from AspNetRoles
 
-Delete from Departments
-Where id = 3
+Delete from AspNetUsers
+Where UserName = 'BobMarley@gmail.com'
 
 ALTER TABLE Employee
 ADD FOREIGN KEY (WorksiteID) REFERENCES Worksite(ID);
