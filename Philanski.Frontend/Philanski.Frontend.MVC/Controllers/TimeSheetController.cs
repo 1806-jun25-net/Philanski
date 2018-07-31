@@ -24,35 +24,9 @@ namespace Philanski.Frontend.MVC.Controllers
 
         public async Task<ActionResult> Index()
         {
-
-
-            //get employeeId from Identity (not the same as employeeId in DB)
-            //var claimsIdentity = User.Identity as ClaimsIdentity;
-            //if (claimsIdentity != null)
-            //{
-            //    // the principal identity is a claims identity.
-            //    // now we need to find the NameIdentifier claim
-            //    var userIdClaim = claimsIdentity.Claims
-            //        .FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier);
-
-            //    if (userIdClaim != null)
-            //    {
-            //        var employeeId = userIdClaim.Value;
-            //    }
-            //}
-
-            //get employeeId from DB based on Identity employeeId
-            //old way of getting username, now we use tempdata.
-           /* var uri =  "api/employee";
-            var requestUsername = CreateRequestToService(HttpMethod.Get, uri);
-            var responseUsername = await HttpClient.SendAsync(requestUsername);
-            string jsonStringUserName = await responseUsername.Content.ReadAsStringAsync();
-            List<Employees> Employee = JsonConvert.DeserializeObject<List<Employees>>(jsonStringUserName);
-            var username = Employee.ElementAt(0).Email;*/
-
             if (TempData.Peek("username") == null)
             {
-                return View("Whoops"); //fix change this to forbidden
+                return View("Forbidden");
             }
             var username = TempData.Peek("username");
             var uri = "api/employee/" + username + "/timesheet";

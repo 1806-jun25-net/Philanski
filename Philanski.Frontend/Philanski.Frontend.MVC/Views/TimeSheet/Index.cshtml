@@ -29,18 +29,25 @@
                 </thead>
                 </thead>
                 <tbody>
-                    @for (int i = 0; i < Model.Length; i++)
-                    {
-                        <tr class="table-primary">
+                    @* TODO: Make page load without errors if Model is empty *@
 
-                            <td>
-                                @Model[i][6].Date.Month/@Model[i][6].Date.Day to @Model[i][0].Date.Month/@Model[i][0].Date.Day
-                            </td>
-                            <td>
-                                <a class="btn btn-default" asp-area="" asp-controller="TimeSheet" asp-action="Create">View</a>
-                            </td>
-                        </tr>
+                    @* If Model has at least 1 element, makes table. *@
+                    @if (Model.Length > 0)
+                    {
+                        for (int i = 0; i < Model.Length; i++)
+                        {
+                            <tr class="table-primary">
+
+                                <td>
+                                    @Model[i][6].Date.Month/@Model[i][6].Date.Day to @Model[i][0].Date.Month/@Model[i][0].Date.Day
+                                </td>
+                                <td>
+                                    <a class="btn btn-default" asp-area="" asp-controller="TimeSheet" asp-action="Create" asp-route-weekstart="@Model[i][6].Date.Date">View</a>
+                                </td>
+                            </tr>
+                        }
                     }
+
                 </tbody>
             </table>
         <div>
