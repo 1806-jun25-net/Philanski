@@ -142,7 +142,7 @@ namespace Philanski.Backend.Library.Repositories
                 var EmployeeDeptIds = GetAllDepartmentIdsByEmployee(TSA.EmployeeId);
                 if (ManagerDeptIds.Intersect(EmployeeDeptIds).Any())
                 {
-                    TSAForManager.Append(TSA);
+                    TSAForManager.Add(TSA);
                 }
             }
             return Mapper.Map(TSAForManager);
@@ -155,7 +155,7 @@ namespace Philanski.Backend.Library.Repositories
             List<int> deptIds = new List<int>();
             foreach (var dept in departments)
             {
-                deptIds.Append(dept.DepartmentId);
+                deptIds.Add(dept.DepartmentId);
             }
             return deptIds;
         }
@@ -168,7 +168,7 @@ namespace Philanski.Backend.Library.Repositories
             List<int> deptIds = new List<int>();
             foreach (var dept in departments)
             {
-                deptIds.Append(dept.DepartmentId);
+                deptIds.Add(dept.DepartmentId);
             }
             return deptIds;
         }
