@@ -184,9 +184,9 @@ namespace Philanski.Backend.Library.Repositories
             return Mapper.Map(employee);
         }
 
-        public Employee GetEmployeeByEmail(string email)
+        public async Task<Employee> GetEmployeeByEmail(string email)
         {
-           var employee = _db.Employees.FirstOrDefault(x => x.Email == email);
+           var employee = await _db.Employees.FirstOrDefaultAsync(x => x.Email == email);
             if(employee == null)
             {
                 return null;

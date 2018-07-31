@@ -42,7 +42,8 @@ namespace Philanski.Backend.WebAPI.Controllers
         [ProducesResponseType(404)]
         public async Task<ActionResult<Employee>> Get(string id)
         {
-          //  var employee = await Repo.GetEmployeeByID(id);
+            //  var employee = await Repo.GetEmployeeByID(id);
+            var employee = await Repo.GetEmployeeByEmail(id);
             //catch null and send 404
             if (employee == null)
             {
