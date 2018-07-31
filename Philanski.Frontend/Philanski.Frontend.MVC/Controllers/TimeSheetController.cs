@@ -42,15 +42,20 @@ namespace Philanski.Frontend.MVC.Controllers
             //}
 
             //get employeeId from DB based on Identity employeeId
-
-            var uri =  "api/employee";
+            //old way of getting username, now we use tempdata.
+           /* var uri =  "api/employee";
             var requestUsername = CreateRequestToService(HttpMethod.Get, uri);
             var responseUsername = await HttpClient.SendAsync(requestUsername);
             string jsonStringUserName = await responseUsername.Content.ReadAsStringAsync();
             List<Employees> Employee = JsonConvert.DeserializeObject<List<Employees>>(jsonStringUserName);
-            var username = Employee.ElementAt(0).Email;
+            var username = Employee.ElementAt(0).Email;*/
 
-            uri = "api/employee/" + username + "/timesheet";
+            if (TempData.Peek("username") == null)
+            {
+                return View("Whoops"); //fix change this to forbidden
+            }
+            var username = TempData.Peek("username");
+            var uri = "api/employee/" + username + "/timesheet";
             var request = CreateRequestToService(HttpMethod.Get, uri);
 
 

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Philanski.Frontend.MVC.Models;
 
 namespace Philanski.Frontend.MVC.Controllers
 {
@@ -48,5 +49,19 @@ namespace Philanski.Frontend.MVC.Controllers
 
             return apiRequest;
         }
+       /* protected async Task<Employees> GetCurrentEmployeeDataHttpRequest()
+        {
+            var uri = "api/employee";
+            var request = CreateRequestToService(HttpMethod.Get, uri);
+
+            var response = await HttpClient.SendAsync(request);
+            if (!response.IsSuccessStatusCode)
+            {
+                return null;
+            }
+            string jsonStringUserName = await responseUsername.Content.ReadAsStringAsync();
+            List<Employees> Employee = JsonConvert.DeserializeObject<List<Employees>>(jsonStringUserName);
+            
+        }*/
     }
 }
