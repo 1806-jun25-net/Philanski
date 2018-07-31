@@ -59,7 +59,7 @@ namespace Philanski.Frontend.MVC.Controllers
                 //get time sheets belonging to logged in employee
                 var response = await HttpClient.SendAsync(request);
 
-                if (!response.IsSuccessStatusCode)
+                if (response.StatusCode.Equals("Forbidden"))
                 {
                     return View("Whoops");
                 }
