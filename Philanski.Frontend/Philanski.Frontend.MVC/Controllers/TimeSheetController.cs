@@ -78,11 +78,49 @@ namespace Philanski.Frontend.MVC.Controllers
 
         }
 
-        public async Task<ActionResult> Create()
+        public async Task<ActionResult> Create(DateTime weekstart)
         {
-            //api/timesheet/GetFullWeek?EmployeeId=id&&date={date}
+            if (TempData.Peek("username") == null)
+            {
+                return View("Forbidden");
+            }
+            var username = TempData.Peek("username");
+            var uri = "api/employee/" + username + "/timesheet/" + weekstart;
+            var request = CreateRequestToService(HttpMethod.Get, uri);
 
-            var uri ="api/timesheet/GetFullWeek?EmployeeId=1&&date=" + DateTime.Now.Date;
+            try
+            {
+                var response = await HttpClient.SendAsync(request);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    return View("Whoops");
+                }
+
+                string jsonString = await response.Content.ReadAsStringAsync();
+
+                List<TimeSheets> timeSheet = JsonConvert.DeserializeObject<List<TimeSheets>>(jsonString);
+
+                //sort timeSheet by date monday-friday
+                timeSheet = timeSheet.OrderByDescending(x => x.Date).ToList();
+
+                return View(timeSheet);
+            }
+            catch (HttpRequestException ex)
+            {
+                // logging
+                return View("Error");
+            }
+        }
+
+        public async Task<ActionResult> PreviousTimesheet(DateTime weekstart)
+        {
+            if (TempData.Peek("username") == null)
+            {
+                return View("Forbidden");
+            }
+            var username = TempData.Peek("username");
+            var uri = "api/employee/" + username + "/timesheet" + weekstart;
             var request = CreateRequestToService(HttpMethod.Get, uri);
 
             try
