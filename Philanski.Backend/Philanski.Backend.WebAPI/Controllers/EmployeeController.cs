@@ -99,11 +99,11 @@ namespace Philanski.Backend.WebAPI.Controllers
 
         // POST api/<controller>
         //this will take in datetime.now and will have to find first day of the week
-        [HttpPost("{id}/timesheet/{weekstart}"]
+      /*  [HttpPost("{id}/timesheet/{weekstart}"]
         public async Task<ActionResult<List<TimeSheet>>> PostFullWeek(string id, DateTime weekstart)
         {
 
-        }
+        }*/
 
         // PUT api/<controller>/5
         [HttpPut("{id}")]
