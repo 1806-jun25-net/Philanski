@@ -75,16 +75,16 @@ namespace Philanski.Frontend.MVC.Controllers
             }
             catch (AggregateException ex)
             {
-                return View("Error");
+                return View("InvalidLogin");
             }
 
             if (!apiResponse.IsSuccessStatusCode)
             {
                 if (apiResponse.StatusCode == HttpStatusCode.Forbidden)
                 {
-                    return View("AccessDenied");
+                    return View("InvalidLogin");
                 }
-                return View("Error");
+                return View("InvalidLogin");
             }
             TempData["username"] = account.Username;
             PassCookiesToClient(apiResponse);
