@@ -46,7 +46,7 @@ namespace Philanski.Frontend.MVC.Controllers
                 string jsonString = await response.Content.ReadAsStringAsync();
 
                 List<TimeSheets> timeSheet = JsonConvert.DeserializeObject<List<TimeSheets>>(jsonString);
-
+               
                 //sort timeSheet by date monday-friday
                 timeSheet = timeSheet.OrderByDescending(x => x.Date).ToList();
 
@@ -67,9 +67,15 @@ namespace Philanski.Frontend.MVC.Controllers
             }
             catch (HttpRequestException ex)
             {
-                // logging
-                return View("Error");
+                return View("Whoops");
             }
+            catch(ArgumentNullException ex)
+            {
+                List<TimeSheets>[] ArrayOfListOfWeeks = new List<TimeSheets>[0];
+                // logging
+                return View(ArrayOfListOfWeeks);
+            }
+
         }
 
         public async Task<ActionResult> Create()
