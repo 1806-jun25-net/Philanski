@@ -55,7 +55,7 @@ namespace Philanski.Backend.WebAPI.Controllers
             }
             return employee;
         }
-        [HttpGet("{id}/timesheet")]
+        [HttpGet("{id}/timesheet", Name = "EmployeeTimesheets")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         public async Task<ActionResult<List<TimeSheet>>> GetTimeSheetsOfEmployee (string id)
@@ -99,11 +99,24 @@ namespace Philanski.Backend.WebAPI.Controllers
 
         // POST api/<controller>
         //this will take in datetime.now and will have to find first day of the week
-      /*  [HttpPost("{id}/timesheet/{weekstart}"]
-        public async Task<ActionResult<List<TimeSheet>>> PostFullWeek(string id, DateTime weekstart)
+        [HttpPost("{id}/timesheet")]
+        public async Task<ActionResult> PostFullWeek(string id, List<TimeSheet> timeSheets)
         {
-
-        }*/
+            var EmployeeId = await Repo.GetEmployeeIDByEmail(id);
+            if (EmployeeId == 0)
+            {
+                return NotFound();
+            }
+           // var actualWeekStart = TimeSheetApproval.GetPreviousSundayOfWeek(weekstart);
+            foreach (var timesheet in timeSheets )
+            {
+                Repo.CreateTimeSheet(timesheet);
+            }
+            await Repo.Save();
+            var weekStart = TimeSheetApproval.GetPreviousSundayOfWeek(timeSheets.ElementAt(0).Date);
+            return CreatedAtRoute("EmployeeTimesheets", new { weekstart = weekStart }, timeSheets );
+ 
+        }
 
         // PUT api/<controller>/5
         [HttpPut("{id}")]
