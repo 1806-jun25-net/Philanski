@@ -88,8 +88,8 @@ namespace Philanski.Backend.WebAPI.Controllers
 
             await _signInManager.SignInAsync(user, isPersistent: true);
 
-            return NoContent();
-            //return CreatedAtRoute("G", new { id = item.Id }, input);
+           // return NoContent();
+            return CreatedAtRoute("GetEmployee" , new { controller = "Employee", id = input.Username }, input);
         }
     }
 }

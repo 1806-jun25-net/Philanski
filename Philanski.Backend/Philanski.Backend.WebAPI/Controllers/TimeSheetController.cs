@@ -53,11 +53,17 @@ namespace Philanski.Backend.WebAPI.Controllers
             return timesheet;
         }
 
-        [HttpGet("GetFullWeek")] //api/timesheet/GetFullWeek?EmployeeId=id&&date={date}
+        [HttpGet("GetFullWeek")] //api/timesheet/GetFullWeek?username={email}&&date={date}
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        public ActionResult<List<TimeSheet>> GetFullWeek(int EmployeeId, DateTime date)
+        public async Task<ActionResult<List<TimeSheet>>> GetFullWeek(string username, DateTime date)
         {
+            //NEED TO CHANGE THIS LATER BEACUSE IT IS NOT RESTFUL
+            var EmployeeId = await Repo.GetEmployeeIDByEmail(username);
+            if (EmployeeId == 0)
+            {
+                return NotFound();
+            }
             List<TimeSheet> TimeSheets = Repo.GetEmployeeTimeSheetWeekFromDate(date, EmployeeId);
             //catch null and send 404
             if (!TimeSheets.Any())
@@ -73,7 +79,7 @@ namespace Philanski.Backend.WebAPI.Controllers
         [ProducesResponseType(409)]
         public async Task<IActionResult> Post(TimeSheet timesheet)
         {
-
+            //check that timesheets will have ID?
             //check db if it already exists (fix)
             var DoesIdExist = await Repo.GetTimeSheetIdByDateAndEmpId(timesheet.Date, timesheet.EmployeeId);
             if (DoesIdExist != 0)

@@ -54,9 +54,14 @@ namespace Philanski.Backend.WebAPI.Controllers
         [HttpGet("{id}/timesheet")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        public ActionResult<List<TimeSheet>> GetTimeSheetsOfEmployee (int id)
+        public async Task<ActionResult<List<TimeSheet>>> GetTimeSheetsOfEmployee (string id)
         {
-            List<TimeSheet> TimeSheets = Repo.GetTimeSheetsByEmployeeId(id);
+            var EmployeeId = await Repo.GetEmployeeIDByEmail(id);
+            if (EmployeeId == 0)
+            {
+                return NotFound();
+            }
+            List<TimeSheet> TimeSheets = Repo.GetTimeSheetsByEmployeeId(EmployeeId);
             //catch null and send 404
             if (!TimeSheets.Any())
             {
