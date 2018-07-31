@@ -85,7 +85,8 @@ namespace Philanski.Backend.WebAPI.Controllers
             {
                 return NotFound();
             }
-            List<TimeSheet> TimeSheets = Repo.GetEmployeeTimeSheetWeekFromDate(weekstart, EmployeeId);
+            var actualWeekStart = TimeSheetApproval.GetPreviousSundayOfWeek(weekstart);
+            List<TimeSheet> TimeSheets = Repo.GetEmployeeTimeSheetWeekFromDate(actualWeekStart, EmployeeId);
             //catch null and send 404
             if (!TimeSheets.Any())
             {
@@ -97,9 +98,11 @@ namespace Philanski.Backend.WebAPI.Controllers
 
 
         // POST api/<controller>
-        [HttpPost]
-        public void Post([FromBody]string value)
+        //this will take in datetime.now and will have to find first day of the week
+        [HttpPost("{id}/timesheet/{weekstart}"]
+        public async Task<ActionResult<List<TimeSheet>>> PostFullWeek(string id, DateTime weekstart)
         {
+
         }
 
         // PUT api/<controller>/5

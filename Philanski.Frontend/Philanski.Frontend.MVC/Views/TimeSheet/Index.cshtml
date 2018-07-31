@@ -17,7 +17,7 @@
         <div>
             <header>
                 <h2>TimeSheets</h2>
-                <a class="btn btn-default" class="nav-link" asp-area="" asp-controller="TimeSheet" asp-action="Create">Current Time Sheet</a>
+                <a class="btn btn-default" asp-area="" asp-controller="TimeSheet" asp-action="Create">Current Time Sheet</a>
             </header>
         </div>
             <table class="table table-hover">
@@ -26,7 +26,6 @@
                         <th scope="col">Date</th>
                         <th scope="col">Edit/View</th>
                     </tr>
-                </thead>
                 </thead>
                 <tbody>
                     @* TODO: Make page load without errors if Model is empty *@
