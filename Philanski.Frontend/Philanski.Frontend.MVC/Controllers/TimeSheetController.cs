@@ -101,8 +101,32 @@ namespace Philanski.Frontend.MVC.Controllers
 
                 List<TimeSheets> timeSheet = JsonConvert.DeserializeObject<List<TimeSheets>>(jsonString);
 
+                if (!timeSheet.Any())
+                {
+                    List<TimeSheets> newTimeSheet = new List<TimeSheets>();
+                    DateTime now = DateTime.Now.Date;
+
+                    while (now.DayOfWeek != DayOfWeek.Sunday)
+                    {
+                        now = now.AddDays(-1);
+                    }
+
+                    for (int i = 0; i < 7; i++)
+                    {
+                        TimeSheets newTS = new TimeSheets
+                        {
+                            Date = now,
+                            RegularHours = 0,
+                        };
+                        newTimeSheet.Add(newTS);
+                        now = now.AddDays(1);
+                    }
+                    newTimeSheet = newTimeSheet.OrderBy(x => x.Date).ToList();
+                    return View(newTimeSheet);
+                }
+
                 //sort timeSheet by date monday-friday
-                timeSheet = timeSheet.OrderByDescending(x => x.Date).ToList();
+                timeSheet = timeSheet.OrderBy(x => x.Date).ToList();
 
                 return View(timeSheet);
             }
@@ -113,14 +137,14 @@ namespace Philanski.Frontend.MVC.Controllers
             }
         }
 
-        public async Task<ActionResult> PreviousTimesheet(DateTime weekstart)
+        public async Task<ActionResult> PreviousTimesheet(string weekstart)
         {
             if (TempData.Peek("username") == null)
             {
                 return View("Forbidden");
             }
             var username = TempData.Peek("username");
-            var uri = "api/employee/" + username + "/timesheet" + weekstart;
+            var uri = "api/employee/" + username + "/timesheet/" + weekstart;
             var request = CreateRequestToService(HttpMethod.Get, uri);
 
             try
@@ -137,7 +161,7 @@ namespace Philanski.Frontend.MVC.Controllers
                 List<TimeSheets> timeSheet = JsonConvert.DeserializeObject<List<TimeSheets>>(jsonString);
 
                 //sort timeSheet by date monday-friday
-                timeSheet = timeSheet.OrderByDescending(x => x.Date).ToList();
+                timeSheet = timeSheet.OrderBy(x => x.Date).ToList();
 
                 return View(timeSheet);
             }

@@ -86,14 +86,14 @@ namespace Philanski.Backend.WebAPI.Controllers
             }
             try
             {
-                DateTime WeekStartDt = Convert.ToDateTime(weekstart);
+                DateTime WeekStartDt = DateTime.ParseExact(weekstart, "dd-MM-yyyy",null);
                 var actualWeekStart = TimeSheetApproval.GetPreviousSundayOfWeek(WeekStartDt);
                 List<TimeSheet> TimeSheets = Repo.GetEmployeeTimeSheetWeekFromDate(actualWeekStart, EmployeeId);
                 //catch null and send 404
-                if (!TimeSheets.Any())
-                {
-                    return NotFound();
-                }
+                //if (!TimeSheets.Any())
+                //{
+                //    return NotFound();
+                //}
                 return TimeSheets;
             }
             catch (Exception ex)
