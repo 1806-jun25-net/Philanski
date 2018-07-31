@@ -73,7 +73,27 @@ namespace Philanski.Backend.WebAPI.Controllers
             }
             return TimeSheets;
         }
-    
+
+        [HttpGet("{id}/timesheet/{weekstart}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<List<TimeSheet>>> GetFullWeek(string id, DateTime weekstart)
+        {
+            //NEED TO CHANGE THIS LATER BEACUSE IT IS NOT RESTFUL
+            var EmployeeId = await Repo.GetEmployeeIDByEmail(id);
+            if (EmployeeId == 0)
+            {
+                return NotFound();
+            }
+            List<TimeSheet> TimeSheets = Repo.GetEmployeeTimeSheetWeekFromDate(weekstart, EmployeeId);
+            //catch null and send 404
+            if (!TimeSheets.Any())
+            {
+                return NotFound();
+            }
+            return TimeSheets;
+        }
+
 
 
         // POST api/<controller>
