@@ -33,7 +33,7 @@ namespace Philanski.Backend.Library.Repositories
         Task<Employee> GetEmployeeByID(int ID);
         List<Employee> GetAllEmployees();
         Task<Employee> GetEmployeeByEmail(string email);
-
+        void CreateEmployee(Employee employee);
         //Managers
         List<Manager> GetAllManagers();
         Task<Manager> GetManagerById(int id);

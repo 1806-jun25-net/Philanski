@@ -215,6 +215,13 @@ namespace Philanski.Backend.Library.Repositories
         }
 
 
+        public void CreateEmployee(Employee employee)
+        {
+            _db.Add(Mapper.Map(employee));
+
+        }
+
+
         //Manager Methods
         public List<Manager> GetAllManagers()
         {

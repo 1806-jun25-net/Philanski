@@ -25,7 +25,7 @@ namespace Philanski.Frontend.MVC.Controllers
 
         // POST: Account/Register
         [HttpPost]
-        public async Task<ActionResult> Register(Login account)
+        public async Task<ActionResult> Register(Register account)
         {
             if (!ModelState.IsValid)
             {
