@@ -1,0 +1,54 @@
+﻿@model List<Philanski.Frontend.MVC.Models.TimeSheets>
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<h4>TimeSheets</h4>
+
+<div>
+    <form asp-action="Create">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        <div>Date</div>
+                    </th>
+                    <th></th>
+                    <th>
+                        <div>Hours</div>
+                    </th>
+                    @foreach (var item in Model)
+                    {
+                    <tr>
+                        <th>
+                            <div>@item.Date.Month/@item.Date.Day </div>
+                        </th>
+                        <th></th>
+                        <th>
+                            <div class="form-group">
+                                <input asp-for="@item.RegularHours" class="form-control" />
+                            </div>
+                        </th>
+                    </tr>
+                }
+                </thead>
+            </table>
+            <div class="form-group">
+                @*Check if TimeSheetApproval for this week exists. If it does, disable Save/Submit Buttons and form entries.*@
+                @*Partial view to get access to the TSA model?*@
+                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Submit" class="btn btn-default" />
+        </form>
+    </div>
+
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
+
