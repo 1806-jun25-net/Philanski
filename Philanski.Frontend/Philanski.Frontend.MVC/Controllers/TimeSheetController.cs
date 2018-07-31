@@ -43,7 +43,14 @@ namespace Philanski.Frontend.MVC.Controllers
 
             //get employeeId from DB based on Identity employeeId
 
-            var uri =  "api/employee/1/timesheet";
+            var uri =  "api/employee";
+            var requestUsername = CreateRequestToService(HttpMethod.Get, uri);
+            var responseUsername = await HttpClient.SendAsync(requestUsername);
+            string jsonStringUserName = await responseUsername.Content.ReadAsStringAsync();
+            List<Employees> Employee = JsonConvert.DeserializeObject<List<Employees>>(jsonStringUserName);
+            var username = Employee.ElementAt(0).Email;
+
+            uri = "api/employee/" + username + "/timesheet";
             var request = CreateRequestToService(HttpMethod.Get, uri);
 
 
