@@ -184,6 +184,17 @@ namespace Philanski.Backend.Library.Repositories
             return Mapper.Map(employee);
         }
 
+        public Employee GetEmployeeByEmail(string email)
+        {
+           var employee = _db.Employees.FirstOrDefault(x => x.Email == email);
+            if(employee == null)
+            {
+                return null;
+            }
+            return Mapper.Map(employee);
+
+        }
+
         public List<Employee> GetAllEmployees()
         {
             var employees = _db.Employees.AsNoTracking();
