@@ -195,6 +195,19 @@ namespace Philanski.Backend.Library.Repositories
 
         }
 
+        public async Task<int> GetEmployeeIDByEmail(string email)
+        {
+            var employee = await _db.Employees.FirstOrDefaultAsync(x => x.Email == email);
+            if(employee == null)
+            {
+                return 0;
+            }
+
+            return employee.Id;
+
+
+        }
+
         public List<Employee> GetAllEmployees()
         {
             var employees = _db.Employees.AsNoTracking();
