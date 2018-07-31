@@ -31,6 +31,7 @@ namespace Philanski.Backend.Library.Repositories
         //Employees
         Task<Employee> GetEmployeeByID(int ID);
         List<Employee> GetAllEmployees();
+        Employee GetEmployeeByEmail(string email);
 
         //Managers
         List<Manager> GetAllManagers();
