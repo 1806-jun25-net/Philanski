@@ -86,7 +86,6 @@ namespace Philanski.Frontend.MVC.Controllers
             }
 
             PassCookiesToClient(apiResponse);
-
             return RedirectToAction("Index", "Home");
         }
 
