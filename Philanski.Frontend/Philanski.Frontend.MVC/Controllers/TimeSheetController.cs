@@ -78,7 +78,7 @@ namespace Philanski.Frontend.MVC.Controllers
 
         }
 
-        public async Task<ActionResult> Create(DateTime weekstart)
+        public async Task<ActionResult> Create(string weekstart)
         {
             if (TempData.Peek("username") == null)
             {
