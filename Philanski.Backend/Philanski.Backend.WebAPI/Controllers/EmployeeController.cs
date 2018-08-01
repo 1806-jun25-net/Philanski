@@ -111,19 +111,28 @@ namespace Philanski.Backend.WebAPI.Controllers
         [HttpPost("{id}/timesheet")]
         public async Task<ActionResult> PostFullWeek(string id, List<TimeSheet> timeSheets)
         {
-            var EmployeeId = await Repo.GetEmployeeIDByEmail(id);
-            if (EmployeeId == 0)
+            try
+            {
+                var EmployeeId = await Repo.GetEmployeeIDByEmail(id);
+                if (EmployeeId == 0)
+                {
+                    return NotFound();
+                }
+                // var actualWeekStart = TimeSheetApproval.GetPreviousSundayOfWeek(weekstart);
+                foreach (var timesheet in timeSheets)
+                {
+                    timesheet.EmployeeId = EmployeeId;
+                    Repo.CreateTimeSheet(timesheet);
+
+                }
+                await Repo.Save();
+                var weekStart = TimeSheetApproval.GetPreviousSundayOfWeek(timeSheets.ElementAt(0).Date).ToString("dd-MM-yyyy");
+                return CreatedAtRoute("EmployeeTimesheets", new { weekstart = weekStart }, timeSheets);
+            }
+            catch(Exception ex)
             {
                 return NotFound();
             }
-           // var actualWeekStart = TimeSheetApproval.GetPreviousSundayOfWeek(weekstart);
-            foreach (var timesheet in timeSheets )
-            {
-                Repo.CreateTimeSheet(timesheet);
-            }
-            await Repo.Save();
-            var weekStart = TimeSheetApproval.GetPreviousSundayOfWeek(timeSheets.ElementAt(0).Date).ToString("dd-MM-yyyy");
-            return CreatedAtRoute("EmployeeTimesheets", new { weekstart = weekStart }, timeSheets );
  
         }
 

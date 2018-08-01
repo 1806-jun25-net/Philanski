@@ -147,7 +147,7 @@ namespace Philanski.Frontend.MVC.Controllers
                 return View("Forbidden");
             }
             var username = TempData.Peek("username");
-            var uri = "api/employee/" + username + "/timesheet"; //+ timeSheets.ElementAt(0).Date.ToString("dd-MM-yyyy");
+            var uri = "api/employee/" + username + "/timesheet/" + timeSheets.ElementAt(0).Date.ToString("dd-MM-yyyy");
             var request = CreateRequestToService(HttpMethod.Get, uri);
 
             try
@@ -166,8 +166,9 @@ namespace Philanski.Frontend.MVC.Controllers
                 if (!timeSheet.Any())
                 {
                     string jsonPostString = JsonConvert.SerializeObject(timeSheets);
+                    var PostUri = "api/employee/" + username + "/timesheet";
 
-                    var postRequest = CreateRequestToService(HttpMethod.Post, uri);
+                    var postRequest = CreateRequestToService(HttpMethod.Post, PostUri);
 
                     postRequest.Content = new StringContent(jsonPostString, Encoding.UTF8, "application/json");
 
