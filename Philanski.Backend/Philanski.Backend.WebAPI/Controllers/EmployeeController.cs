@@ -55,7 +55,7 @@ namespace Philanski.Backend.WebAPI.Controllers
             }
             return employee;
         }
-        [HttpGet("{id}/timesheet", Name = "EmployeeTimesheets")]
+        [HttpGet("{id}/timesheet")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         public async Task<ActionResult<List<TimeSheet>>> GetTimeSheetsOfEmployee (string id)
@@ -74,7 +74,7 @@ namespace Philanski.Backend.WebAPI.Controllers
             return TimeSheets;
         }
 
-        [HttpGet("{id}/timesheet/{weekstart}")]
+        [HttpGet("{id}/timesheet/{weekstart}", Name = "EmployeeTimesheets")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         public async Task<ActionResult<List<TimeSheet>>> GetFullWeek(string id, string weekstart)
@@ -86,7 +86,7 @@ namespace Philanski.Backend.WebAPI.Controllers
             }
             try
             {
-                DateTime WeekStartDt = Convert.ToDateTime(weekstart);
+                DateTime WeekStartDt = DateTime.Parse(weekstart);
                 var actualWeekStart = TimeSheetApproval.GetPreviousSundayOfWeek(WeekStartDt);
                 List<TimeSheet> TimeSheets = Repo.GetEmployeeTimeSheetWeekFromDate(actualWeekStart, EmployeeId);
                 //catch null and send 404
@@ -121,7 +121,7 @@ namespace Philanski.Backend.WebAPI.Controllers
                 Repo.CreateTimeSheet(timesheet);
             }
             await Repo.Save();
-            var weekStart = TimeSheetApproval.GetPreviousSundayOfWeek(timeSheets.ElementAt(0).Date);
+            var weekStart = TimeSheetApproval.GetPreviousSundayOfWeek(timeSheets.ElementAt(0).Date).ToString("dd-MM-yyyy");
             return CreatedAtRoute("EmployeeTimesheets", new { weekstart = weekStart }, timeSheets );
  
         }
