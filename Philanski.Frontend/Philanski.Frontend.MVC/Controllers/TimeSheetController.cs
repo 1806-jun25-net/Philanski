@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -136,6 +137,62 @@ namespace Philanski.Frontend.MVC.Controllers
                 return View("Error");
             }
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Create(List<TimeSheets> timeSheets)
+        {
+            if (TempData.Peek("username") == null)
+            {
+                return View("Forbidden");
+            }
+            var username = TempData.Peek("username");
+            var uri = "api/employee/" + username + "/timesheet"; //+ timeSheets.ElementAt(0).Date.ToString("dd-MM-yyyy");
+            var request = CreateRequestToService(HttpMethod.Get, uri);
+
+            try
+            {
+                var response = await HttpClient.SendAsync(request);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    return View("Whoops");
+                }
+
+                string jsonString = await response.Content.ReadAsStringAsync();
+
+                List<TimeSheets> timeSheet = JsonConvert.DeserializeObject<List<TimeSheets>>(jsonString);
+
+                if (!timeSheet.Any())
+                {
+                    string jsonPostString = JsonConvert.SerializeObject(timeSheets);
+
+                    var postRequest = CreateRequestToService(HttpMethod.Post, uri);
+
+                    postRequest.Content = new StringContent(jsonPostString, Encoding.UTF8, "application/json");
+
+                    var postResponse = await HttpClient.SendAsync(postRequest);
+
+                    if (!postResponse.IsSuccessStatusCode)
+                    {
+                        return View("Whoops");
+
+                    }
+
+                    return View(timeSheets);
+                }
+                else
+                {
+                    return View("Whoops");
+                }
+            }
+            catch
+            {
+                return View("Whoops");
+            }
+
+        }
+
 
         public async Task<ActionResult> PreviousTimesheet(string weekstart)
         {
