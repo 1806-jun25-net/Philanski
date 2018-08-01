@@ -20,16 +20,17 @@
                     <th>
                         <div>Hours</div>
                     </th>
-                    @foreach (var item in Model)
+                    @for(int i = 0; i < 7; i++ )
                     {
                     <tr>
                         <th>
-                            <div>@item.Date.Month/@item.Date.Day </div>
+                            <div>@Model[i].Date.Month/@Model[i].Date.Day </div>
                         </th>
                         <th></th>
                         <th>
                             <div class="form-group">
-                                <input asp-for="@item.RegularHours" class="form-control" />
+                                <input asp-for="@Model[i].RegularHours" class="form-control" />
+                                <input asp-for="@Model[i].Date" type="hidden" value="@Model[i].Date" class="form-control" />
                             </div>
                         </th>
                     </tr>
@@ -37,10 +38,9 @@
                 </thead>
             </table>
             <div class="form-group">
-                @*Check if TimeSheetApproval for this week exists. If it does, disable Save/Submit Buttons and form entries.*@
-                @*Partial view to get access to the TSA model?*@
                 <input type="submit" value="Save" class="btn btn-default" />
-                <input type="submit" value="Submit" class="btn btn-default" />
+                @*<input type="submit" value="Submit" class="btn btn-default" />*@
+            </div>
         </form>
     </div>
 
