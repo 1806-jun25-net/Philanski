@@ -128,9 +128,20 @@ namespace Philanski.Backend.WebAPI.Controllers
         }
 
         // PUT api/<controller>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        [HttpPut("{id}/timesheet")]
+        public async Task<ActionResult> PutFullWeek(string id, List<TimeSheet> timeSheets)
         {
+            var EmployeeId = await Repo.GetEmployeeIDByEmail(id);
+            if (EmployeeId == 0)
+            {
+                return NotFound();
+            }
+            foreach (var timesheet in timeSheets)
+            {
+                Repo.UpdateTimeSheet(timesheet);
+            }
+            await Repo.Save();
+
         }
 
         // DELETE api/<controller>/5
