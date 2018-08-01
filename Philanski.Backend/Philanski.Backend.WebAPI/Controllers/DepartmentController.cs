@@ -41,7 +41,6 @@ namespace Philanski.Backend.WebAPI.Controllers
                 return NotFound();
             }
 
-       
                 return Departments;
             
         }
