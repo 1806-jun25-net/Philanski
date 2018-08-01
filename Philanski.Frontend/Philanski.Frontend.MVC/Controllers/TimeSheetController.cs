@@ -184,7 +184,20 @@ namespace Philanski.Frontend.MVC.Controllers
                 }
                 else
                 {
-                    return View("Whoops");
+                    string jsonPutString = JsonConvert.SerializeObject(timeSheets);
+                    var PutUri = "api/employee/" + username + "/timesheet/" + timeSheets.ElementAt(0).Date.ToString("dd-MM-yyyy");
+
+                    var putRequest = CreateRequestToService(HttpMethod.Put, PutUri);
+
+                    putRequest.Content = new StringContent(jsonPutString, Encoding.UTF8, "application/json");
+
+                    var putResponse = await HttpClient.SendAsync(putRequest);
+
+                    if (!putResponse.IsSuccessStatusCode)
+                    {
+                        return View("Whoops");
+                    }
+                    return View(timeSheets);
                 }
             }
             catch

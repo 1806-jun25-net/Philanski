@@ -84,7 +84,9 @@ namespace Philanski.Backend.Library.Repositories
             //potential fix later
             var dbTimeSheet = Mapper.Map(timesheet);
             dbTimeSheet.Id = timesheet.Id;
-            _db.Entry(_db.Departments.Find(timesheet.Id)).CurrentValues.SetValues(dbTimeSheet);
+            _db.TimeSheets.Attach(dbTimeSheet);
+            //_db.Entry(_db.Departments.Find(timesheet.Id)).CurrentValues.SetValues(dbTimeSheet);
+            _db.Entry(dbTimeSheet).Property(x => x.RegularHours).IsModified = true;
         }
 
         //TimeSheet Approval Methods
