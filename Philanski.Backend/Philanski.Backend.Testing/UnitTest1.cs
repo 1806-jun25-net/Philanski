@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Moq;
+using Philanski.Backend.DataContext.Models;
 using Philanski.Backend.Library.Models;
 using Philanski.Backend.Library.Repositories;
 using Philanski.Backend.WebAPI.Controllers;
@@ -13,7 +14,7 @@ namespace Philanski.Backend.Testing
     public class UnitTest1
     {
 
-
+        PhilanskiManagementSolutionsContext db = new PhilanskiManagementSolutionsContext();
 
 
         [Theory]
