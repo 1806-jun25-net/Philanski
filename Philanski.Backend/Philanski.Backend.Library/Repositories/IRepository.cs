@@ -26,12 +26,15 @@ namespace Philanski.Backend.Library.Repositories
         List<TimeSheetApproval> GetAllTimeSheetsFromEmployee(int EmployeeId);
         void CreateTimeSheetApproval(TimeSheetApproval TSA);
         List<TimeSheetApproval> GetAllTSAsThatCanBeApprovedByManager(int id);
+        Task<TimeSheetApproval> GetTimeSheetApprovalByEmployeeIdAndWeekStart(int EmployeeId, DateTime WeekStart);
 
 
         //Employees
+        Task<int> GetEmployeeIDByEmail(string email);
         Task<Employee> GetEmployeeByID(int ID);
         List<Employee> GetAllEmployees();
-
+        Task<Employee> GetEmployeeByEmail(string email);
+        void CreateEmployee(Employee employee);
         //Managers
         List<Manager> GetAllManagers();
         Task<Manager> GetManagerById(int id);

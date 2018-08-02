@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 using Philanski.Backend.WebAPI.Models;
+using Philanski.Backend.Library.Models;
+using Philanski.Backend.Library.Repositories;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -18,10 +20,12 @@ namespace Philanski.Backend.WebAPI.Controllers
     public class AccountController : ControllerBase
     {
         private SignInManager<IdentityUser> _signInManager { get; }
+        public IRepository Repo { get; }
 
-        public AccountController(SignInManager<IdentityUser> signInManager)
+        public AccountController(SignInManager<IdentityUser> signInManager, IRepository repo)
         {
             _signInManager = signInManager;
+            Repo = repo;
         }
 
         [HttpPost("Login")]
@@ -52,7 +56,7 @@ namespace Philanski.Backend.WebAPI.Controllers
         [HttpPost("Register")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
-        public async Task<ActionResult> Register(User input,
+        public async Task<ActionResult> Register(Register input,
             [FromServices] UserManager<IdentityUser> userManager,
             [FromServices] RoleManager<IdentityRole> roleManager, bool admin = false)
         {
@@ -60,7 +64,7 @@ namespace Philanski.Backend.WebAPI.Controllers
             // and return 400 if any errors.
 
             var user = new IdentityUser(input.Username);
-
+            var libraryEmployee = new Employee();
             var result = await userManager.CreateAsync(user, input.Password);
 
             if (!result.Succeeded)
@@ -87,8 +91,21 @@ namespace Philanski.Backend.WebAPI.Controllers
             }
 
             await _signInManager.SignInAsync(user, isPersistent: true);
+            libraryEmployee.FirstName = input.FirstName;
+            libraryEmployee.LastName = input.LastName;
+            libraryEmployee.Email = input.Username;
+            libraryEmployee.JobTitle = input.JobTitle;
+            libraryEmployee.WorksiteId = input.Worksite;
+            libraryEmployee.Salary = input.Salary;
+            libraryEmployee.HireDate = DateTime.Now;
+            Repo.CreateEmployee(libraryEmployee);
+            await Repo.Save();
+            
+                
 
-            return NoContent();
+            
+           // return NoContent();
+            return CreatedAtRoute("GetEmployee" , new { controller = "Employee", id = input.Username }, input);
         }
     }
 }

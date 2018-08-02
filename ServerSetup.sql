@@ -54,7 +54,7 @@ Create Table TimeSheetApprovals
 select * from Employees
 select * from Managers
 select * from Worksites
-select * from TimeSheets
+,kjuh 
 select * from TimeSheetApprovals
 select * from EmployeeDepartments
 select * from ManagerDepartments
@@ -64,8 +64,8 @@ select * from AspNetUsers
 select * from AspNetUserLogins
 select * from AspNetRoles
 
-Delete from Departments
-Where id = 3
+Delete from AspNetUsers
+Where UserName = 'BobMarley@gmail.com'
 
 ALTER TABLE Employee
 ADD FOREIGN KEY (WorksiteID) REFERENCES Worksite(ID);

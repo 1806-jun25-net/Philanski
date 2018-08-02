@@ -84,7 +84,9 @@ namespace Philanski.Backend.Library.Repositories
             //potential fix later
             var dbTimeSheet = Mapper.Map(timesheet);
             dbTimeSheet.Id = timesheet.Id;
-            _db.Entry(_db.Departments.Find(timesheet.Id)).CurrentValues.SetValues(dbTimeSheet);
+            _db.TimeSheets.Attach(dbTimeSheet);
+            //_db.Entry(_db.Departments.Find(timesheet.Id)).CurrentValues.SetValues(dbTimeSheet);
+            _db.Entry(dbTimeSheet).Property(x => x.RegularHours).IsModified = true;
         }
 
         //TimeSheet Approval Methods
@@ -122,6 +124,12 @@ namespace Philanski.Backend.Library.Repositories
             return Mapper.Map(TimeSheetApprovals);
         }
 
+        public async Task<TimeSheetApproval> GetTimeSheetApprovalByEmployeeIdAndWeekStart(int EmployeeId, DateTime WeekStart)
+        {
+            var TSA = await _db.TimeSheetApprovals.FirstOrDefaultAsync(i => (i.EmployeeId == EmployeeId) && (i.WeekStart == WeekStart));
+            return Mapper.Map(TSA);
+        }
+
         public void CreateTimeSheetApproval(TimeSheetApproval TSA)
         {
             _db.Add(Mapper.Map(TSA));
@@ -142,7 +150,7 @@ namespace Philanski.Backend.Library.Repositories
                 var EmployeeDeptIds = GetAllDepartmentIdsByEmployee(TSA.EmployeeId);
                 if (ManagerDeptIds.Intersect(EmployeeDeptIds).Any())
                 {
-                    TSAForManager.Append(TSA);
+                    TSAForManager.Add(TSA);
                 }
             }
             return Mapper.Map(TSAForManager);
@@ -155,7 +163,7 @@ namespace Philanski.Backend.Library.Repositories
             List<int> deptIds = new List<int>();
             foreach (var dept in departments)
             {
-                deptIds.Append(dept.DepartmentId);
+                deptIds.Add(dept.DepartmentId);
             }
             return deptIds;
         }
@@ -168,7 +176,7 @@ namespace Philanski.Backend.Library.Repositories
             List<int> deptIds = new List<int>();
             foreach (var dept in departments)
             {
-                deptIds.Append(dept.DepartmentId);
+                deptIds.Add(dept.DepartmentId);
             }
             return deptIds;
         }
@@ -184,10 +192,41 @@ namespace Philanski.Backend.Library.Repositories
             return Mapper.Map(employee);
         }
 
+        public async Task<Employee> GetEmployeeByEmail(string email)
+        {
+           var employee = await _db.Employees.FirstOrDefaultAsync(x => x.Email == email);
+            if(employee == null)
+            {
+                return null;
+            }
+            return Mapper.Map(employee);
+
+        }
+
+        public async Task<int> GetEmployeeIDByEmail(string email)
+        {
+            var employee = await _db.Employees.FirstOrDefaultAsync(x => x.Email == email);
+            if(employee == null)
+            {
+                return 0;
+            }
+
+            return employee.Id;
+
+
+        }
+
         public List<Employee> GetAllEmployees()
         {
             var employees = _db.Employees.AsNoTracking();
             return Mapper.Map(employees);
+        }
+
+
+        public void CreateEmployee(Employee employee)
+        {
+            _db.Add(Mapper.Map(employee));
+
         }
 
 

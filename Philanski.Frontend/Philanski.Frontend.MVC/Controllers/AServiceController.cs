@@ -8,15 +8,18 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Philanski.Frontend.MVC.Models;
 
 namespace Philanski.Frontend.MVC.Controllers
 {
     public class AServiceController : Controller
     {
 
+
        private static readonly Uri s_serviceUri = new Uri("https://localhost:44386/");
-    //    private static readonly Uri s_serviceUri = new Uri("https://philanksi.azurewebsites.net/");
+     //private static readonly Uri s_serviceUri = new Uri("https://philanksi.azurewebsites.net/");
         protected static readonly string s_CookieName = "PhilanskiApiAuth2";
+
 
         protected HttpClient HttpClient { get; }
 
@@ -46,5 +49,19 @@ namespace Philanski.Frontend.MVC.Controllers
 
             return apiRequest;
         }
+       /* protected async Task<Employees> GetCurrentEmployeeDataHttpRequest()
+        {
+            var uri = "api/employee";
+            var request = CreateRequestToService(HttpMethod.Get, uri);
+
+            var response = await HttpClient.SendAsync(request);
+            if (!response.IsSuccessStatusCode)
+            {
+                return null;
+            }
+            string jsonStringUserName = await responseUsername.Content.ReadAsStringAsync();
+            List<Employees> Employee = JsonConvert.DeserializeObject<List<Employees>>(jsonStringUserName);
+            
+        }*/
     }
 }

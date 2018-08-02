@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Philanski.Frontend.MVC.Models;
@@ -25,7 +26,8 @@ namespace Philanski.Frontend.MVC.Controllers
 
         // POST: Account/Register
         [HttpPost]
-        public async Task<ActionResult> Register(Login account)
+        [Authorize]
+        public async Task<ActionResult> Register(Register account)
         {
             if (!ModelState.IsValid)
             {
@@ -50,7 +52,7 @@ namespace Philanski.Frontend.MVC.Controllers
             }
 
             PassCookiesToClient(apiResponse);
-
+            TempData["username"] = account.Username;
             return RedirectToAction("Index", "Home");
         }
 
@@ -73,20 +75,19 @@ namespace Philanski.Frontend.MVC.Controllers
             }
             catch (AggregateException ex)
             {
-                return View("Error");
+                return View("InvalidLogin");
             }
 
             if (!apiResponse.IsSuccessStatusCode)
             {
                 if (apiResponse.StatusCode == HttpStatusCode.Forbidden)
                 {
-                    return View("AccessDenied");
+                    return View("InvalidLogin");
                 }
-                return View("Error");
+                return View("InvalidLogin");
             }
-
+            TempData["username"] = account.Username;
             PassCookiesToClient(apiResponse);
-
             return RedirectToAction("Index", "Home");
         }
 
@@ -117,7 +118,7 @@ namespace Philanski.Frontend.MVC.Controllers
             }
 
             PassCookiesToClient(apiResponse);
-
+            TempData.Remove("username");
             return RedirectToAction("Index", "Home");
         }
 

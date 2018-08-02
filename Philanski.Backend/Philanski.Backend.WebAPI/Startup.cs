@@ -84,7 +84,7 @@ namespace Philanski.Backend.WebAPI
                 //  options.Cookie.HttpOnly = false;
                 options.CookieSecure = CookieSecurePolicy.None;
                 options.Cookie.Name = "PhilanskiApiAuth2";
-                options.ExpireTimeSpan = TimeSpan.FromDays(100);
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
                 options.Events = new CookieAuthenticationEvents
                 {
                     OnRedirectToLogin = ctx =>
