@@ -26,6 +26,7 @@ namespace Philanski.Backend.Library.Repositories
         List<TimeSheetApproval> GetAllTimeSheetsFromEmployee(int EmployeeId);
         void CreateTimeSheetApproval(TimeSheetApproval TSA);
         List<TimeSheetApproval> GetAllTSAsThatCanBeApprovedByManager(int id);
+        Task<TimeSheetApproval> GetTimeSheetApprovalByEmployeeIdAndWeekStart(int EmployeeId, DateTime WeekStart);
 
 
         //Employees

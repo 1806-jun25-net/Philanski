@@ -124,6 +124,12 @@ namespace Philanski.Backend.Library.Repositories
             return Mapper.Map(TimeSheetApprovals);
         }
 
+        public async Task<TimeSheetApproval> GetTimeSheetApprovalByEmployeeIdAndWeekStart(int EmployeeId, DateTime WeekStart)
+        {
+            var TSA = await _db.TimeSheetApprovals.FirstOrDefaultAsync(i => (i.EmployeeId == EmployeeId) && (i.WeekStart == WeekStart));
+            return Mapper.Map(TSA);
+        }
+
         public void CreateTimeSheetApproval(TimeSheetApproval TSA)
         {
             _db.Add(Mapper.Map(TSA));

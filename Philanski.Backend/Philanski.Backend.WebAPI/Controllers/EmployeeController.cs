@@ -104,7 +104,31 @@ namespace Philanski.Backend.WebAPI.Controllers
 
         }
 
+      //  [HttpGet("{id}/timesheetapproval")]
+        
 
+        [HttpGet("{id}/timesheetapproval/{weekstart}", Name = "EmployeeTimeSheetApproval")]
+        public async Task<ActionResult<TimeSheetApproval>> GetTimeSheetApprovalByWeekStart(string id, string weekstart)
+        {
+            var EmployeeId = await Repo.GetEmployeeIDByEmail(id);
+            if (EmployeeId == 0)
+            {
+                return NotFound();
+            }
+            try
+            {
+
+                DateTime DateWeekStart = DateTime.ParseExact(weekstart, "dd-MM-yyyy", null);
+                var TSA = await Repo.GetTimeSheetApprovalByEmployeeIdAndWeekStart(EmployeeId, DateWeekStart.Date);
+                //we need to send something back to front end to represent they dont have one for that week
+                return TSA;
+
+            }
+            catch (Exception ex)
+            {
+                return NotFound();
+            }
+        }
 
         // POST api/<controller>
         //this will take in datetime.now and will have to find first day of the week
@@ -134,6 +158,27 @@ namespace Philanski.Backend.WebAPI.Controllers
                 return NotFound();
             }
  
+        }
+
+        [HttpPost("{id}/timesheetapproval")]
+        public async Task<ActionResult> PostTSA(string id, TimeSheetApproval TSA)
+        {
+            try
+            {
+                var EmployeeId = await Repo.GetEmployeeIDByEmail(id);
+                if (EmployeeId == 0)
+                {
+                    return NotFound();
+                }
+                TSA.EmployeeId = EmployeeId;
+                Repo.CreateTimeSheetApproval(TSA);
+                await Repo.Save();
+                return CreatedAtRoute("EmployeeTimeSheetApproval", new { weekstart = TSA.WeekStart }, TSA);
+            }
+            catch (Exception ex)
+            {
+                return NotFound();
+            }
         }
 
         // PUT api/<controller>/5
