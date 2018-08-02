@@ -81,6 +81,7 @@ namespace Philanski.Frontend.MVC.Controllers
 
         public async Task<ActionResult> Create(string weekstart)
         {
+            //need to add code that disables submit button if TSA exists
             if (TempData.Peek("username") == null)
             {
                 return View("Forbidden");
@@ -206,10 +207,38 @@ namespace Philanski.Frontend.MVC.Controllers
                     }
                     if (submit.Equals("Submit"))
                     {
-                        return View("Forbidden");
+                        //return View("Forbidden");
+                        //create TSA
+                        var TSA = new TimeSheetApprovals
+                        {
+                            WeekStart = timeSheets.ElementAt(0).Date,
+                            WeekEnd = timeSheets.ElementAt(6).Date,
+                            Status = "0",
+                            TimeSubmitted = DateTime.Now
+                        };
+                        decimal HoursWorked = 0;
+                        foreach(var item in timeSheets)
+                        {
+                            HoursWorked = HoursWorked + item.RegularHours;
+                        }
+                        TSA.WeekTotalRegular = HoursWorked;
+                        var PostTSAUri = "api/employee/" + username + "/timesheetapproval/";
+                        var PostTSAJsonString = JsonConvert.SerializeObject(TSA);
+                        var postTSARequest = CreateRequestToService(HttpMethod.Post, PostTSAUri);
+                        postTSARequest.Content = new StringContent(PostTSAJsonString, Encoding.UTF8, "application/json");
+                        var postTSAResponse = await HttpClient.SendAsync(postTSARequest);
+                        //add employee id on back end
+                        if (!postTSAResponse.IsSuccessStatusCode)
+                        {
+                            return View("Whoops");
+                        }
+
+                        return View("TSASubmitted");
+
+
                     }
                     else
-                    {
+                    {   
                         return View(timeSheets);
                     }
                 }
