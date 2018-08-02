@@ -140,8 +140,9 @@ namespace Philanski.Frontend.MVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(List<TimeSheets> timeSheets)
+        public async Task<ActionResult> Create(List<TimeSheets> timeSheets, string submit)
         {
+
             if (TempData.Peek("username") == null)
             {
                 return View("Forbidden");
@@ -179,8 +180,14 @@ namespace Philanski.Frontend.MVC.Controllers
                         return View("Whoops");
 
                     }
-
-                    return View(timeSheets);
+                    if (submit.Equals("Submit"))
+                    {
+                        return View("Forbidden");
+                    }
+                    else
+                    {
+                        return View(timeSheets);
+                    }
                 }
                 else
                 {
@@ -197,7 +204,14 @@ namespace Philanski.Frontend.MVC.Controllers
                     {
                         return View("Whoops");
                     }
-                    return View(timeSheets);
+                    if (submit.Equals("Submit"))
+                    {
+                        return View("Forbidden");
+                    }
+                    else
+                    {
+                        return View(timeSheets);
+                    }
                 }
             }
             catch
