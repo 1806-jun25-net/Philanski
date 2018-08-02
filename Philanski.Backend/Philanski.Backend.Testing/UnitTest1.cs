@@ -96,33 +96,128 @@ namespace Philanski.Backend.Testing
 
 
 
-
+        //testing all department repo methods
         [Fact]
-        public void GetEmployeeByIDRepoMethodShouldWork()
+        public async Task DepartmentRepoMethodsTest()
         {
 
             var options = new DbContextOptionsBuilder<PhilanskiManagementSolutionsContext>()
-                 .UseInMemoryDatabase(databaseName: "Add_writes_to_database")
+                 .UseInMemoryDatabase(databaseName: "TestDB")
                  .Options;
+
+
+            Department testdept1 = new Department();
+            testdept1.Id = 1;
+            testdept1.Name = "Blacksmithing";
+
+            Department testdept2 = new Department();
+            testdept2.Id = 2;
+            testdept2.Name = "Jewelcrafting";
 
 
             // Run the test against one instance of the context
             using (var context = new PhilanskiManagementSolutionsContext(options))
             {
                 var repo = new Repository(context);
-               Task<Employee> emp = repo.GetEmployeeByID(1);
+              repo.CreateDepartment(testdept1);
+               await repo.Save();
+                repo.CreateDepartment(testdept2);
+                await repo.Save();
             }
 
             // Use a separate instance of the context to verify correct data was saved to database
-            //using (var context = new BloggingContext(options))
+            using (var context = new PhilanskiManagementSolutionsContext(options))
             {
-                //Assert.AreEqual(1, context.Blogs.Count());
-                //Assert.AreEqual("http://sample.com", context.Blogs.Single().Url);
+                var repo = new Repository(context);
+
+                List<Department> testdeptlist = new List<Department>();
+
+                //testing get all depts
+                testdeptlist = repo.GetAllDepartments();
+                Assert.Equal(2, testdeptlist.Count());
+
+
+                //TESTinG getdeptby id
+                Department testgetbyID = await repo.GetDepartmentByID(2);
+
+                Assert.Equal("Jewelcrafting", testgetbyID.Name);
+
+
+                //null path of getdeptby id tested
+                Department testgetbyIDnull = await repo.GetDepartmentByID(3);
+
+                Assert.Null(testgetbyIDnull);
+
+
+               
+
+
+                //testing get apt id by name
+
+                int aptidtest = await repo.GetDepartmentIdByName("Jewelcrafting");
+
+                Assert.Equal(2, aptidtest);
+
+
+                //testing delete apartment 
+
+                repo.DeleteDepartment(2);
+                await repo.Save();
+
+                List<Department> testdeptlist2 = repo.GetAllDepartments();
+
+                //should only be one left
+                Assert.Single(testdeptlist2);
+
+
+                //testing update apartment
+
+                Department updatetestdept = new Department();
+                updatetestdept.Id = 1;
+                updatetestdept.Name = "New Department";
+
+                repo.UpdateDepartment(updatetestdept);
+
+                Department checkingitwasupdated = new Department();
+
+                checkingitwasupdated = await repo.GetDepartmentByID(1);
+
+                Assert.Equal("New Department", checkingitwasupdated.Name);
             }
 
 
 
         }
+
+        //[Fact]
+        //public void GetAllDepartmentIdsByManagerIdTest()
+        //{
+
+        //    var options = new DbContextOptionsBuilder<PhilanskiManagementSolutionsContext>()
+        //        .UseInMemoryDatabase(databaseName: "TestDB")
+        //        .Options;
+
+
+        //    Department testdept1 = new Department();
+        //    testdept1.Id = 1;
+        //    testdept1.Name = "Blacksmithing";
+
+        //    Department testdept2 = new Department();
+        //    testdept2.Id = 2;
+        //    testdept2.Name = "Jewelcrafting";
+
+
+        //    // Run the test against one instance of the context
+        //    using (var context = new PhilanskiManagementSolutionsContext(options))
+        //    {
+        //        var repo = new Repository(context);
+        //        repo.CreateDepartment(testdept1);
+        //        await repo.Save();
+        //        repo.CreateDepartment(testdept2);
+        //        await repo.Save();
+        //    }
+
+        //}
 
 
 
