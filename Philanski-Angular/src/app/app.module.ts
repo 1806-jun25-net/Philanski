@@ -21,15 +21,13 @@ import { LoginFormComponent } from './login-form/login-form.component';
   declarations: [
     AppComponent,
     LoginComponent,
-<<<<<<< HEAD
+    
     NavbarComponent
-=======
 
     ManagerComponent,
 
     LoginFormComponent
 
->>>>>>> 329edd934ed1b3fd953da52faddc89bc8b0437bb
   ],
   imports: [
     BrowserModule,
