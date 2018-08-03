@@ -1,0 +1,12 @@
+<div>
+<h2>User Login</h2>
+</div>
+
+<div>
+    <!-- two-way binding -->
+    <input type="text" [(ngModel)]="login.username" />
+    <input type="text" [(ngModel)]="login.password" />
+    <!-- event binding -->
+    <button (click)="onLogin()">Login</button>
+  </div>
+
