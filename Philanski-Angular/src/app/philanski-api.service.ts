@@ -13,7 +13,13 @@ export class PhilanskiApiService {
 
   postLogin(login: Login){
     var body = JSON.stringify(login)
-    var header = new HttpHeaders({ 'Content-Type' : 'application/json'})
+    var header = new HttpHeaders({ 
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': 'Content-Type, Origin , Access-Control-* , X-Requested-With, Accept',
+    'Content-Type':  'application/json,charset=utf-8',
+    'Accept': 'application/json',
+    'Allow' : 'GET, POST, PUT, DELETE, OPTIONS, HEAD'
+  })
     return this.httpClient.post(this.Url + 'Account/Login', body, {headers: header})
   }
 
