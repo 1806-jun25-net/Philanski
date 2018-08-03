@@ -281,6 +281,12 @@ namespace Philanski.Backend.Library.Repositories
             return Mapper.Map(manager);
         }
 
+        public async Task<int> GetManagerIdByEmployeeId(int id)
+        {
+            var ManagerId = await _db.Managers.FirstOrDefaultAsync(x => x.EmployeeId == id);
+            return ManagerId.Id;
+        }
+
 
         //Department methods
         public async Task<Department> GetDepartmentByID(int id)

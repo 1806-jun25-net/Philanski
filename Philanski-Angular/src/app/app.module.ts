@@ -6,14 +6,30 @@ import { RouterModule } from '../../node_modules/@angular/router';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './account/login/login.component';
+
+import { ManagerComponent } from './account/manager/manager.component';
+
 import { AppRoutingModule } from './/app-routing.module';
+
 import { NavbarComponent } from './navbar/navbar.component';
+
+import { LoginFormComponent } from './login-form/login-form.component';
+
+
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
+<<<<<<< HEAD
     NavbarComponent
+=======
+
+    ManagerComponent,
+
+    LoginFormComponent
+
+>>>>>>> 329edd934ed1b3fd953da52faddc89bc8b0437bb
   ],
   imports: [
     BrowserModule,
