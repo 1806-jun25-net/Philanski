@@ -7,7 +7,12 @@ import { AppComponent } from './app.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
-  { path: 'home', component: AppComponent}
+
+  { path: 'home', component: AppComponent},
+
+  { path: 'logout', redirectTo: 'https://localhost:44382/', pathMatch: 'full'},
+  //{ path: 'tsa', component: tsaComponent }
+
 ];
 
 

@@ -6,7 +6,16 @@ import { RouterModule } from '../../node_modules/@angular/router';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './account/login/login.component';
+
+import { ManagerComponent } from './account/manager/manager.component';
+
 import { AppRoutingModule } from './/app-routing.module';
+
+
+import { NavbarComponent } from './navbar/navbar.component';
+
+
+
 
 
 
@@ -14,8 +23,13 @@ import { AppRoutingModule } from './/app-routing.module';
   declarations: [
     AppComponent,
     LoginComponent,
-    
-    
+
+    NavbarComponent,
+
+
+    ManagerComponent,
+
+
   ],
   imports: [
     BrowserModule,

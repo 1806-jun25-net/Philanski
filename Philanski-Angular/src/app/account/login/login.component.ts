@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router'
 import { PhilanskiApiService } from '../../philanski-api.service';
 import { Login } from '../../models/Login'
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpHeaderResponse,HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -20,13 +20,16 @@ export class LoginComponent implements OnInit {
 
   onLogin(login: Login){
     this.apiService.postLogin(login).subscribe(
-      (data : any) => {
-        console.log(data.text())
+      (data : HttpResponse<Login> ) => {
+       // console.log(data.body)
+        console.log(data.status)        
         console.log("login success")
+        sessionStorage.setItem('UserName', this.login.username) 
         this.currentUserName = this.login.username
 
       },
       (err: HttpErrorResponse ) =>{
+        console.log(err.status)
         console.log("login failed")
 
       }
@@ -36,8 +39,9 @@ export class LoginComponent implements OnInit {
   onLogout()
   {
     this.apiService.postLogout().subscribe(
-      (data : any) => {
-          console.log(data.text())
+      (data : HttpHeaderResponse) => {
+          console.log(data.status)
+          sessionStorage.clear()
           this.currentUserName = 'Not Logged In'
           console.log("logged out success")
       },
