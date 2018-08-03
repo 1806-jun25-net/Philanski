@@ -3,6 +3,31 @@
   <h1>
     Welcome to {{ title }}!
   </h1>
-<app-login></app-login>
-<app-manager></app-manager>
+
+  <app-login-form></app-login-form>
+<nav>
+  <a routerLink = "/login"> Login</a>
+</nav>
+<router-outlet></router-outlet>
+
+</div>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Date</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="table-primary">
+            <td>You do not have any time sheets to display. Work harder!</td>
+            <td>some more data</td>
+        </tr>
+        <tr class="table-primary">
+            <td>Something is missing from your life. Dedication? Motivation? I'm not paying you more money!</td>
+            <td>yet more data</td>
+        </tr>
+    </tbody>
+</table>
+<div>
 

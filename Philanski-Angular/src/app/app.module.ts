@@ -6,19 +6,29 @@ import { RouterModule } from '../../node_modules/@angular/router';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './account/login/login.component';
+
 import { ManagerComponent } from './account/manager/manager.component';
+
+import { AppRoutingModule } from './/app-routing.module';
+import { LoginFormComponent } from './login-form/login-form.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    ManagerComponent
+
+    ManagerComponent,
+
+    LoginFormComponent
+
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    RouterModule
+    RouterModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

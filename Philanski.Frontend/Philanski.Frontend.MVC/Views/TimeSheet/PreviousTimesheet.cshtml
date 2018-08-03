@@ -29,7 +29,7 @@
                         <th></th>
                         <th>
                             <div class="form-group">
-                                <input asp-for="@item.RegularHours" class="form-control" />
+                                <input disabled asp-for="@item.RegularHours" class="form-control" />
                             </div>
                         </th>
                     </tr>
@@ -39,8 +39,8 @@
             <div class="form-group">
                 @*Check if TimeSheetApproval for this week exists. If it does, disable Save/Submit Buttons and form entries.*@
                 @*Partial view to get access to the TSA model?*@
-                <input type="submit" value="Save" class="btn btn-default" />
-                <input type="submit" value="Submit" class="btn btn-default" />
+                <input disabled type="submit" value="Save" class="btn btn-default" />
+                <input disabled type="submit" value="Submit" class="btn btn-default" />
         </form>
     </div>
 
