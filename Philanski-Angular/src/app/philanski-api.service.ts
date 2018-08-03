@@ -34,13 +34,13 @@ export class PhilanskiApiService {
     'Allow' : 'GET, POST, PUT, DELETE, OPTIONS, HEAD'
   });
     return this.httpClient.post(this.Url + 'Account/Login', body, {headers: header, withCredentials: true})
-           .pipe(map(data : any) => {
+         /*  .pipe(map(data : any) => {
             data.json();
             // the console.log(...) line prevents your code from working 
             // either remove it or add the line below (return ...)
             console.log("I CAN SEE DATA HERE: ", data.json());
             return data.json();
-    });
+    });*/
 }
   postLogout()
   {
