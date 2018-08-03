@@ -288,7 +288,7 @@ namespace Philanski.Backend.Testing
                 {
                     var repo = new Repository(context);
 
-                    List<int> deptsthatbobmanages = repo.GetAllDepartmentIdsByManagerId(1);
+                    List<int> deptsthatbobmanages = await repo.GetAllDepartmentIdsByManagerId(1);
 
                     Assert.Equal(2, deptsthatbobmanages.Count()); //we added bob to be the manager of two departments
 

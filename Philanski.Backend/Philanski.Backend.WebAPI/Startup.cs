@@ -93,6 +93,13 @@ namespace Philanski.Backend.WebAPI
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddCors(options => options.AddPolicy("AllowAll", builder =>
+            {
+                builder.AllowAnyOrigin();
+                builder.AllowAnyHeader();
+                builder.AllowAnyMethod();
+                builder.AllowCredentials();
+            }));
 
             services.AddSwaggerGen(c =>
             {
@@ -125,7 +132,7 @@ namespace Philanski.Backend.WebAPI
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
                 c.RoutePrefix = string.Empty;
             });
-
+            app.UseCors("AllowAll");
             app.UseHttpsRedirection();
             app.UseMvc();
 

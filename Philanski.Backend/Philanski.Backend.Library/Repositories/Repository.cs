@@ -145,7 +145,7 @@ namespace Philanski.Backend.Library.Repositories
         //employee ids on TSAs. check their department and and if part of managers. add to list
         public async Task<List<TimeSheetApproval>> GetAllTSAsThatCanBeApprovedByManager(int id)
         {
-            var TSAs = _db.TimeSheetApprovals.AsNoTracking();
+            var TSAs = await _db.TimeSheetApprovals.ToListAsync();
             var ManagerDeptIds = await GetAllDepartmentIdsByManagerId(id);
             List<TimeSheetApprovals> TSAForManager = new List<TimeSheetApprovals>();
             foreach (var TSA in TSAs)
@@ -156,6 +156,7 @@ namespace Philanski.Backend.Library.Repositories
                 {
                     TSAForManager.Add(TSA);
                 }
+
             }
             return Mapper.Map(TSAForManager);
         }
@@ -174,7 +175,7 @@ namespace Philanski.Backend.Library.Repositories
 
         //Manager-Department methods
 
-        public async Task<List<int>> GetAllDepartmentIdsByManagerId(int id)
+        public async Task<List<int>>  GetAllDepartmentIdsByManagerId(int id)
         {
             var departments = await _db.ManagerDepartments.Where(x => x.ManagerId == id).ToListAsync();
             List<int> deptIds = new List<int>();

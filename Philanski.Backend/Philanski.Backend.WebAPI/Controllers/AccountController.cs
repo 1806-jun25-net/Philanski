@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Philanski.Backend.WebAPI.Models;
 using Philanski.Backend.Library.Models;
 using Philanski.Backend.Library.Repositories;
+using System.Web.Http.Cors;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -17,6 +18,7 @@ namespace Philanski.Backend.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors(origins: "http://localhost:4200", headers: "*", methods: "*")]
     public class AccountController : ControllerBase
     {
         private SignInManager<IdentityUser> _signInManager { get; }
