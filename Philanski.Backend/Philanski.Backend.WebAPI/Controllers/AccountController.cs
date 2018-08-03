@@ -74,16 +74,16 @@ namespace Philanski.Backend.WebAPI.Controllers
 
             if (admin)
             {
-                if (!(await roleManager.RoleExistsAsync("admin")))
+                if (!(await roleManager.RoleExistsAsync("Admin")))
                 {
-                    var adminRole = new IdentityRole("admin");
+                    var adminRole = new IdentityRole("Admin");
                     result = await roleManager.CreateAsync(adminRole);
                     if (!result.Succeeded)
                     {
                         return StatusCode(500, result);
                     }
                 }
-                result = await userManager.AddToRoleAsync(user, "admin");
+                result = await userManager.AddToRoleAsync(user, "Admin");
                 if (!result.Succeeded)
                 {
                     return StatusCode(500, result);
@@ -91,6 +91,8 @@ namespace Philanski.Backend.WebAPI.Controllers
             }
 
             await _signInManager.SignInAsync(user, isPersistent: true);
+
+            //create employee in our database after account is added to identity
             libraryEmployee.FirstName = input.FirstName;
             libraryEmployee.LastName = input.LastName;
             libraryEmployee.Email = input.Username;

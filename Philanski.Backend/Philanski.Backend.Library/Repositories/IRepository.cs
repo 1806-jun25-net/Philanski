@@ -25,7 +25,7 @@ namespace Philanski.Backend.Library.Repositories
         Task<int> GetTimeSheetApprovalIdByDateSubmitted(DateTime submitted);
         List<TimeSheetApproval> GetAllTimeSheetsFromEmployee(int EmployeeId);
         void CreateTimeSheetApproval(TimeSheetApproval TSA);
-        List<TimeSheetApproval> GetAllTSAsThatCanBeApprovedByManager(int id);
+        Task<List<TimeSheetApproval>> GetAllTSAsThatCanBeApprovedByManager(int id);
         Task<TimeSheetApproval> GetTimeSheetApprovalByEmployeeIdAndWeekStart(int EmployeeId, DateTime WeekStart);
 
 
@@ -40,10 +40,10 @@ namespace Philanski.Backend.Library.Repositories
         Task<Manager> GetManagerById(int id);
 
         //EmployeeDepartment methods
-        List<int> GetAllDepartmentIdsByEmployee(int id);
+        Task<List<int>> GetAllDepartmentIdsByEmployee(int id);
 
         //ManagerDepartment methods
-        List<int> GetAllDepartmentIdsByManagerId(int id);
+        Task<List<int>> GetAllDepartmentIdsByManagerId(int id);
 
         //Departments
         Task<Department> GetDepartmentByID(int id);
