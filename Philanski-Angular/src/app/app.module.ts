@@ -11,9 +11,11 @@ import { ManagerComponent } from './account/manager/manager.component';
 
 import { AppRoutingModule } from './/app-routing.module';
 
+
 import { NavbarComponent } from './navbar/navbar.component';
 
-import { LoginFormComponent } from './login-form/login-form.component';
+
+
 
 
 
@@ -24,9 +26,11 @@ import { LoginFormComponent } from './login-form/login-form.component';
     
     NavbarComponent
 
+    NavbarComponent,
+
+
     ManagerComponent,
 
-    LoginFormComponent
 
   ],
   imports: [
