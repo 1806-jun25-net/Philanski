@@ -5,7 +5,9 @@ import { Login } from './models/Login';
 
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent }
+  { path: 'login', component: LoginComponent },
+  { path: 'logout', redirectTo: 'https://localhost:44382/', pathMatch: 'full'},
+  //{ path: 'tsa', component: tsaComponent }
 ];
 
 
