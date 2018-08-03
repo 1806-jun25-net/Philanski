@@ -127,6 +127,10 @@ namespace Philanski.Backend.Library.Repositories
         public async Task<TimeSheetApproval> GetTimeSheetApprovalByEmployeeIdAndWeekStart(int EmployeeId, DateTime WeekStart)
         {
             var TSA = await _db.TimeSheetApprovals.FirstOrDefaultAsync(i => (i.EmployeeId == EmployeeId) && (i.WeekStart == WeekStart));
+            if (TSA == null)
+            {
+                return null;
+            }
             return Mapper.Map(TSA);
         }
 
@@ -139,27 +143,28 @@ namespace Philanski.Backend.Library.Repositories
         //logic 
         //What do I have: manager id->all departments they are part of. 
         //employee ids on TSAs. check their department and and if part of managers. add to list
-        public List<TimeSheetApproval> GetAllTSAsThatCanBeApprovedByManager(int id)
+        public async Task<List<TimeSheetApproval>> GetAllTSAsThatCanBeApprovedByManager(int id)
         {
-            var TSAs = _db.TimeSheetApprovals.AsNoTracking();
-            var ManagerDeptIds = GetAllDepartmentIdsByManagerId(id);
+            var TSAs = await _db.TimeSheetApprovals.ToListAsync();
+            var ManagerDeptIds = await GetAllDepartmentIdsByManagerId(id);
             List<TimeSheetApprovals> TSAForManager = new List<TimeSheetApprovals>();
             foreach (var TSA in TSAs)
             {
                 //gather employee departments, compare their departments to manager depts. if a match add to list of tsas.
-                var EmployeeDeptIds = GetAllDepartmentIdsByEmployee(TSA.EmployeeId);
+                var EmployeeDeptIds = await GetAllDepartmentIdsByEmployee(TSA.EmployeeId);
                 if (ManagerDeptIds.Intersect(EmployeeDeptIds).Any())
                 {
                     TSAForManager.Add(TSA);
                 }
+
             }
             return Mapper.Map(TSAForManager);
         }
 
         //Employee-Department methods
-        public List<int> GetAllDepartmentIdsByEmployee(int id)
+        public async Task<List<int>> GetAllDepartmentIdsByEmployee(int id)
         {
-            var departments = _db.EmployeeDepartments.Where(x => x.EmployeeId == id).AsNoTracking();
+            var departments = await _db.EmployeeDepartments.Where(x => x.EmployeeId == id).ToListAsync();
             List<int> deptIds = new List<int>();
             foreach (var dept in departments)
             {
@@ -170,15 +175,29 @@ namespace Philanski.Backend.Library.Repositories
 
         //Manager-Department methods
 
-        public List<int> GetAllDepartmentIdsByManagerId(int id)
+        public async Task<List<int>>  GetAllDepartmentIdsByManagerId(int id)
         {
-            var departments = _db.ManagerDepartments.Where(x => x.ManagerId == id).AsNoTracking();
+            var departments = await _db.ManagerDepartments.Where(x => x.ManagerId == id).ToListAsync();
             List<int> deptIds = new List<int>();
             foreach (var dept in departments)
             {
                 deptIds.Add(dept.DepartmentId);
             }
             return deptIds;
+        }
+
+        //takes a manager by manager ID and makes them a manager for the dept id also given. NEEDS TESTING
+        public void RelateManagertoDepartment(int managerID, int deptIDtomanage)
+        {
+
+            ManagerDepartments toAdd = new ManagerDepartments();
+            toAdd.DepartmentId = deptIDtomanage;
+            toAdd.ManagerId = managerID;
+
+            _db.Add(toAdd);
+            
+
+
         }
 
         //Employee Methods
@@ -231,6 +250,21 @@ namespace Philanski.Backend.Library.Repositories
 
 
         //Manager Methods
+
+
+            //takes already existing employee and makes them a manager by adding them to manager table
+            public void PromoteEmployeeToManager(int employeeID)
+        {
+
+            Managers managertoadd = new Managers();
+
+            managertoadd.EmployeeId = employeeID;
+
+            _db.Add(managertoadd);
+
+        }
+
+
         public List<Manager> GetAllManagers()
         {
             var managers = _db.Managers.AsNoTracking();

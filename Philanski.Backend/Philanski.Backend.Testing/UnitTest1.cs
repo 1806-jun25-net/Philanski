@@ -23,14 +23,14 @@ namespace Philanski.Backend.Testing
         //ensuredatabasecreated still needs to be used somewhere. 
         //  DbContextOptionsBuilder<PhilanskiManagementSolutionsContext> optionsBuilder = new DbContextOptionsBuilder<PhilanskiManagementSolutionsContext>().UseInMemoryDatabase();
         //public static DbContextOptionsBuilder UseInMemoryDatabase(this DbContextOptionsBuilder optionsBuilder, Action<InMemoryDbContextOptionsBuilder> inMemoryOptionsAction = null);
-    //    optionsBuilder
-    //.UseSqlServer(connectionString, providerOptions=>providerOptions.CommandTimeout(60))
-    //.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+        //    optionsBuilder
+        //.UseSqlServer(connectionString, providerOptions=>providerOptions.CommandTimeout(60))
+        //.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 
-      //  PhilanskiManagementSolutionsContext db = new PhilanskiManagementSolutionsContext();
+        //  PhilanskiManagementSolutionsContext db = new PhilanskiManagementSolutionsContext();
 
-        
-        
+
+
 
 
         [Theory]
@@ -38,11 +38,11 @@ namespace Philanski.Backend.Testing
         [InlineData("07/22/2018 14:50:50.42", "07/22/2018 14:50:50.42")]
         public void GetPreviousSundayTest(string test, string actual)
         {
-           // var TimeSheetApp = new TimeSheetApproval();
+            // var TimeSheetApp = new TimeSheetApproval();
             var testDate = Convert.ToDateTime(test);
             var result = TimeSheetApproval.GetPreviousSundayOfWeek(testDate);
             Assert.Equal(Convert.ToDateTime(actual), result);
-           
+
         }
 
         [Theory]
@@ -50,7 +50,7 @@ namespace Philanski.Backend.Testing
         [InlineData("07/28/2018 14:50:50.42", "07/28/2018 14:50:50.42")]
         public void GetNextSaturdayTest(string test, string actual)
         {
-      //      var TimeSheetApp = new TimeSheetApproval();
+            //      var TimeSheetApp = new TimeSheetApproval();
             var testDate = Convert.ToDateTime(test);
             var result = TimeSheetApproval.GetNextSaturdayOfWeek(testDate);
             Assert.Equal(Convert.ToDateTime(actual), result);
@@ -82,7 +82,7 @@ namespace Philanski.Backend.Testing
 
             // instead of view.model, actionResult.Value
 
-         
+
             //var view = Assert.IsType<ViewResult>(actionResult);
             var model = Assert.IsAssignableFrom<List<Department>>(actionResult.Value).ToList();
             Assert.Equal(deptList.Count, model.Count);
@@ -102,7 +102,7 @@ namespace Philanski.Backend.Testing
         {
 
             var options = new DbContextOptionsBuilder<PhilanskiManagementSolutionsContext>()
-                 .UseInMemoryDatabase(databaseName: "TestDB")
+                 .UseInMemoryDatabase(databaseName: "TestDB2")
                  .Options;
 
 
@@ -119,10 +119,11 @@ namespace Philanski.Backend.Testing
             using (var context = new PhilanskiManagementSolutionsContext(options))
             {
                 var repo = new Repository(context);
-              repo.CreateDepartment(testdept1);
-               await repo.Save();
+                repo.CreateDepartment(testdept1);
+                await repo.Save();
                 repo.CreateDepartment(testdept2);
                 await repo.Save();
+                
             }
 
             // Use a separate instance of the context to verify correct data was saved to database
@@ -149,7 +150,7 @@ namespace Philanski.Backend.Testing
                 Assert.Null(testgetbyIDnull);
 
 
-               
+
 
 
                 //testing get apt id by name
@@ -183,47 +184,133 @@ namespace Philanski.Backend.Testing
                 checkingitwasupdated = await repo.GetDepartmentByID(1);
 
                 Assert.Equal("New Department", checkingitwasupdated.Name);
+
+                context.Database.EnsureDeleted();
+            }
+
+          
+
+        }
+
+
+
+
+
+        public class UnitTest2
+        {
+            [Fact]
+            public async Task GetAllDepartmentIdsByManagerIdTest()
+            {
+
+                var options = new DbContextOptionsBuilder<PhilanskiManagementSolutionsContext>()
+                    .UseInMemoryDatabase(databaseName: "TestDB")
+                    .Options;
+
+
+
+                Department testdept1 = new Department();
+                testdept1.Id = 1;
+                testdept1.Name = "Blacksmithing";
+
+                Department testdept2 = new Department();
+                testdept2.Id = 2;
+                testdept2.Name = "Jewelcrafting";
+
+
+                Employee testregremp1 = new Employee();
+                testregremp1.Email = "bobman76@gmail.com";
+                testregremp1.FirstName = "Bob";
+                testregremp1.HireDate = DateTime.Now;
+                testregremp1.Id = 1;
+                testregremp1.JobTitle = "The Terminator";
+                testregremp1.LastName = "Man";
+                testregremp1.Salary = 55000.00m;
+                testregremp1.WorksiteId = 1;
+
+                Employee testregremp2 = new Employee();
+                testregremp2.Email = "timmy22@gmail.com";
+                testregremp2.FirstName = "Timmy";
+                testregremp2.HireDate = DateTime.Now;
+                testregremp2.Id = 2;
+                testregremp2.JobTitle = "The Tim";
+                testregremp2.LastName = "Marely";
+                testregremp2.Salary = 99000.00m;
+                testregremp2.WorksiteId = 2;
+
+                Employee testmanageremp = new Employee();
+                testmanageremp.Email = "iamamanager@gmail.com";
+                testmanageremp.FirstName = "The";
+                testmanageremp.HireDate = DateTime.Now;
+                testmanageremp.Id = 3;
+                testmanageremp.JobTitle = "Bossman";
+                testmanageremp.LastName = "Boss";
+                testmanageremp.Salary = 99000.00m;
+                testmanageremp.WorksiteId = 2;
+
+
+
+
+
+                // Run the test against one instance of the context
+                using (var context = new PhilanskiManagementSolutionsContext(options))
+                {
+                    var repo = new Repository(context);
+
+                    repo.CreateEmployee(testregremp1);
+                    await repo.Save();
+                    repo.CreateEmployee(testregremp2);
+                    await repo.Save();
+                    repo.CreateEmployee(testmanageremp);
+                    await repo.Save();
+                    repo.CreateDepartment(testdept1);
+                    await repo.Save();
+                    repo.CreateDepartment(testdept2);
+                    await repo.Save();
+
+
+
+                    repo.PromoteEmployeeToManager(3);  //boss has emp id 3 and manager id should be 1
+                    await repo.Save();
+                    repo.RelateManagertoDepartment(1, 2); //should make boss a manager of jewelcrafting
+                    await repo.Save();
+                    repo.RelateManagertoDepartment(1, 1); //should make boss a manager of blacksmithing
+                    await repo.Save();
+
+                   
+
+                }
+
+
+
+
+                // Use a separate instance of the context to verify correct data was saved to database
+                using (var context = new PhilanskiManagementSolutionsContext(options))
+                {
+                    var repo = new Repository(context);
+
+                    List<int> deptsthatbobmanages = await repo.GetAllDepartmentIdsByManagerId(1);
+
+                    Assert.Equal(2, deptsthatbobmanages.Count()); //we added bob to be the manager of two departments
+
+                    Assert.Equal(1, deptsthatbobmanages[1]);
+                    Assert.Equal(2, deptsthatbobmanages[0]);
+
+                    context.Database.EnsureDeleted();
+
+                }
+
+
+
+
             }
 
 
 
+
+
+
+
         }
-
-        //[Fact]
-        //public void GetAllDepartmentIdsByManagerIdTest()
-        //{
-
-        //    var options = new DbContextOptionsBuilder<PhilanskiManagementSolutionsContext>()
-        //        .UseInMemoryDatabase(databaseName: "TestDB")
-        //        .Options;
-
-
-        //    Department testdept1 = new Department();
-        //    testdept1.Id = 1;
-        //    testdept1.Name = "Blacksmithing";
-
-        //    Department testdept2 = new Department();
-        //    testdept2.Id = 2;
-        //    testdept2.Name = "Jewelcrafting";
-
-
-        //    // Run the test against one instance of the context
-        //    using (var context = new PhilanskiManagementSolutionsContext(options))
-        //    {
-        //        var repo = new Repository(context);
-        //        repo.CreateDepartment(testdept1);
-        //        await repo.Save();
-        //        repo.CreateDepartment(testdept2);
-        //        await repo.Save();
-        //    }
-
-        //}
-
-
-
-
-
-
 
     }
 }

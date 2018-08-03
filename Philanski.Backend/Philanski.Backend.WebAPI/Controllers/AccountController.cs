@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Philanski.Backend.WebAPI.Models;
 using Philanski.Backend.Library.Models;
 using Philanski.Backend.Library.Repositories;
+using System.Web.Http.Cors;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -17,6 +18,7 @@ namespace Philanski.Backend.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors(origins: "http://localhost:4200", headers: "*", methods: "*")]
     public class AccountController : ControllerBase
     {
         private SignInManager<IdentityUser> _signInManager { get; }
@@ -74,16 +76,16 @@ namespace Philanski.Backend.WebAPI.Controllers
 
             if (admin)
             {
-                if (!(await roleManager.RoleExistsAsync("admin")))
+                if (!(await roleManager.RoleExistsAsync("Admin")))
                 {
-                    var adminRole = new IdentityRole("admin");
+                    var adminRole = new IdentityRole("Admin");
                     result = await roleManager.CreateAsync(adminRole);
                     if (!result.Succeeded)
                     {
                         return StatusCode(500, result);
                     }
                 }
-                result = await userManager.AddToRoleAsync(user, "admin");
+                result = await userManager.AddToRoleAsync(user, "Admin");
                 if (!result.Succeeded)
                 {
                     return StatusCode(500, result);
@@ -91,6 +93,8 @@ namespace Philanski.Backend.WebAPI.Controllers
             }
 
             await _signInManager.SignInAsync(user, isPersistent: true);
+
+            //create employee in our database after account is added to identity
             libraryEmployee.FirstName = input.FirstName;
             libraryEmployee.LastName = input.LastName;
             libraryEmployee.Email = input.Username;

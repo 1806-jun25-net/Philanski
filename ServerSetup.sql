@@ -54,15 +54,15 @@ Create Table TimeSheetApprovals
 select * from Employees
 select * from Managers
 select * from Worksites
-,kjuh 
+select * from TimeSheets
 select * from TimeSheetApprovals
 select * from EmployeeDepartments
 select * from ManagerDepartments
 select * from Departments
-select * from AspNetRoleClaims
+select * from AspNetUserRoles
 select * from AspNetUsers
-select * from AspNetUserLogins
 select * from AspNetRoles
+
 
 Delete from AspNetUsers
 Where UserName = 'BobMarley@gmail.com'

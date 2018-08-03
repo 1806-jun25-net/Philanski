@@ -141,6 +141,10 @@ namespace Philanski.Frontend.MVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        //right now the user can create a timesheet based on the current week. it will handle whether they have created a timesheet before
+        //or not. When they submit it will add a TSA to the database or tell them that already submitted their timesheet.
+        //Issues: The fields are always open, so even after submitting the TSA they can change their hours in the DB.
+        //These changes wont be reflected in the timesheetapproval
         public async Task<ActionResult> Create(List<TimeSheets> timeSheets, string submit)
         {
 
@@ -183,7 +187,36 @@ namespace Philanski.Frontend.MVC.Controllers
                     }
                     if (submit.Equals("Submit"))
                     {
-                        return View("Forbidden");
+                        //create TSA 
+                        var TSA = new TimeSheetApprovals
+                        {
+                            WeekStart = timeSheets.ElementAt(0).Date,
+                            WeekEnd = timeSheets.ElementAt(6).Date,
+                            Status = "0",
+                            TimeSubmitted = DateTime.Now
+                        };
+                        decimal HoursWorked = 0;
+                        foreach (var item in timeSheets)
+                        {
+                            HoursWorked = HoursWorked + item.RegularHours;
+                        }
+                        TSA.WeekTotalRegular = HoursWorked;
+                        var PostTSAUri = "api/employee/" + username + "/timesheetapproval/";
+                        var PostTSAJsonString = JsonConvert.SerializeObject(TSA);
+                        var postTSARequest = CreateRequestToService(HttpMethod.Post, PostTSAUri);
+                        postTSARequest.Content = new StringContent(PostTSAJsonString, Encoding.UTF8, "application/json");
+                        var postTSAResponse = await HttpClient.SendAsync(postTSARequest);
+                        //add employee id on back end
+                        if (postTSAResponse.IsSuccessStatusCode.Equals("Conflict"))
+                        {
+                            return View("TSAAlreadySubmitted");
+                        }
+                        if (!postTSAResponse.IsSuccessStatusCode)
+                        {
+                            return View("Whoops");
+                        }
+
+                        return View("TSASubmitted");
                     }
                     else
                     {
@@ -228,6 +261,10 @@ namespace Philanski.Frontend.MVC.Controllers
                         postTSARequest.Content = new StringContent(PostTSAJsonString, Encoding.UTF8, "application/json");
                         var postTSAResponse = await HttpClient.SendAsync(postTSARequest);
                         //add employee id on back end
+                        if (postTSAResponse.IsSuccessStatusCode.Equals(409))
+                        {
+                            return View("TSAAlreadySubmitted");
+                        }
                         if (!postTSAResponse.IsSuccessStatusCode)
                         {
                             return View("Whoops");

@@ -31,18 +31,6 @@ namespace Philanski.Backend.WebAPI
         public IConfiguration Configuration { get; }
 
 
-      /*  public List<string> GetDBConnectionString()
-        {
-            List<string> connectionStrings = new List<string>();
-            
-            string connectionString1 = Configuration["ConnectionStrings:dev_db"];
-            connectionStrings.Append(connectionString1);
-            string connectionString2 = Configuration["ConnectionStrings:identity_db"];
-            connectionStrings.Append(connectionString2);
-            return connectionStrings;
-
-        }*/
-
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {   
@@ -76,6 +64,7 @@ namespace Philanski.Backend.WebAPI
                     "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
                     "0123456789" +
                     "-._@+";
+               
             })
              .AddEntityFrameworkStores<IdentityDbContext>();
 
@@ -91,7 +80,12 @@ namespace Philanski.Backend.WebAPI
                     {
                         ctx.Response.StatusCode = 401; // Unauthorized
                         return Task.FromResult(0);
-                    }
+                    },
+                    OnRedirectToAccessDenied = ctx =>
+                    {
+                        ctx.Response.StatusCode = 403; // Forbidden
+                        return Task.FromResult(0);
+                    },
                 };
             });
 
@@ -99,6 +93,13 @@ namespace Philanski.Backend.WebAPI
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddCors(options => options.AddPolicy("AllowAll", builder =>
+            {
+                builder.AllowAnyOrigin();
+                builder.AllowAnyHeader();
+                builder.AllowAnyMethod();
+                builder.AllowCredentials();
+            }));
 
             services.AddSwaggerGen(c =>
             {
@@ -109,17 +110,17 @@ namespace Philanski.Backend.WebAPI
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider services)
         {
             //fix later after host works
-           // if (env.IsDevelopment())
-           // {
+           if (env.IsDevelopment())
+           {
                 app.UseDeveloperExceptionPage();
-          //  }
-           /* else
-            {
+           }
+           else
+           {
                 app.UseHsts();
-            }*/
+           }
             app.UseAuthentication();
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
@@ -131,9 +132,31 @@ namespace Philanski.Backend.WebAPI
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
                 c.RoutePrefix = string.Empty;
             });
-
+            app.UseCors("AllowAll");
             app.UseHttpsRedirection();
             app.UseMvc();
+
+            //ran once to create roles
+          //  CreateUserRoles(services).Wait();
         }
+        //private async Task CreateUserRoles(IServiceProvider serviceProvider)
+      //  {
+         //   var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+         //   var UserManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
+
+          //  IdentityResult roleResult;
+            //Adding Admin Role
+         //   var roleCheck = await RoleManager.RoleExistsAsync("Admin");
+         //   if (!roleCheck)
+          //  {
+                //create the roles and seed them to the database
+          //      roleResult = await RoleManager.CreateAsync(new IdentityRole("Admin"));
+           // }
+            //Assign Admin role to the main User here we have given our newly registered 
+            //login id for Admin management
+          //  IdentityUser user = await UserManager.FindByNameAsync("warchief@gmail.com");
+           // var User = new IdentityUser();
+           // await UserManager.AddToRoleAsync(user, "Admin");
+       // }
     }
 }

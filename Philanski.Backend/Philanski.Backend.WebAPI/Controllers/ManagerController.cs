@@ -52,9 +52,9 @@ namespace Philanski.Backend.WebAPI.Controllers
         }
 
         [HttpGet("{id}/TimeSheetApproval")]
-        public ActionResult<List<TimeSheetApproval>> GetAllTimeSheetApprovalByManagerId(int id)
+        public async Task<ActionResult<List<TimeSheetApproval>>> GetAllTimeSheetApprovalByManagerId(int id)
         {
-            var TSAByManager = Repo.GetAllTSAsThatCanBeApprovedByManager(id);
+            var TSAByManager = await Repo.GetAllTSAsThatCanBeApprovedByManager(id);
             if (!TSAByManager.Any())
             {
                 return NotFound();
