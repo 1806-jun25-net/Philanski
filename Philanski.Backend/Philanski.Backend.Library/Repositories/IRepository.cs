@@ -38,6 +38,7 @@ namespace Philanski.Backend.Library.Repositories
         //Managers
         List<Manager> GetAllManagers();
         Task<Manager> GetManagerById(int id);
+        Task<int> GetManagerIdByEmployeeId(int id);
 
         //EmployeeDepartment methods
         Task<List<int>> GetAllDepartmentIdsByEmployee(int id);

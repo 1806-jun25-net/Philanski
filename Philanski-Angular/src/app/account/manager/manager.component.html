@@ -1,0 +1,36 @@
+<div>
+  <h2>Time Sheets Approval</h2>
+</div>
+
+<div>
+  <button (click)="onGetTSAs()">Get TSAs</button>
+</div>
+<div>
+  {{TSAs.length}}
+</div>
+<div *ngIf="TSAs && TSAs.length > 0">
+  <table>
+    <thead>
+      <tr>
+        <th>Week Start</th>
+        <th>Week End</th>
+        <th>Total Hours</th>
+        <th>Status</th>
+        <th>Approving Manager Id</th>
+        <th>Time Submitted</th>
+        <th>Employee Id</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let TSA of TSAs">
+        <td>{{TSA.weekStart}}</td>
+        <td>{{TSA.weekEnd}}</td>
+        <td>{{TSA.weekTotalRegular}}</td>
+        <td>{{TSA.status}}</td>
+        <td>{{TSA.approvingManagerId}}</td>
+        <td>{{TSA.timeSubmitted}}</td>
+        <td>{{TSA.employeeId}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
