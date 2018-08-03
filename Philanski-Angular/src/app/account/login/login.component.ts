@@ -13,7 +13,7 @@ export class LoginComponent implements OnInit {
 
   constructor(private apiService: PhilanskiApiService) { }
   login = new Login('Username', 'Password')
-  success : number = 0;
+  currentUserName = 'Not Logged In'
   ngOnInit() {
   }
 
@@ -21,12 +21,26 @@ export class LoginComponent implements OnInit {
   onLogin(login: Login){
     this.apiService.postLogin(login).subscribe(
       (data : any) => {
-        this.success = 1
-        console.log(this.success)
+        console.log("login success")
+        this.currentUserName = this.login.username
+
       },
       (err: HttpErrorResponse ) =>{
-        this.success = 2
-        console.log(this.success)
+        console.log("login failed")
+
+      }
+    )
+  }
+
+  onLogout()
+  {
+    this.apiService.postLogout().subscribe(
+      (data : any) => {
+          this.currentUserName = 'Not Logged In'
+          console.log("logged out success")
+      },
+      (err : HttpErrorResponse) => {
+          console.log("error logging out")
       }
     )
   }

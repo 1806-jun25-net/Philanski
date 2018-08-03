@@ -3,10 +3,12 @@
 </div>
 
 <div>
+    <h2>Current User: {{currentUserName}}</h2>
     <!-- two-way binding -->
     <input type="text" [(ngModel)]="login.username" />
     <input type="text" [(ngModel)]="login.password" />
     <!-- event binding -->
     <button (click)="onLogin(login)">Login</button>
+    <button (click)="onLogout()">Logout</button>
   </div>
 

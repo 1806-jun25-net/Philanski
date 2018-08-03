@@ -20,7 +20,19 @@ export class PhilanskiApiService {
     'Accept': 'application/json',
     'Allow' : 'GET, POST, PUT, DELETE, OPTIONS, HEAD'
   })
-    return this.httpClient.post(this.Url + 'Account/Login', body, {headers: header})
+    return this.httpClient.post(this.Url + 'Account/Login', body, {headers: header, withCredentials: true} )
   }
+  postLogout()
+  {
+    var header = new HttpHeaders({ 
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Headers': 'Content-Type, Origin , Access-Control-* , X-Requested-With, Accept',
+      'Content-Type':  'application/json,charset=utf-8',
+      'Accept': 'application/json',
+      'Allow' : 'GET, POST, PUT, DELETE, OPTIONS, HEAD'
+    })
+    return this.httpClient.post(this.Url + 'Account/Logout', {headers: header, withCredentials: true} )
+  }
+  
 
 }
