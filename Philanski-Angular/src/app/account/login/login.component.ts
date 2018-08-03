@@ -21,6 +21,7 @@ export class LoginComponent implements OnInit {
   onLogin(login: Login){
     this.apiService.postLogin(login).subscribe(
       (data : any) => {
+        console.log(data.text())
         console.log("login success")
         this.currentUserName = this.login.username
 
@@ -36,6 +37,7 @@ export class LoginComponent implements OnInit {
   {
     this.apiService.postLogout().subscribe(
       (data : any) => {
+          console.log(data.text())
           this.currentUserName = 'Not Logged In'
           console.log("logged out success")
       },

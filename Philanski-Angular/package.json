@@ -22,9 +22,14 @@
     "@angular/router": "^6.1.0",
     "bootstrap": "^3.3.7",
     "core-js": "^2.5.4",
+<<<<<<< HEAD
     "jquery": "^3.3.1",
     "popper.js": "^1.14.4",
     "rxjs": "^6.0.0",
+=======
+    "rxjs": "^6.2.2",
+    "rxjs-compat": "^6.2.2",
+>>>>>>> a44a03d9d7abebfb859d2fb371d7040ae086d3e5
     "zone.js": "~0.8.26"
   },
   "devDependencies": {
