@@ -185,6 +185,20 @@ namespace Philanski.Backend.Library.Repositories
             return deptIds;
         }
 
+        //takes a manager by manager ID and makes them a manager for the dept id also given. NEEDS TESTING
+        public void RelateManagertoDepartment(int managerID, int deptIDtomanage)
+        {
+
+            ManagerDepartments toAdd = new ManagerDepartments();
+            toAdd.DepartmentId = deptIDtomanage;
+            toAdd.ManagerId = managerID;
+
+            _db.Add(toAdd);
+            
+
+
+        }
+
         //Employee Methods
         public async Task<Employee> GetEmployeeByID(int ID) //maybe change to find. NVM DONT USE FIND
         {
@@ -235,6 +249,21 @@ namespace Philanski.Backend.Library.Repositories
 
 
         //Manager Methods
+
+
+            //takes already existing employee and makes them a manager by adding them to manager table
+            public void PromoteEmployeeToManager(int employeeID)
+        {
+
+            Managers managertoadd = new Managers();
+
+            managertoadd.EmployeeId = employeeID;
+
+            _db.Add(managertoadd);
+
+        }
+
+
         public List<Manager> GetAllManagers()
         {
             var managers = _db.Managers.AsNoTracking();
