@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Philanski.Frontend.MVC", "P
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Philanski.Frontend.Library", "Philanski.Frontend.Library\Philanski.Frontend.Library.csproj", "{EEB2BD56-D198-4430-ADCA-2FADE1793CA9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XUnitTestProject1", "XUnitTestProject1\XUnitTestProject1.csproj", "{9E3D786F-4CD2-4C29-B5CD-113FD2532988}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Philanski.Frontend.Testing", "Philanski.Frontend.Testing\Philanski.Frontend.Testing.csproj", "{CB3C8D9C-ADCF-4B8B-92CA-409D70BB0D16}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{EEB2BD56-D198-4430-ADCA-2FADE1793CA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EEB2BD56-D198-4430-ADCA-2FADE1793CA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EEB2BD56-D198-4430-ADCA-2FADE1793CA9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9E3D786F-4CD2-4C29-B5CD-113FD2532988}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9E3D786F-4CD2-4C29-B5CD-113FD2532988}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9E3D786F-4CD2-4C29-B5CD-113FD2532988}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9E3D786F-4CD2-4C29-B5CD-113FD2532988}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CB3C8D9C-ADCF-4B8B-92CA-409D70BB0D16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CB3C8D9C-ADCF-4B8B-92CA-409D70BB0D16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CB3C8D9C-ADCF-4B8B-92CA-409D70BB0D16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CB3C8D9C-ADCF-4B8B-92CA-409D70BB0D16}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

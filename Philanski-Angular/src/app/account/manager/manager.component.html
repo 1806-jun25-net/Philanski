@@ -30,7 +30,9 @@
         <td>{{TSA.approvingManagerId}}</td>
         <td>{{TSA.timeSubmitted}}</td>
         <td>{{TSA.employeeId}}</td>
-        <td *ngIf="TSA.status == '0'"></td>
+        <td *ngIf="TSA.status == '0'">
+          <button (click)="onPutTSA(TSA)" type="submit" class="btn btn-success">Approve</button>
+        </td>
       </tr>
     </tbody>
   </table>

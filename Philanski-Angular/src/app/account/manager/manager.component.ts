@@ -30,8 +30,9 @@ export class ManagerComponent implements OnInit {
       console.log("error")
     })}
 
-  /*onPutTSAs(){
-    this.apiService.putTSA()
-  }*/
+  onPutTSA(TSA : TimeSheetApproval){
+    TSA.status = '1';
+    this.apiService.putTSA(TSA)
+  }
 
 }
