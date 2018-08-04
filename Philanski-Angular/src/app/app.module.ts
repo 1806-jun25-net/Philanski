@@ -24,7 +24,7 @@ import { NavbarComponent } from './navbar/navbar.component';
     AppComponent,
     LoginComponent,
     
-    NavbarComponent
+    
 
     NavbarComponent,
 
