@@ -10,17 +10,27 @@ import { LoginComponent } from './account/login/login.component';
 import { ManagerComponent } from './account/manager/manager.component';
 
 import { AppRoutingModule } from './/app-routing.module';
-import { LoginFormComponent } from './login-form/login-form.component';
+
+
+import { NavbarComponent } from './navbar/navbar.component';
+
+
+
+
 
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
+    
+    
+
+    NavbarComponent,
+
 
     ManagerComponent,
 
-    LoginFormComponent
 
   ],
   imports: [
