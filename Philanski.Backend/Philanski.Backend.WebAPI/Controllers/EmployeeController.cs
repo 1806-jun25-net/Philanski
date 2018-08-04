@@ -179,7 +179,7 @@ namespace Philanski.Backend.WebAPI.Controllers
                 {
                     return NotFound();
                 }
-                var TSATest = Repo.GetTimeSheetApprovalByEmployeeIdAndWeekStart(EmployeeId, TSA.WeekStart);
+                var TSATest = await Repo.GetTimeSheetApprovalByEmployeeIdAndWeekStart(EmployeeId, TSA.WeekStart);
                 if (TSATest != null)
                 {
                     return Conflict();
