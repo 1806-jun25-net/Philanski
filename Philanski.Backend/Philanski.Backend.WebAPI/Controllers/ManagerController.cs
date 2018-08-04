@@ -72,13 +72,15 @@ namespace Philanski.Backend.WebAPI.Controllers
 
         // PUT api/<controller>/5
         [HttpPut("{id}/TimeSheetApproval/{weekstart}/Employee/{EmployeeId}")]
-        public async Task<ActionResult> PutEmployeeTSAByWeekStart(string id, string weekstart, string EmployeeId, TimeSheetApproval TSA)
+        public async Task<ActionResult> PutEmployeeTSAByWeekStart(string id, string weekstart, int EmployeeId, TimeSheetApproval TSA)
         {
-            var EmployeeNumberId = await Repo.GetEmployeeIDByEmail(EmployeeId);
+            var EmployeeNumberId = await Repo.GetEmployeeIDByEmail(id);
             if (EmployeeNumberId == 0)
             {
                 return NotFound();
             }
+            var ManagerId = await Repo.GetManagerIdByEmployeeId(EmployeeNumberId);
+            TSA.ApprovingManagerId = ManagerId;
             Repo.UpdateTimeSheetApproval(TSA);
             await Repo.Save();
             return NoContent();

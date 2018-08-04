@@ -44,8 +44,9 @@ export class PhilanskiApiService {
   putTSA(TSA: TimeSheetApproval)
   {
     let body = JSON.stringify(TSA)
-    let weekstart = TSA.weekStart.slice(8,9) + TSA.weekStart.slice(4,6) + '-' + TSA.weekStart.slice(0,3)
-    return this.httpClient.put<TimeSheetApproval>(this.Url + 'Manager/' + sessionStorage.getItem('UserName') + '/TimeSheetApproval/' + weekstart + '/Employee' + TSA.employeeId, body, {headers: this.header, withCredentials: true, observe: 'response'} )
+    let weekstart = TSA.weekStart.slice(8,10) + TSA.weekStart.slice(4,7) + '-' + TSA.weekStart.slice(0,4)
+    debugger;
+    return this.httpClient.put<TimeSheetApproval>(this.Url + 'Manager/' + sessionStorage.getItem('UserName') + '/TimeSheetApproval/' + weekstart + '/Employee/' + TSA.employeeId, body, {headers: this.header, withCredentials: true, observe: 'response'} )
   }
 
 }

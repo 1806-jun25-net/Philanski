@@ -13,9 +13,4 @@
     <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Philanski.Frontend.Library\Philanski.Frontend.Library.csproj" />
-    <ProjectReference Include="..\Philanski.Frontend.MVC\Philanski.Frontend.MVC.csproj" />
-  </ItemGroup>
-
 </Project>

@@ -22,7 +22,7 @@ export class ManagerComponent implements OnInit {
     this.apiService.getTSAsForApproval().subscribe(
       (data : HttpResponse<TimeSheetApproval[]>) => {
         this.TSAs = data.body
-        debugger; 
+       // debugger; 
         console.log(data.status)
         console.log(data.headers)
     },
@@ -30,8 +30,18 @@ export class ManagerComponent implements OnInit {
       console.log("error")
     })}
 
-  /*onPutTSAs(){
-    this.apiService.putTSA()
-  }*/
+  onPutTSA(TSA : TimeSheetApproval){
+    TSA.status = '1';
+    this.apiService.putTSA(TSA).subscribe(
+      (data : HttpResponse<TimeSheetApproval>) => {
+        console.log("updated Timesheet approval")
+        console.log("get timesheets again?")
+      },
+      (err : HttpErrorResponse) =>{
+        console.log(err.status)
+
+      }
+    )
+  }
 
 }
