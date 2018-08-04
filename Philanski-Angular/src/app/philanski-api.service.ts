@@ -13,18 +13,23 @@ export class PhilanskiApiService {
   private readonly header = new HttpHeaders({ 
     'Access-Control-Allow-Origin': 'true',
     'Access-Control-Allow-Credentials':'true',
-    'Access-Control-Allow-Headers': 'Content-Type, Origin , Access-Control-* , X-Requested-With, Accept',
+   // 'Access-Control-Allow-Origin': '*',
+   // 'Access-Control-Allow-Headers': 'Content-Type, Origin , Access-Control-* , X-Requested-With, Accept',
     'Content-Type':  'application/json,charset=utf-8',
     'Accept': 'application/json',
     'Allow' : 'GET, POST, PUT, DELETE, OPTIONS, HEAD'
   });
+<<<<<<< HEAD
+=======
+  
+>>>>>>> 5f3eccabc8f682617fa66e99701246e5928cecbc
   constructor(private httpClient: HttpClient) { }
 
 
   postLogin(login: Login) {
     let body = JSON.stringify(login)
 
-    return this.httpClient.post<Login>(this.Url + 'Account/Login', body, {headers: this.header, withCredentials: true, observe: 'response'})
+    return this.httpClient.post<Login>(this.Url + 'Account/Login', body, {headers: this.header,  observe: 'response'})
          /*  .pipe(map(data : any) => {
             data.json();
             // the console.log(...) line prevents your code from working 
@@ -35,19 +40,18 @@ export class PhilanskiApiService {
 }
   postLogout()
   {
-    return this.httpClient.post(this.Url + 'Account/Logout', {headers: this.header, withCredentials: true, observe: 'response'} )
+    return this.httpClient.post(this.Url + 'Account/Logout', {headers: this.header,  observe: 'response'} )
   }
   
   getTSAsForApproval()
   {
-    return this.httpClient.get<TimeSheetApproval[]>(this.Url + 'Manager/' + sessionStorage.getItem('UserName') + '/TimeSheetApproval', {headers: this.header, withCredentials: true, observe: 'response'})
+    return this.httpClient.get<TimeSheetApproval[]>(this.Url + 'Manager/' + sessionStorage.getItem('UserName') + '/TimeSheetApproval', {headers: this.header,  observe: 'response'})
   }
   putTSA(TSA: TimeSheetApproval)
   {
     let body = JSON.stringify(TSA)
     let weekstart = TSA.weekStart.slice(8,10) + TSA.weekStart.slice(4,7) + '-' + TSA.weekStart.slice(0,4)
-    debugger;
-    return this.httpClient.put<TimeSheetApproval>(this.Url + 'Manager/' + sessionStorage.getItem('UserName') + '/TimeSheetApproval/' + weekstart + '/Employee/' + TSA.employeeId, body, {headers: this.header, withCredentials: true, observe: 'response'} )
+    return this.httpClient.put<TimeSheetApproval>(this.Url + 'Manager/' + sessionStorage.getItem('UserName') + '/TimeSheetApproval/' + weekstart + '/Employee/' + TSA.employeeId, body, {headers: this.header,  observe: 'response'} )
   }
 
 }

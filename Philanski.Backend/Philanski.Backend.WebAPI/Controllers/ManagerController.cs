@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Philanski.Backend.Library.Models;
 using Philanski.Backend.Library.Repositories;
@@ -12,6 +13,7 @@ namespace Philanski.Backend.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ManagerController : Controller
     {
 
@@ -60,6 +62,11 @@ namespace Philanski.Backend.WebAPI.Controllers
             if (!TSAByManager.Any())
             {
                 return NotFound();
+            }
+            foreach (var TSA in TSAByManager)
+            {
+                var TimeSheets = Repo.GetEmployeeTimeSheetWeekFromDate(TSA.WeekStart, TSA.EmployeeId);
+                TSA.TimeSheets = TimeSheets;
             }
             return TSAByManager;
         }
