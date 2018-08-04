@@ -11,10 +11,12 @@ import { HttpErrorResponse, HttpHeaderResponse,HttpResponse } from '@angular/com
 })
 export class LoginComponent implements OnInit {
 
+  
+
   constructor(private apiService: PhilanskiApiService) { }
-  login = new Login('Username', 'Password')
-  currentUserName = 'Not Logged In'
-  ngOnInit() {
+  login = new Login('', '')
+  userName = ''
+  ngOnInit() { 
   }
 
 
@@ -25,8 +27,7 @@ export class LoginComponent implements OnInit {
         console.log(data.status)        
         console.log("login success")
         sessionStorage.setItem('UserName', this.login.username) 
-        this.currentUserName = this.login.username
-
+        this.userName = sessionStorage.getItem('UserName');
       },
       (err: HttpErrorResponse ) =>{
         console.log(err.status)
@@ -42,7 +43,6 @@ export class LoginComponent implements OnInit {
       (data : HttpHeaderResponse) => {
           console.log(data.status)
           sessionStorage.clear()
-          this.currentUserName = 'Not Logged In'
           console.log("logged out success")
       },
       (err : HttpErrorResponse) => {
