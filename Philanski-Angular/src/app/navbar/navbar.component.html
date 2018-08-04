@@ -1,4 +1,41 @@
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Management Panel</a>
+    </div>
+    <div>
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <div>
+          <ul class="nav navbar-nav">
+            <li class="nav-item">
+              <a routerLink="tsa">Pending Timesheets</a>
+            </li>
+          </ul>
+          <ul class="nav navbar-right">
+            <li *ngIf="userName != ''" class="nav-item">
+              <p>You are logged in as {{sessionStorage.getItem('UserName')}} 
+                <span>
+                  <button (click)="onLogout()" type="submit" class="btn btn-success">Logout</button>
+                </span>
+              </p>
+            </li>
+            <li *ngIf="userName == ''" class="nav-item">
+              <a routerLink = "/login"> Login</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>  
+</nav>
+
 <div>
   <a href="https://localhost:44382/">Logout</a>
-  <a routerLink="tsa"
+  <a routerLink="/manager">TSA</a>
 </div>
