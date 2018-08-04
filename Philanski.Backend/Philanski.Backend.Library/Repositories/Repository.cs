@@ -139,6 +139,15 @@ namespace Philanski.Backend.Library.Repositories
             _db.Add(Mapper.Map(TSA));
         }
 
+        public void UpdateTimeSheetApproval(TimeSheetApproval TSA)
+        {
+            var dbTSA = Mapper.Map(TSA);
+            dbTSA.Id = TSA.Id;
+            _db.TimeSheetApprovals.Attach(dbTSA);
+            _db.Entry(dbTSA).Property(x => x.ApprovingManagerId).IsModified = true;
+            _db.Entry(dbTSA).Property(x => x.Status).IsModified = true;
+        }
+
         //get approvals by manager id
         //logic 
         //What do I have: manager id->all departments they are part of. 
@@ -279,6 +288,12 @@ namespace Philanski.Backend.Library.Repositories
                 return null;
             }
             return Mapper.Map(manager);
+        }
+
+        public async Task<int> GetManagerIdByEmployeeId(int id)
+        {
+            var ManagerId = await _db.Managers.FirstOrDefaultAsync(x => x.EmployeeId == id);
+            return ManagerId.Id;
         }
 
 

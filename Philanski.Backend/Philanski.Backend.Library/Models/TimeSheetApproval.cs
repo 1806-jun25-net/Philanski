@@ -16,6 +16,8 @@ namespace Philanski.Backend.Library.Models
         public DateTime TimeSubmitted { get; set; }
         public int EmployeeId { get; set; }
 
+        public List<TimeSheet> TimeSheets {get; set;}
+
       //  public Repository Repo { get; }
 
         

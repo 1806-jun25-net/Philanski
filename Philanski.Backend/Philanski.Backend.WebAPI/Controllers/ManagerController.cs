@@ -52,9 +52,11 @@ namespace Philanski.Backend.WebAPI.Controllers
         }
 
         [HttpGet("{id}/TimeSheetApproval")]
-        public async Task<ActionResult<List<TimeSheetApproval>>> GetAllTimeSheetApprovalByManagerId(int id)
+        public async Task<ActionResult<List<TimeSheetApproval>>> GetAllTimeSheetApprovalByManagerId(string id)
         {
-            var TSAByManager = await Repo.GetAllTSAsThatCanBeApprovedByManager(id);
+            var EmployeeId = await Repo.GetEmployeeIDByEmail(id);
+            var ManagerId = await Repo.GetManagerIdByEmployeeId(EmployeeId);
+            var TSAByManager = await Repo.GetAllTSAsThatCanBeApprovedByManager(ManagerId);
             if (!TSAByManager.Any())
             {
                 return NotFound();
@@ -69,9 +71,19 @@ namespace Philanski.Backend.WebAPI.Controllers
         }
 
         // PUT api/<controller>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        [HttpPut("{id}/TimeSheetApproval/{weekstart}/Employee/{EmployeeId}")]
+        public async Task<ActionResult> PutEmployeeTSAByWeekStart(string id, string weekstart, int EmployeeId, TimeSheetApproval TSA)
         {
+            var EmployeeNumberId = await Repo.GetEmployeeIDByEmail(id);
+            if (EmployeeNumberId == 0)
+            {
+                return NotFound();
+            }
+            var ManagerId = await Repo.GetManagerIdByEmployeeId(EmployeeNumberId);
+            TSA.ApprovingManagerId = ManagerId;
+            Repo.UpdateTimeSheetApproval(TSA);
+            await Repo.Save();
+            return NoContent();
         }
 
         // DELETE api/<controller>/5

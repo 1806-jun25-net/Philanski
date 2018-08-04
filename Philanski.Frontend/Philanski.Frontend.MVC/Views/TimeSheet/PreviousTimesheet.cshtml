@@ -14,33 +14,77 @@
             <thead>
                 <tr>
                     <th>
+                        <div>Day</div>
+                    </th>
+                    <th>
                         <div>Date</div>
                     </th>
                     <th></th>
                     <th>
                         <div>Hours</div>
                     </th>
-                    @foreach (var item in Model)
+
+                    @{
+
+                        int counter = 0;
+
+                        @foreach (var item in Model)
+                        {
+                            counter++;
+<tr>
+
+                    @if (counter == 1)
                     {
-                    <tr>
-                        <th>
-                            <div>@item.Date.Month/@item.Date.Day </div>
-                        </th>
-                        <th></th>
-                        <th>
-                            <div class="form-group">
-                                <input asp-for="@item.RegularHours" class="form-control" />
-                            </div>
-                        </th>
-                    </tr>
-                }
+                        <th>Sunday</th>
+                    }
+
+                    else if (counter == 2)
+                    {
+                        <th>Monday</th>
+                    }
+                    else if (counter == 3)
+                    {
+                        <th>Tuesday</th>
+
+                    }
+                    else if (counter == 4)
+                    {
+                        <th>Wednesday</th>
+                    }
+                    else if (counter == 5)
+                    {
+                        <th>Thursday</th>
+
+                    }
+                    else if (counter == 6)
+                    {
+                        <th>Friday</th>
+                    }
+                    else if (counter == 7)
+                    {
+                        <th>Saturday</th>
+
+                    }
+
+                    <th>
+                        <div>@item.Date.Month/@item.Date.Day </div>
+                    </th>
+                    <th></th>
+                    <th>
+                        <div class="form-group">
+                            <input disabled asp-for="@item.RegularHours" class="form-control" />
+                        </div>
+                    </th>
+                </tr>
+                    }
+                        }
                 </thead>
             </table>
             <div class="form-group">
                 @*Check if TimeSheetApproval for this week exists. If it does, disable Save/Submit Buttons and form entries.*@
                 @*Partial view to get access to the TSA model?*@
-                <input type="submit" value="Save" class="btn btn-default" />
-                <input type="submit" value="Submit" class="btn btn-default" />
+                <input disabled type="submit" value="Save" class="btn btn-default" />
+                <input disabled type="submit" value="Submit" class="btn btn-default" />
         </form>
     </div>
 

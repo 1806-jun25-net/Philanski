@@ -1,7 +1,18 @@
-<!--The content below is only a placeholder and can be replaced.-->
+<app-navbar></app-navbar>
 <div style="text-align:center">
   <h1>
     Welcome to {{ title }}!
   </h1>
-<app-login></app-login>
+
+
+
+<!--  <app-login></app-login> -->
+
+
+<nav>
+  <a routerLink = "/login"> Login</a>
+  <a routerLink = "/manager">Manager</a>
+  <a routerLink = "/"> Home </a>
+</nav>
+<router-outlet></router-outlet>
 

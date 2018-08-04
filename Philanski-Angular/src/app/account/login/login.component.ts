@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router'
 import { PhilanskiApiService } from '../../philanski-api.service';
 import { Login } from '../../models/Login'
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpHeaderResponse,HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -11,22 +11,26 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class LoginComponent implements OnInit {
 
+  
+
   constructor(private apiService: PhilanskiApiService) { }
-  login = new Login('Username', 'Password')
-  currentUserName = 'Not Logged In'
-  ngOnInit() {
+  login = new Login('', '')
+  userName = ''
+  ngOnInit() { 
   }
 
 
   onLogin(login: Login){
     this.apiService.postLogin(login).subscribe(
-      (data : any) => {
-        console.log(data.text())
+      (data : HttpResponse<Login> ) => {
+       // console.log(data.body)
+        console.log(data.status)        
         console.log("login success")
-        this.currentUserName = this.login.username
-
+        sessionStorage.setItem('UserName', this.login.username) 
+        this.userName = sessionStorage.getItem('UserName');
       },
       (err: HttpErrorResponse ) =>{
+        console.log(err.status)
         console.log("login failed")
 
       }
@@ -36,9 +40,9 @@ export class LoginComponent implements OnInit {
   onLogout()
   {
     this.apiService.postLogout().subscribe(
-      (data : any) => {
-          console.log(data.text())
-          this.currentUserName = 'Not Logged In'
+      (data : HttpHeaderResponse) => {
+          console.log(data.status)
+          sessionStorage.clear()
           console.log("logged out success")
       },
       (err : HttpErrorResponse) => {
@@ -46,4 +50,6 @@ export class LoginComponent implements OnInit {
       }
     )
   }
+
+ 
 }

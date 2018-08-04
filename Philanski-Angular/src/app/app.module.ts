@@ -7,16 +7,37 @@ import { RouterModule } from '../../node_modules/@angular/router';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './account/login/login.component';
 
+import { ManagerComponent } from './account/manager/manager.component';
+
+import { AppRoutingModule } from './/app-routing.module';
+
+
+import { NavbarComponent } from './navbar/navbar.component';
+
+
+
+
+
+
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+
+    NavbarComponent,
+
+
+
+    ManagerComponent,
+
+
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    RouterModule
+    RouterModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
