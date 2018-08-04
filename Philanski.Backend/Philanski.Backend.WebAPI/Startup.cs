@@ -137,7 +137,7 @@ namespace Philanski.Backend.WebAPI
                 .AllowAnyMethod()
                 .AllowAnyHeader()
                 .AllowCredentials());
-            app.UseHttpsRedirection();
+         //   app.UseHttpsRedirection();
             app.UseMvc();
 
             //ran once to create roles

@@ -22,7 +22,7 @@ export class ManagerComponent implements OnInit {
     this.apiService.getTSAsForApproval().subscribe(
       (data : HttpResponse<TimeSheetApproval[]>) => {
         this.TSAs = data.body
-       // debugger; 
+        debugger; 
         console.log(data.status)
         console.log(data.headers)
     },
