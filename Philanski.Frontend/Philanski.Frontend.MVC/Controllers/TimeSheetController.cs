@@ -130,6 +130,46 @@ namespace Philanski.Frontend.MVC.Controllers
                 //sort timeSheet by date monday-friday
                 timeSheet = timeSheet.OrderBy(x => x.Date).ToList();
 
+                //make a call to get gettimesheetapprovalbyweekstart
+
+               
+                var uri2 = "api/employee/" + username + "/timesheetapproval/" + weekstart;
+                var request2 = CreateRequestToService(HttpMethod.Get, uri2);
+
+                try
+                {
+                    var response2 = await HttpClient.SendAsync(request2);
+
+                    string jsonString2 = await response2.Content.ReadAsStringAsync();
+
+                    TimeSheetApprovals timeSheetApproval = JsonConvert.DeserializeObject<TimeSheetApprovals>(jsonString2);
+
+                    //need if TSA exists here basically
+
+                    if(timeSheetApproval != null)
+                    {
+                        return View("PreviousTimesheet", timeSheet);
+
+                    }
+
+
+                }
+
+                  catch (HttpRequestException ex)
+                 {
+                return View("Whoops");
+                  }
+            catch (ArgumentNullException ex)
+                 {
+                List<TimeSheets>[] ArrayOfListOfWeeks = new List<TimeSheets>[0];
+                // logging
+                return View(ArrayOfListOfWeeks);
+                 }
+
+           
+
+
+
                 return View(timeSheet);
             }
             catch (HttpRequestException ex)

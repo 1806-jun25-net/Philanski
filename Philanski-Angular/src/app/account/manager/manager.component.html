@@ -30,6 +30,7 @@
         <td>{{TSA.approvingManagerId}}</td>
         <td>{{TSA.timeSubmitted}}</td>
         <td>{{TSA.employeeId}}</td>
+        <td *ngIf="TSA.status == '0'"></td>
       </tr>
     </tbody>
   </table>

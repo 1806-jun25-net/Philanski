@@ -23,7 +23,7 @@ import { NavbarComponent } from './navbar/navbar.component';
   declarations: [
     AppComponent,
     LoginComponent,
-    
+
     NavbarComponent,
 
 

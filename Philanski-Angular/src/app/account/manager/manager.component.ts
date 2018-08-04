@@ -28,9 +28,10 @@ export class ManagerComponent implements OnInit {
     },
     (err : HttpErrorResponse) => {
       console.log("error")
-    }
-    )
+    })}
 
-  }
+  /*onPutTSAs(){
+    this.apiService.putTSA()
+  }*/
 
 }
