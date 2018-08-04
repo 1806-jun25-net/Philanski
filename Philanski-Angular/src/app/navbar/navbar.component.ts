@@ -18,10 +18,10 @@ export class NavbarComponent implements OnInit {
   ngOnInit() {
   }
 
-  getUser(): void {
-    const email = +this.route.snapshot.paramMap.get('email');
-    this.heroService.getHero(id)
-      .subscribe(hero => this.hero = hero);
-  }
+  // getUser(): void {
+  //   const email = +this.route.snapshot.paramMap.get('email');
+  //   this.heroService.getHero(id)
+  //     .subscribe(hero => this.hero = hero);
+  // }
 
 }

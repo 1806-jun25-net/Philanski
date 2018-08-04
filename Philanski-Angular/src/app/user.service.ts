@@ -8,7 +8,7 @@ export class UserService {
 
   constructor() { }
 
-  getUser() email{
-    return User;
-  }
+  // getUser() email{
+  //   return User;
+  // }
 }
