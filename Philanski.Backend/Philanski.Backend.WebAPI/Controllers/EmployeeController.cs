@@ -108,6 +108,8 @@ namespace Philanski.Backend.WebAPI.Controllers
         
 
         [HttpGet("{id}/timesheetapproval/{weekstart}", Name = "EmployeeTimeSheetApproval")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
         public async Task<ActionResult<TimeSheetApproval>> GetTimeSheetApprovalByWeekStart(string id, string weekstart)
         {
             var EmployeeId = await Repo.GetEmployeeIDByEmail(id);
@@ -118,10 +120,17 @@ namespace Philanski.Backend.WebAPI.Controllers
             try
             {
 
+                
                 DateTime DateWeekStart = DateTime.ParseExact(weekstart, "dd-MM-yyyy", null);
-                var TSA = await Repo.GetTimeSheetApprovalByEmployeeIdAndWeekStart(EmployeeId, DateWeekStart.Date);
+
+                //YALL FORGOT THIS PART AS IN ABOVE - Phil
+                var actualWeekStart = TimeSheetApproval.GetPreviousSundayOfWeek(DateWeekStart);
+
+                var TSA = await Repo.GetTimeSheetApprovalByEmployeeIdAndWeekStart(EmployeeId, actualWeekStart.Date);
                 //we need to send something back to front end to represent they dont have one for that week
                 return TSA;
+
+                
 
             }
             catch (Exception ex)
