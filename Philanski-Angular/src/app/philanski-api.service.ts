@@ -9,20 +9,21 @@ import { TimeSheetApproval } from './models/TimeSheetApproval'
 export class PhilanskiApiService {
 
   private readonly Url : string = 'https://localhost:44386/api/'
-  //private readonly Url : string = 'https://philanksi.azurewebsites.net/api/'
-  constructor(private httpClient: HttpClient) { }
-
-
-  postLogin(login: Login) {
-    var body = JSON.stringify(login)
-    var header = new HttpHeaders({ 
+  private readonly header = new HttpHeaders({ 
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Headers': 'Content-Type, Origin , Access-Control-* , X-Requested-With, Accept',
     'Content-Type':  'application/json,charset=utf-8',
     'Accept': 'application/json',
     'Allow' : 'GET, POST, PUT, DELETE, OPTIONS, HEAD'
   });
-    return this.httpClient.post<Login>(this.Url + 'Account/Login', body, {headers: header, withCredentials: true, observe: 'response'})
+  //private readonly Url : string = 'https://philanksi.azurewebsites.net/api/'
+  constructor(private httpClient: HttpClient) { }
+
+
+  postLogin(login: Login) {
+    let body = JSON.stringify(login)
+
+    return this.httpClient.post<Login>(this.Url + 'Account/Login', body, {headers: this.header, withCredentials: true, observe: 'response'})
          /*  .pipe(map(data : any) => {
             data.json();
             // the console.log(...) line prevents your code from working 
@@ -33,26 +34,18 @@ export class PhilanskiApiService {
 }
   postLogout()
   {
-    var header = new HttpHeaders({ 
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Headers': 'Content-Type, Origin , Access-Control-* , X-Requested-With, Accept',
-      'Content-Type':  'application/json,charset=utf-8',
-      'Accept': 'application/json',
-      'Allow' : 'GET, POST, PUT, DELETE, OPTIONS, HEAD'
-    })
-    return this.httpClient.post(this.Url + 'Account/Logout', {headers: header, withCredentials: true, observe: 'response'} )
+    return this.httpClient.post(this.Url + 'Account/Logout', {headers: this.header, withCredentials: true, observe: 'response'} )
   }
   
   getTSAsForApproval()
   {
-    var header = new HttpHeaders({ 
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Headers': 'Content-Type, Origin , Access-Control-* , X-Requested-With, Accept',
-      'Content-Type':  'application/json,charset=utf-8',
-      'Accept': 'application/json',
-      'Allow' : 'GET, POST, PUT, DELETE, OPTIONS, HEAD'
-    })
-    return this.httpClient.get<TimeSheetApproval[]>(this.Url + 'Manager/' + sessionStorage.getItem('UserName') + '/TimeSheetApproval', {headers: header, withCredentials: true, observe: 'response'})
+    return this.httpClient.get<TimeSheetApproval[]>(this.Url + 'Manager/' + sessionStorage.getItem('UserName') + '/TimeSheetApproval', {headers: this.header, withCredentials: true, observe: 'response'})
+  }
+  putTSA(TSA: TimeSheetApproval)
+  {
+    let body = JSON.stringify(TSA)
+    let weekstart = TSA.weekStart.slice(8,9) + TSA.weekStart.slice(4,6) + '-' + TSA.weekStart.slice(0,3)
+    return this.httpClient.put<TimeSheetApproval>(this.Url + 'Manager/' + sessionStorage.getItem('UserName') + '/TimeSheetApproval/' + weekstart + '/Employee' + TSA.employeeId, body, {headers: this.header, withCredentials: true, observe: 'response'} )
   }
 
 }

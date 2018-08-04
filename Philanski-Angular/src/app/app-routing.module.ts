@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './account/login/login.component'
 import { Login } from './models/Login';
 import { AppComponent } from './app.component';
+import { ManagerComponent } from './account/manager/manager.component';
 
 
 const routes: Routes = [
@@ -11,6 +12,8 @@ const routes: Routes = [
   { path: 'home', component: AppComponent},
 
   { path: 'logout', redirectTo: 'https://localhost:44382/', pathMatch: 'full'},
+
+  { path: 'manager', component: ManagerComponent}
   //{ path: 'tsa', component: tsaComponent }
 
 ];
