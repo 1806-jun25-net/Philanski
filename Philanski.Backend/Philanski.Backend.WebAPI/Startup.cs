@@ -132,7 +132,11 @@ namespace Philanski.Backend.WebAPI
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
                 c.RoutePrefix = string.Empty;
             });
-            app.UseCors("AllowAll");
+            app.UseCors(builder => builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials());
             app.UseHttpsRedirection();
             app.UseMvc();
 
