@@ -127,6 +127,7 @@ namespace Philanski.Frontend.MVC.Controllers
                     return View(newTimeSheet);
                 }
 
+                   
                 //sort timeSheet by date monday-friday
                 timeSheet = timeSheet.OrderBy(x => x.Date).ToList();
 
@@ -191,6 +192,16 @@ namespace Philanski.Frontend.MVC.Controllers
             if (TempData.Peek("username") == null)
             {
                 return View("Forbidden");
+            }
+            decimal totalhours = 0;
+            foreach (var timesheet in timeSheets)
+            {
+                totalhours = timesheet.RegularHours + totalhours;
+            }
+            if (totalhours > 60.00m)
+            {
+                ModelState.AddModelError(string.Empty, "Can't submit or save a time sheet over 60 hours");
+                return View(timeSheets);
             }
             var username = TempData.Peek("username");
             var uri = "api/employee/" + username + "/timesheet/" + timeSheets.ElementAt(0).Date.ToString("dd-MM-yyyy");

@@ -28,10 +28,11 @@ namespace Philanski.Backend.WebAPI.Controllers
 
         //response that gathers all departments
 
-        [Authorize]
+        
         [HttpGet]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
+        [Authorize]
         public ActionResult<List<Department>> GetAll()
         {
             List<Department> Departments = Repo.GetAllDepartments();
@@ -50,6 +51,7 @@ namespace Philanski.Backend.WebAPI.Controllers
         [HttpGet("{id}", Name = "GetDepartment")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
+        [Authorize]
         public async Task<ActionResult<Department>> GetById(int id)
         {
             var dept = await Repo.GetDepartmentByID(id);
