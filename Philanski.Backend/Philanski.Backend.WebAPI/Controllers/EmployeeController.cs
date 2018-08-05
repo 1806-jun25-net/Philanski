@@ -37,8 +37,11 @@ namespace Philanski.Backend.WebAPI.Controllers
                 return NotFound();
             }
             List<Employee> singleEmployee = new List<Employee>();
-            singleEmployee = (employees.Where(x => x.Email == User.Identity.Name).ToList());
-            return singleEmployee;
+
+            //commented out for testing, not sure we needed this?
+           // singleEmployee = (employees.Where(x => x.Email == User.Identity.Name).ToList());
+            // return singleEmployee;
+            return employees;
         }
 
         // GET api/<controller>/{username}
