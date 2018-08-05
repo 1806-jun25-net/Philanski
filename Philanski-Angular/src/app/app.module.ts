@@ -38,7 +38,7 @@ import { NavbarComponent } from './navbar/navbar.component';
     HttpClientModule,
     RouterModule,
     AppRoutingModule,
-    Router
+    //Router
   ],
   providers: [],
   bootstrap: [AppComponent]
