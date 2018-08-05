@@ -19,10 +19,7 @@ export class PhilanskiApiService {
     'Accept': 'application/json',
     'Allow' : 'GET, POST, PUT, DELETE, OPTIONS, HEAD'
   });
-<<<<<<< HEAD
-=======
-  
->>>>>>> 5f3eccabc8f682617fa66e99701246e5928cecbc
+
   constructor(private httpClient: HttpClient) { }
 
 
