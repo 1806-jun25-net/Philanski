@@ -11,13 +11,18 @@ export class PhilanskiApiService {
   private readonly Url : string = 'https://localhost:44386/api/'
   //private readonly Url : string = 'https://philanksi.azurewebsites.net/api/'
   private readonly header = new HttpHeaders({ 
+    'Access-Control-Allow-Origin': 'true',
+    'Access-Control-Allow-Credentials':'true',
    // 'Access-Control-Allow-Origin': '*',
    // 'Access-Control-Allow-Headers': 'Content-Type, Origin , Access-Control-* , X-Requested-With, Accept',
     'Content-Type':  'application/json,charset=utf-8',
     'Accept': 'application/json',
     'Allow' : 'GET, POST, PUT, DELETE, OPTIONS, HEAD'
   });
+<<<<<<< HEAD
+=======
   
+>>>>>>> 5f3eccabc8f682617fa66e99701246e5928cecbc
   constructor(private httpClient: HttpClient) { }
 
 

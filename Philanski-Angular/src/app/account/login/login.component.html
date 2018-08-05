@@ -1,7 +1,5 @@
-<div class="center-block">
-  
+<div style="background-color:#5f9ea0">
   <form style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);">
-
     <div class="form-group">
       <label for="username">Username</label>
       <input type="text" [(ngModel)]="login.username" name="username" autofocus class="form-control" id="name" required>
@@ -10,9 +8,6 @@
       <label for="password">Password</label>
       <input type="text" [(ngModel)]="login.password" type="password" name="password" class="form-control" id="alterEgo" required>
     </div>
-
     <button (click)="onLogin(login)" type="submit" class="btn btn-success">Login</button>
-
   </form>
-
 </div>
