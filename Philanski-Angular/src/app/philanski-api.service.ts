@@ -8,9 +8,9 @@ import { TimeSheetApproval } from './models/TimeSheetApproval'
 })
 export class PhilanskiApiService {
 
-  private readonly Url : string = 'https://localhost:44386/api/'
+ // private readonly Url : string = 'https://localhost:44386/api/'
 
-//  private readonly Url : string = 'https://philanksi.azurewebsites.net/api/'
+  private readonly Url : string = 'https://philanksi.azurewebsites.net/api/'
 
   private readonly header = new HttpHeaders({ 
   //  'Access-Control-Allow-Origin': 'true',

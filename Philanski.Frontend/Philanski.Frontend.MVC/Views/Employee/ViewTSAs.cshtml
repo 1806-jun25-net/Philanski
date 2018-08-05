@@ -1,8 +1,6 @@
 ﻿@model IEnumerable<Philanski.Frontend.MVC.Models.TimeSheetApprovals>
 
-@{
-    ViewData["Title"] = "ViewTSAs";
-}
+
 
 <h2>Here are your currently submitted timesheets and approval status.</h2>
 
@@ -12,9 +10,7 @@
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
+
             <th>
                 @Html.DisplayNameFor(model => model.WeekStart)
             </th>
@@ -42,9 +38,6 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.WeekStart)
             </td>

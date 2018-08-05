@@ -1,12 +1,8 @@
 ﻿@model List<Philanski.Frontend.MVC.Models.TimeSheets>[]
 
-@{
-    ViewData["Title"] = "Index";
-}
 
-<h2>Index</h2>
 
-<h4>TimeSheets</h4>
+<h2>Time Sheets</h2>
 <hr />
 
 <div>
@@ -16,7 +12,6 @@
     <div>
         <div>
             <header>
-                <h2>TimeSheets</h2>
                 <a class="btn btn-default" asp-area="" asp-controller="TimeSheet" asp-action="Create" asp-route-weekstart=@DateTime.Now.Date.ToString("dd-MM-yyyy")>Current Time Sheet</a>
             </header>
         </div>
