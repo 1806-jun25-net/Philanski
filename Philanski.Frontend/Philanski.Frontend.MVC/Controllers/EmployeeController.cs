@@ -22,10 +22,10 @@ namespace Philanski.Frontend.MVC.Controllers
         {
 
 
-            if (TempData.Peek("username") == null)
+     /*       if (TempData.Peek("username") == null)
             {
                 return View("Forbidden");
-            }
+            }*/
             var username = TempData.Peek("username");
             
 
@@ -36,6 +36,15 @@ namespace Philanski.Frontend.MVC.Controllers
             {
                 var response = await HttpClient.SendAsync(request);
 
+                if (response.StatusCode == System.Net.HttpStatusCode.Forbidden)
+                {
+                    return View("Forbidden");
+                }
+
+                if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                {
+                    return View("Unauthorized");
+                }
                 if (!response.IsSuccessStatusCode)
                 {
                     return View("Whoops");
@@ -62,10 +71,10 @@ namespace Philanski.Frontend.MVC.Controllers
 
 
 
-            if (TempData.Peek("username") == null)
-            {
-                return View("Forbidden");
-            }
+          // if (TempData.Peek("username") == null)
+          //  {
+          //      return View("Forbidden");
+          //  }
             var username = TempData.Peek("username");
 
 
@@ -75,7 +84,15 @@ namespace Philanski.Frontend.MVC.Controllers
             try
             {
                 var response = await HttpClient.SendAsync(request);
+                if (response.StatusCode == System.Net.HttpStatusCode.Forbidden)
+                {
+                    return View("Forbidden");
+                }
 
+                if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                {
+                    return View("Unauthorized");
+                }
                 if (!response.IsSuccessStatusCode)
                 {
                     return View("Whoops");

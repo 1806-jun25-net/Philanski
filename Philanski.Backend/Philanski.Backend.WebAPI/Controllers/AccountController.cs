@@ -19,7 +19,7 @@ namespace Philanski.Backend.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-   // [Authorize]
+    [Authorize]
   //  [EnableCors(origins: "http://localhost:4200", headers: "*", methods: "*")]
     public class AccountController : ControllerBase
     {
@@ -62,7 +62,7 @@ namespace Philanski.Backend.WebAPI.Controllers
         [HttpPost("Register")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
-        [AllowAnonymous]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Register(Register input,
             [FromServices] UserManager<IdentityUser> userManager,
             [FromServices] RoleManager<IdentityRole> roleManager, bool admin = false)

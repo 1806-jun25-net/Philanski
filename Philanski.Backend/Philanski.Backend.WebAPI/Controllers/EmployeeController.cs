@@ -28,6 +28,7 @@ namespace Philanski.Backend.WebAPI.Controllers
         [HttpGet]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
+        [Authorize]
         public ActionResult<List<Employee>> GetAll()
         {
             List<Employee> employees = Repo.GetAllEmployees();
@@ -45,10 +46,11 @@ namespace Philanski.Backend.WebAPI.Controllers
         }
 
         // GET api/<controller>/{username}
-        [AllowAnonymous]
+        
         [HttpGet("{id}", Name = "GetEmployee")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
+        [Authorize]
         public async Task<ActionResult<Employee>> Get(string id)
         {
             //  var employee = await Repo.GetEmployeeByID(id);
@@ -63,6 +65,7 @@ namespace Philanski.Backend.WebAPI.Controllers
         [HttpGet("{id}/timesheet")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
+        [Authorize]
         public async Task<ActionResult<List<TimeSheet>>> GetTimeSheetsOfEmployee (string id)
         {
             var EmployeeId = await Repo.GetEmployeeIDByEmail(id);
@@ -82,8 +85,13 @@ namespace Philanski.Backend.WebAPI.Controllers
         [HttpGet("{id}/timesheet/{weekstart}", Name = "EmployeeTimesheets")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
+        [Authorize]
         public async Task<ActionResult<List<TimeSheet>>> GetFullWeek(string id, string weekstart)
         {
+            if (User.Identity.Name != id)
+            {
+                return StatusCode(401);
+            }
             var EmployeeId = await Repo.GetEmployeeIDByEmail(id);
             if (EmployeeId == 0)
             {
@@ -112,6 +120,7 @@ namespace Philanski.Backend.WebAPI.Controllers
         [HttpGet("{id}/timesheetapproval")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
+        [Authorize]
         public async Task<List<TimeSheetApproval>> GetAllTSAsByEmployeeUserName(string id)
         {
 
@@ -126,6 +135,7 @@ namespace Philanski.Backend.WebAPI.Controllers
         [HttpGet("{id}/timesheetapproval/{weekstart}", Name = "EmployeeTimeSheetApproval")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
+        [Authorize]
         public async Task<ActionResult<TimeSheetApproval>> GetTimeSheetApprovalByWeekStart(string id, string weekstart)
         {
             var EmployeeId = await Repo.GetEmployeeIDByEmail(id);
@@ -158,6 +168,7 @@ namespace Philanski.Backend.WebAPI.Controllers
         // POST api/<controller>
         //this will take in datetime.now and will have to find first day of the week
         [HttpPost("{id}/timesheet")]
+        [Authorize]
         public async Task<ActionResult> PostFullWeek(string id, List<TimeSheet> timeSheets)
         {
             try
@@ -186,6 +197,7 @@ namespace Philanski.Backend.WebAPI.Controllers
         }
 
         [HttpPost("{id}/timesheetapproval")]
+        [Authorize]
         public async Task<ActionResult> PostTSA(string id, TimeSheetApproval TSA)
         {
             try
@@ -213,6 +225,7 @@ namespace Philanski.Backend.WebAPI.Controllers
 
         // PUT api/<controller>/5
         [HttpPut("{id}/timesheet/{weekstart}")]
+        [Authorize]
         public async Task<ActionResult> PutFullWeek(string id, string weekstart, List<TimeSheet> timeSheets)
         {
             var EmployeeId = await Repo.GetEmployeeIDByEmail(id);
