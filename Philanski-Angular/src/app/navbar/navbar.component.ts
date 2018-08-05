@@ -11,7 +11,7 @@ import { LoginComponent } from '../account/login/login.component';
 export class NavbarComponent implements OnInit {
 
   constructor(
-    private route: ActivatedRoute
+    
   ) {}
   
   userName = sessionStorage.getItem('UserName')
