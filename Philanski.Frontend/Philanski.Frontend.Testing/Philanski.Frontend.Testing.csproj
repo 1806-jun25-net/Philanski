@@ -15,7 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Philanski.Frontend.Library\Philanski.Frontend.Library.csproj" />
     <ProjectReference Include="..\Philanski.Frontend.MVC\Philanski.Frontend.MVC.csproj" />
   </ItemGroup>
 
