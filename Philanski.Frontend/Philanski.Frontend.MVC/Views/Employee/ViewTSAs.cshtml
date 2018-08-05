@@ -1,0 +1,87 @@
+﻿@model IEnumerable<Philanski.Frontend.MVC.Models.TimeSheetApprovals>
+
+@{
+    ViewData["Title"] = "ViewTSAs";
+}
+
+<h2>Here are your currently submitted timesheets and approval status.</h2>
+
+<p>
+    
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WeekStart)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WeekEnd)
+            </th>
+            <th>
+               Worked Hours
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ApprovingManagerId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TimeSubmitted)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmployeeId)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WeekStart)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WeekEnd)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WeekTotalRegular)
+            </td>
+            
+               
+                @if (item.Status == "0")
+                {
+                <td> Pending </td>
+            }
+            else if (item.Status == "1")
+            {
+                <td> Approved </td>
+
+            }
+            else if (item.Status == "2")
+            {
+                <td> Denied </td>
+
+            }
+               
+                <td>
+                    @Html.DisplayFor(modelItem => item.ApprovingManagerId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TimeSubmitted)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmployeeId)
+                </td>
+                <td></td>
+            </tr>
+}
+    </tbody>
+</table>

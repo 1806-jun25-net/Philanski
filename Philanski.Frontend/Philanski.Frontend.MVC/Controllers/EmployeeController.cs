@@ -57,9 +57,41 @@ namespace Philanski.Frontend.MVC.Controllers
         }
 
         // GET: Employee/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> ViewTSAs()
         {
-            return View();
+
+
+
+            if (TempData.Peek("username") == null)
+            {
+                return View("Forbidden");
+            }
+            var username = TempData.Peek("username");
+
+
+            var request = CreateRequestToService(HttpMethod.Get, "api/Employee/" + username + "/timesheetapproval");
+
+
+            try
+            {
+                var response = await HttpClient.SendAsync(request);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    return View("Whoops");
+                }
+
+                string jsonString = await response.Content.ReadAsStringAsync();
+
+                List<TimeSheetApprovals> employeeTSAs = JsonConvert.DeserializeObject<List<TimeSheetApprovals>>(jsonString);
+
+                return View(employeeTSAs);
+            }
+            catch (HttpRequestException ex)
+            {
+                return View("Whoops");
+            }
+           
         }
 
         // GET: Employee/Create

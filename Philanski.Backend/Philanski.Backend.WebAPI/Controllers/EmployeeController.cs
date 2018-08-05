@@ -106,8 +106,19 @@ namespace Philanski.Backend.WebAPI.Controllers
 
         }
 
-      //  [HttpGet("{id}/timesheetapproval")]
-        
+        [HttpGet("{id}/timesheetapproval")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        public async Task<List<TimeSheetApproval>> GetAllTSAsByEmployeeUserName(string id)
+        {
+
+            int userid = await Repo.GetEmployeeIDByEmail(id);
+            List <TimeSheetApproval> empTSAs = Repo.GetAllTimeSheetsFromEmployee(userid);
+            return empTSAs;
+
+        }
+
+
 
         [HttpGet("{id}/timesheetapproval/{weekstart}", Name = "EmployeeTimeSheetApproval")]
         [ProducesResponseType(200)]
