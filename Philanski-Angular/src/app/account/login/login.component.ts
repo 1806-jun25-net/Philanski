@@ -13,7 +13,7 @@ export class LoginComponent implements OnInit {
 
   
 
-  constructor(private apiService: PhilanskiApiService) { }
+  constructor(private apiService: PhilanskiApiService, private router: Router) { }
   login = new Login('', '')
   userName = ''
   ngOnInit() { 
@@ -28,6 +28,8 @@ export class LoginComponent implements OnInit {
         console.log("login success")
         sessionStorage.setItem('UserName', this.login.username) 
         this.userName = sessionStorage.getItem('UserName');
+        this.router.navigateByUrl('/')
+        
       },
       (err: HttpErrorResponse ) =>{
         console.log(err.status)
