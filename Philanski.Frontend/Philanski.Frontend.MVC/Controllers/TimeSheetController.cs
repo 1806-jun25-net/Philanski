@@ -25,10 +25,7 @@ namespace Philanski.Frontend.MVC.Controllers
 
         public async Task<ActionResult> Index()
         {
-            if (TempData.Peek("username") == null)
-            {
-                return View("Forbidden");
-            }
+
             var username = TempData.Peek("username");
             var uri = "api/employee/" + username + "/timesheet";
             var request = CreateRequestToService(HttpMethod.Get, uri);
@@ -39,11 +36,15 @@ namespace Philanski.Frontend.MVC.Controllers
                 //get time sheets belonging to logged in employee
                 var response = await HttpClient.SendAsync(request);
 
-                if (response.StatusCode.Equals("Forbidden"))
+                if (response.StatusCode == System.Net.HttpStatusCode.Forbidden)
                 {
-                    return View("Whoops");
+                    return View("Forbidden");
                 }
 
+                if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                {
+                    return View("Unauthorized");
+                }
                 string jsonString = await response.Content.ReadAsStringAsync();
 
                 List<TimeSheets> timeSheet = JsonConvert.DeserializeObject<List<TimeSheets>>(jsonString);
@@ -84,10 +85,7 @@ namespace Philanski.Frontend.MVC.Controllers
         public async Task<ActionResult> Create(string weekstart)
         {
             //need to add code that disables submit button if TSA exists
-            if (TempData.Peek("username") == null)
-            {
-                return View("Forbidden");
-            }
+
             var username = TempData.Peek("username");
             var uri = "api/employee/" + username + "/timesheet/" + weekstart;
             var request = CreateRequestToService(HttpMethod.Get, uri);
@@ -96,6 +94,15 @@ namespace Philanski.Frontend.MVC.Controllers
             {
                 var response = await HttpClient.SendAsync(request);
 
+                if (response.StatusCode == System.Net.HttpStatusCode.Forbidden)
+                {
+                    return View("Forbidden");
+                }
+
+                if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                {
+                    return View("Unauthorized");
+                }
                 if (!response.IsSuccessStatusCode)
                 {
                     return View("Whoops");
@@ -191,10 +198,10 @@ namespace Philanski.Frontend.MVC.Controllers
         public async Task<ActionResult> Create(List<TimeSheets> timeSheets, string submit)
         {
 
-            if (TempData.Peek("username") == null)
+       /*     if (TempData.Peek("username") == null)
             {
                 return View("Forbidden");
-            }
+            }*/
             decimal totalhours = 0;
             foreach (var timesheet in timeSheets)
             {
@@ -213,6 +220,15 @@ namespace Philanski.Frontend.MVC.Controllers
             {
                 var response = await HttpClient.SendAsync(request);
 
+                if (response.StatusCode == System.Net.HttpStatusCode.Forbidden)
+                {
+                    return View("Forbidden");
+                }
+
+                if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                {
+                    return View("Unauthorized");
+                }
                 if (!response.IsSuccessStatusCode)
                 {
                     return View("Whoops");
@@ -343,10 +359,7 @@ namespace Philanski.Frontend.MVC.Controllers
 
         public async Task<ActionResult> PreviousTimesheet(string weekstart)
         {
-            if (TempData.Peek("username") == null)
-            {
-                return View("Forbidden");
-            }
+
             var username = TempData.Peek("username");
             var uri = "api/employee/" + username + "/timesheet/" + weekstart;
             var request = CreateRequestToService(HttpMethod.Get, uri);
@@ -354,6 +367,15 @@ namespace Philanski.Frontend.MVC.Controllers
             try
             {
                 var response = await HttpClient.SendAsync(request);
+                if (response.StatusCode == System.Net.HttpStatusCode.Forbidden)
+                {
+                    return View("Forbidden");
+                }
+
+                if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                {
+                    return View("Unauthorized");
+                }
 
                 if (!response.IsSuccessStatusCode)
                 {

@@ -28,10 +28,14 @@ namespace Philanski.Frontend.MVC.Controllers
             try
             {
                 var response = await HttpClient.SendAsync(request);
-
-                if(response.StatusCode.Equals(401))
+                if (response.StatusCode == System.Net.HttpStatusCode.Forbidden)
                 {
                     return View("Forbidden");
+                }
+
+                if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                {
+                    return View("Unauthorized");
                 }
                 if (!response.IsSuccessStatusCode)
                 {

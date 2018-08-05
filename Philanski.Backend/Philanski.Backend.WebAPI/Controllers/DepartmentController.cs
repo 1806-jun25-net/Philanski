@@ -32,7 +32,7 @@ namespace Philanski.Backend.WebAPI.Controllers
         [HttpGet]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public ActionResult<List<Department>> GetAll()
         {
             List<Department> Departments = Repo.GetAllDepartments();

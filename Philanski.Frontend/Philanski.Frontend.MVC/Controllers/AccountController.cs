@@ -43,6 +43,15 @@ namespace Philanski.Frontend.MVC.Controllers
             {
                 return View("Error");
             }
+            if (apiResponse.StatusCode == System.Net.HttpStatusCode.Forbidden)
+            {
+                return View("Forbidden");
+            }
+
+            if (apiResponse.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+            {
+                return View("Unauthorized");
+            }
 
             if (!apiResponse.IsSuccessStatusCode)
             {
