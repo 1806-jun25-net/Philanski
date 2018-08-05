@@ -6,39 +6,49 @@
   <button (click)="onGetTSAs()">Get TSAs</button>
 </div>
 <div>
-  {{TSAs.length}}
+  Number of timesheets: {{TSAs.length}}
 </div>
 <div *ngIf="TSAs && TSAs.length > 0">
-  <table>
+  <table class="table table-hover">
     <thead>
       <tr>
-        <th>Week Start</th>
-        <th>Week End</th>
-        <th>Total Hours</th>
-        <th>Status</th>
-        <th>Approving Manager Id</th>
-        <th>Time Submitted</th>
-        <th>Employee Id</th>
+        <th scope="col">Week Start</th>
+        <th scope="col">Week End</th>
+        <th scope="col">Total Hours</th>
+        <th scope="col">Status</th>
+        <th scope="col">Approving Manager Id</th>
+        <th scope="col">Time Submitted</th>
+        <th scope="col">Employee Id</th>
+        <th scope="col">Action</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let TSA of TSAs">
-        <td>{{TSA.weekStart}}</td>
-        <td>{{TSA.weekEnd}}</td>
-        <td>{{TSA.weekTotalRegular}}
-          <button (click)="myFunction(TSA)" class="dropbtn">Dropdown</button>
+      <tr *ngFor="let TSA of TSAs" class="table-primary">
+        <td>{{TSA.weekStart.slice(0,10)}}</td>
+        <td>{{TSA.weekEnd.slice(0,10)}}</td>
+        <td>
+          <button (click)="myFunction(TSA)" class="dropdown">{{TSA.weekTotalRegular}}</button>
           <div id={{TSA.id}} class="dropdown-content">
             <p *ngFor="let timesheet of TSA.timeSheets">
-              {{timesheet.date.slice(5,10)}} {{timesheet.regularHours}}
+              {{timesheet.date.slice(5,10)}}: {{timesheet.regularHours}} hours
             </p>
           </div>
         </td>
         <td>{{TSA.status}}</td>
         <td>{{TSA.approvingManagerId}}</td>
-        <td>{{TSA.timeSubmitted}}</td>
+        <td>{{TSA.timeSubmitted.slice(0,10)}} at {{TSA.timeSubmitted.slice(11,18)}}</td>
         <td>{{TSA.employeeId}}</td>
         <td *ngIf="TSA.status == '0'">
-          <button (click)="onPutTSA(TSA)" type="submit" class="btn btn-success">Approve</button>
+          <button (click)="onPutTSAApprove(TSA)" type="submit" class="btn btn-success">Approve</button>
+        </td>
+        <td *ngIf="TSA.status == '1'">
+            Approved
+          </td>
+        <td *ngIf="TSA.status == '0'">
+            <button (click)="onPutTSADeny(TSA)" type="submit" class="btn btn-danger">Decline</button>
+        </td>
+        <td *ngIf="TSA.status == '2'">
+            Declined
         </td>
       </tr>
     </tbody>

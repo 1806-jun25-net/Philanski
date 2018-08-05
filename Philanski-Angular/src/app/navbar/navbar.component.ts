@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { User } from '../user';
 import { ActivatedRoute } from '@angular/router';
+import { LoginComponent } from '../account/login/login.component';
 
 @Component({
   selector: 'app-navbar',
@@ -9,19 +10,13 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class NavbarComponent implements OnInit {
 
-  @Input() user: User;
-
   constructor(
     private route: ActivatedRoute
   ) {}
+  
   userName = sessionStorage.getItem('UserName')
+
   ngOnInit() {
+    var userName = sessionStorage.getItem('UserName');
   }
-
-  // getUser(): void {
-  //   const email = +this.route.snapshot.paramMap.get('email');
-  //   this.heroService.getHero(id)
-  //     .subscribe(hero => this.hero = hero);
-  // }
-
 }
