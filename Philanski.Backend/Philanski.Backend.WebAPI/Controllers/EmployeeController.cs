@@ -37,8 +37,11 @@ namespace Philanski.Backend.WebAPI.Controllers
                 return NotFound();
             }
             List<Employee> singleEmployee = new List<Employee>();
-            singleEmployee = (employees.Where(x => x.Email == User.Identity.Name).ToList());
-            return singleEmployee;
+
+            //commented out for testing, not sure we needed this?
+           // singleEmployee = (employees.Where(x => x.Email == User.Identity.Name).ToList());
+            // return singleEmployee;
+            return employees;
         }
 
         // GET api/<controller>/{username}
@@ -106,8 +109,19 @@ namespace Philanski.Backend.WebAPI.Controllers
 
         }
 
-      //  [HttpGet("{id}/timesheetapproval")]
-        
+        [HttpGet("{id}/timesheetapproval")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        public async Task<List<TimeSheetApproval>> GetAllTSAsByEmployeeUserName(string id)
+        {
+
+            int userid = await Repo.GetEmployeeIDByEmail(id);
+            List <TimeSheetApproval> empTSAs = Repo.GetAllTimeSheetsFromEmployee(userid);
+            return empTSAs;
+
+        }
+
+
 
         [HttpGet("{id}/timesheetapproval/{weekstart}", Name = "EmployeeTimeSheetApproval")]
         [ProducesResponseType(200)]

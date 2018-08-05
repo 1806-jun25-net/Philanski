@@ -93,6 +93,51 @@ namespace Philanski.Backend.Testing
             }
         }
 
+        //TESTING DEPARTMENT API CONTROLLER
+        [Fact]
+        public void TestingEmpController()
+        {
+
+        //      public int Id { get; set; }
+        //public string FirstName { get; set; }
+        //public string LastName { get; set; }
+        //public string Email { get; set; }
+        //public string JobTitle { get; set; }
+        //public int WorksiteId { get; set; }
+        //public decimal Salary { get; set; }
+        //public DateTime HireDate { get; set; }
+        //public DateTime? TerminationDate { get; set; }
+        // arrange
+        var empList = new List<Employee>
+            {
+                new Employee { Id = 1, FirstName = "Jeff" , LastName = "Jeff", Email = "jeffjeff@gmail.com", JobTitle = "Tester", WorksiteId = 1, Salary = 20000.00m, HireDate= DateTime.Now, TerminationDate = null},
+                new Employee { Id = 1, FirstName = "Jeff" , LastName = "Jeff", Email = "jeffjeff@gmail.com", JobTitle = "Tester", WorksiteId = 1, Salary = 20000.00m, HireDate= DateTime.Now, TerminationDate = null}
+            };
+            var mockRepo = new Mock<IRepository>();
+            mockRepo.Setup(x => x.GetAllEmployees()).Returns(empList);
+            EmployeeController controller = new EmployeeController(mockRepo.Object);
+
+            // act
+            var actionResult = controller.GetAll();
+
+            // assert
+            // assert that actionResult.Value is not null
+
+            Assert.NotNull(actionResult.Value);
+
+            // instead of view.model, actionResult.Value
+
+
+            //var view = Assert.IsType<ViewResult>(actionResult);
+            var model = Assert.IsAssignableFrom<List<Employee>>(actionResult.Value).ToList();
+            Assert.Equal(empList.Count, model.Count);
+            for (int i = 0; i < model.Count; i++)
+            {
+                Assert.Equal(empList[i].Id, model[i].Id);
+                Assert.Equal(empList[i].FirstName, model[i].FirstName);
+            }
+        }
+
 
 
 
