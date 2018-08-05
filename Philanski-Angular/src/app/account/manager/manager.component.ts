@@ -18,6 +18,11 @@ export class ManagerComponent implements OnInit {
   ngOnInit() {
   }
 
+  myFunction(TSA : any) {
+    document.getElementById(TSA.id).classList.toggle("show");
+  }
+
+
   onGetTSAs(){
     this.apiService.getTSAsForApproval().subscribe(
       (data : HttpResponse<TimeSheetApproval[]>) => {

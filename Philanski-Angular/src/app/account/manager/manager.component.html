@@ -25,7 +25,14 @@
       <tr *ngFor="let TSA of TSAs">
         <td>{{TSA.weekStart}}</td>
         <td>{{TSA.weekEnd}}</td>
-        <td>{{TSA.weekTotalRegular}}</td>
+        <td>{{TSA.weekTotalRegular}}
+          <button (click)="myFunction(TSA)" class="dropbtn">Dropdown</button>
+          <div id={{TSA.id}} class="dropdown-content">
+            <p *ngFor="let timesheet of TSA.timeSheets">
+              {{timesheet.date.slice(5,10)}} {{timesheet.regularHours}}
+            </p>
+          </div>
+        </td>
         <td>{{TSA.status}}</td>
         <td>{{TSA.approvingManagerId}}</td>
         <td>{{TSA.timeSubmitted}}</td>
