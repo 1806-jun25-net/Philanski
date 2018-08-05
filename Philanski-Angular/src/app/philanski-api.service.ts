@@ -8,11 +8,11 @@ import { TimeSheetApproval } from './models/TimeSheetApproval'
 })
 export class PhilanskiApiService {
 
-  //private readonly Url : string = 'https://localhost:44386/api/'
+//  private readonly Url : string = 'https://localhost:44386/api/'
   private readonly Url : string = 'https://philanksi.azurewebsites.net/api/'
   private readonly header = new HttpHeaders({ 
-    'Access-Control-Allow-Origin': 'true',
-    'Access-Control-Allow-Credentials':'true',
+  //  'Access-Control-Allow-Origin': 'true',
+   // 'Access-Control-Allow-Credentials':'true',
    // 'Access-Control-Allow-Origin': '*',
    // 'Access-Control-Allow-Headers': 'Content-Type, Origin , Access-Control-* , X-Requested-With, Accept',
     'Content-Type':  'application/json,charset=utf-8',
@@ -26,7 +26,7 @@ export class PhilanskiApiService {
   postLogin(login: Login) {
     let body = JSON.stringify(login)
 
-    return this.httpClient.post<Login>(this.Url + 'Account/Login', body, {headers: this.header,  observe: 'response'})
+    return this.httpClient.post<Login>(this.Url + 'Account/Login', body, {headers: this.header,  withCredentials: true, observe: 'response'})
          /*  .pipe(map(data : any) => {
             data.json();
             // the console.log(...) line prevents your code from working 
@@ -37,18 +37,18 @@ export class PhilanskiApiService {
 }
   postLogout()
   {
-    return this.httpClient.post(this.Url + 'Account/Logout', {headers: this.header,  observe: 'response'} )
+    return this.httpClient.post(this.Url + 'Account/Logout', {headers: this.header, withCredentials: true,   observe: 'response'} )
   }
   
   getTSAsForApproval()
   {
-    return this.httpClient.get<TimeSheetApproval[]>(this.Url + 'Manager/' + sessionStorage.getItem('UserName') + '/TimeSheetApproval', {headers: this.header,  observe: 'response'})
+    return this.httpClient.get<TimeSheetApproval[]>(this.Url + 'Manager/' + sessionStorage.getItem('UserName') + '/TimeSheetApproval', {headers: this.header,  withCredentials: true, observe: 'response'})
   }
   putTSA(TSA: TimeSheetApproval)
   {
     let body = JSON.stringify(TSA)
     let weekstart = TSA.weekStart.slice(8,10) + TSA.weekStart.slice(4,7) + '-' + TSA.weekStart.slice(0,4)
-    return this.httpClient.put<TimeSheetApproval>(this.Url + 'Manager/' + sessionStorage.getItem('UserName') + '/TimeSheetApproval/' + weekstart + '/Employee/' + TSA.employeeId, body, {headers: this.header,  observe: 'response'} )
+    return this.httpClient.put<TimeSheetApproval>(this.Url + 'Manager/' + sessionStorage.getItem('UserName') + '/TimeSheetApproval/' + weekstart + '/Employee/' + TSA.employeeId, body, {headers: this.header,  withCredentials: true, observe: 'response'} )
   }
 
 }
