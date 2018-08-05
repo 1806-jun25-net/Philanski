@@ -75,6 +75,101 @@ namespace Philanski.Frontend.Testing
 
         }
 
+        [Fact]
+        public void TestingAccountController()
+        {
+
+            // Arrange 2
+            var mockMessageHandler = new Mock<HttpMessageHandler>();
+
+
+            HttpClient client = new HttpClient(mockMessageHandler.Object);
+
+            AccountController controller = new AccountController(client);
+
+
+            // Act
+            var result = controller.Register();
+
+            // Assert
+            Assert.IsAssignableFrom<ViewResult>(result);
+            Assert.Equal(1, 1);
+
+
+
+        }
+
+
+        [Fact]
+        public void TestingAServiceController()
+        {
+
+            // Arrange 2
+            var mockMessageHandler = new Mock<HttpMessageHandler>();
+
+
+            HttpClient client = new HttpClient(mockMessageHandler.Object);
+
+            AServiceController controller = new AServiceController(client);
+
+
+            // Act
+            Assert.NotNull(controller);
+
+
+
+        }
+
+        [Fact]
+        public void TestingHomeController()
+        {
+
+            // Arrange 2
+            var mockMessageHandler = new Mock<HttpMessageHandler>();
+
+
+            HttpClient client = new HttpClient(mockMessageHandler.Object);
+
+            HomeController controller = new HomeController(client);
+
+
+            // Act
+            var result = controller.Index();
+
+            // Assert
+            Assert.IsAssignableFrom<ViewResult>(result);
+            Assert.Equal(1, 1);
+
+
+
+        }
+
+        [Fact]
+        public void TestingTimeSheetController()
+        {
+
+            // Arrange 2
+            var mockMessageHandler = new Mock<HttpMessageHandler>();
+
+
+            HttpClient client = new HttpClient(mockMessageHandler.Object);
+
+            TimeSheetController controller = new TimeSheetController(client);
+
+
+            // Act
+            var result = controller.Index();
+
+            // Assert
+            Assert.IsAssignableFrom<Task<ActionResult>>(result);
+            Assert.Equal(1, 1);
+
+
+
+        }
+
+
+
 
     }
 }
