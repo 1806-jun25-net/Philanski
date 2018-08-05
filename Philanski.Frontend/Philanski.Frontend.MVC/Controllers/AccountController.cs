@@ -4,7 +4,6 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Philanski.Frontend.MVC.Models;
@@ -26,7 +25,6 @@ namespace Philanski.Frontend.MVC.Controllers
 
         // POST: Account/Register
         [HttpPost]
-        [Authorize]
         public async Task<ActionResult> Register(Register account)
         {
             if (!ModelState.IsValid)
@@ -75,16 +73,19 @@ namespace Philanski.Frontend.MVC.Controllers
             }
             catch (AggregateException ex)
             {
-                return View("InvalidLogin");
+                ModelState.AddModelError(string.Empty, "Invalid Login");
+                return View(account);
             }
 
             if (!apiResponse.IsSuccessStatusCode)
             {
                 if (apiResponse.StatusCode == HttpStatusCode.Forbidden)
                 {
-                    return View("InvalidLogin");
+                    ModelState.AddModelError(string.Empty, "Invalid Login");
+                    return View(account);
                 }
-                return View("InvalidLogin");
+                ModelState.AddModelError(string.Empty, "Invalid Login");
+                return View(account);
             }
             TempData["username"] = account.Username;
             PassCookiesToClient(apiResponse);

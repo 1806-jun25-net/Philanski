@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
+
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -18,6 +18,7 @@ using Microsoft.Extensions.Options;
 using Philanski.Backend.DataContext.Models;
 using Philanski.Backend.Library.Repositories;
 using Swashbuckle.AspNetCore.Swagger;
+using Microsoft.AspNetCore.Http;
 
 namespace Philanski.Backend.WebAPI
 {
@@ -90,9 +91,6 @@ namespace Philanski.Backend.WebAPI
             });
 
             services.AddAuthentication();
-
-
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddCors(options => options.AddPolicy("AllowAll", builder =>
             {
                 builder.AllowAnyOrigin();
@@ -100,6 +98,9 @@ namespace Philanski.Backend.WebAPI
                 builder.AllowAnyMethod();
                 builder.AllowCredentials();
             }));
+
+
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddSwaggerGen(c =>
             {
@@ -110,7 +111,7 @@ namespace Philanski.Backend.WebAPI
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider services)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             //fix later after host works
            if (env.IsDevelopment())
@@ -122,6 +123,11 @@ namespace Philanski.Backend.WebAPI
                 app.UseHsts();
            }
             app.UseAuthentication();
+            app.UseCors(builder => builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials());
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
 
@@ -132,11 +138,7 @@ namespace Philanski.Backend.WebAPI
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
                 c.RoutePrefix = string.Empty;
             });
-            app.UseCors(builder => builder
-                .AllowAnyOrigin()
-                .AllowAnyMethod()
-                .AllowAnyHeader()
-                .AllowCredentials());
+
          //   app.UseHttpsRedirection();
             app.UseMvc();
 

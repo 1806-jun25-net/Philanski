@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Philanski.Backend.WebAPI.Models;
 using Philanski.Backend.Library.Models;
 using Philanski.Backend.Library.Repositories;
-using System.Web.Http.Cors;
+
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -18,6 +19,7 @@ namespace Philanski.Backend.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+   // [Authorize]
   //  [EnableCors(origins: "http://localhost:4200", headers: "*", methods: "*")]
     public class AccountController : ControllerBase
     {
@@ -33,6 +35,7 @@ namespace Philanski.Backend.WebAPI.Controllers
         [HttpPost("Login")]
         [ProducesResponseType(204)]
         [ProducesResponseType(403)]
+        [AllowAnonymous]
         public async Task<ActionResult> Login(User input)
         {
             var result = await _signInManager.PasswordSignInAsync(input.Username, input.Password,
@@ -48,6 +51,7 @@ namespace Philanski.Backend.WebAPI.Controllers
 
         [HttpPost("Logout")]
         [ProducesResponseType(204)]
+        [AllowAnonymous]
         public async Task<NoContentResult> Logout()
         {
             await _signInManager.SignOutAsync();
@@ -58,6 +62,7 @@ namespace Philanski.Backend.WebAPI.Controllers
         [HttpPost("Register")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
+        [AllowAnonymous]
         public async Task<ActionResult> Register(Register input,
             [FromServices] UserManager<IdentityUser> userManager,
             [FromServices] RoleManager<IdentityRole> roleManager, bool admin = false)

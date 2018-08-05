@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Philanski.Backend.Library.Models;
 using Philanski.Backend.Library.Repositories;
+using Microsoft.AspNetCore.Http;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -41,6 +42,7 @@ namespace Philanski.Backend.WebAPI.Controllers
         }
 
         // GET api/<controller>/{username}
+        [AllowAnonymous]
         [HttpGet("{id}", Name = "GetEmployee")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
