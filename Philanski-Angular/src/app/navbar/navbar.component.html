@@ -1,4 +1,4 @@
-<nav class="navbar navbar-inverse">
+<nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2">
@@ -18,14 +18,10 @@
             </li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li *ngIf="userName" class="nav-item">
-              <p>You are logged in as: placeholderUser <!-- {{sessionStorage.getItem('UserName')}} -->
-                <span>
-                  <button (click)="onLogout()" type="submit" class="btn btn-success">Logout</button>
-                </span>
-              </p>
+            <li class="nav-item">
+              <a href="https://localhost:44382/">Logout</a>
             </li>
-            <li *ngIf="!userName" class="nav-item">
+            <li class="nav-item">
               <a routerLink = "/login">Login</a>
             </li>
           </ul>
@@ -34,7 +30,3 @@
     </div>
   </div>  
 </nav>
-
-<div>
-  <a href="https://localhost:44382/">Logout</a>
-</div>
