@@ -70,7 +70,7 @@ namespace Philanski.Backend.WebAPI
 
             services.ConfigureApplicationCookie(options =>
             {
-                //  options.Cookie.HttpOnly = false;
+                options.Cookie.HttpOnly = false;
                 options.CookieSecure = CookieSecurePolicy.None;
                 options.Cookie.Name = "PhilanskiApiAuth2";
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
