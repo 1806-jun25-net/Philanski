@@ -10,7 +10,6 @@ import { LoginComponent } from './account/login/login.component';
 import { ManagerComponent } from './account/manager/manager.component';
 
 import { AppRoutingModule } from './/app-routing.module';
-import { Router } from '@angular/router'
 
 import { NavbarComponent } from './navbar/navbar.component';
 
@@ -37,8 +36,7 @@ import { NavbarComponent } from './navbar/navbar.component';
     FormsModule,
     HttpClientModule,
     RouterModule,
-    AppRoutingModule,
-    Router
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
