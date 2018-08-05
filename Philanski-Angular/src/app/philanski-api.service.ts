@@ -15,7 +15,7 @@ export class PhilanskiApiService {
   private readonly header = new HttpHeaders({ 
   //  'Access-Control-Allow-Origin': 'true',
    // 'Access-Control-Allow-Credentials':'true',
-    'Access-Control-Allow-Origin': 'https://localhost:44386',
+    'Access-Control-Allow-Origin': 'https://philanksi.azurewebsites.net/api/',
     'Access-Control-Allow-Headers': 'Content-Type, Origin , Access-Control-* , X-Requested-With, Accept',
     'Content-Type':  'application/json,charset=utf-8 , application/x-www-form-urlencoded',
     'Accept': 'application/json',
