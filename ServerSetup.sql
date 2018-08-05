@@ -63,6 +63,10 @@ select * from AspNetUserRoles
 select * from AspNetUsers
 select * from AspNetRoles
 
+update TimeSheetApprovals
+set Status = 0, ApprovingManagerID = null
+where ID = 1
+
 
 Delete from AspNetUsers
 Where UserName = 'BobMarley@gmail.com'

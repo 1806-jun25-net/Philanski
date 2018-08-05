@@ -14,6 +14,9 @@
             <thead>
                 <tr>
                     <th>
+                        <div>Day</div>
+                    </th>
+                    <th>
                         <div>Date</div>
                     </th>
                     <th></th>
@@ -23,6 +26,7 @@
                     @for(int i = 0; i < 7; i++ )
                     {
                     <tr>
+                        <th>@Model[i].Date.DayOfWeek</th>
                         <th>
                             <div>@Model[i].Date.Month/@Model[i].Date.Day </div>
                         </th>
