@@ -93,7 +93,7 @@ namespace Philanski.Backend.Testing
             }
         }
 
-        //TESTING DEPARTMENT API CONTROLLER
+        //TESTING employee API CONTROLLER
         [Fact]
         public void TestingEmpController()
         {
@@ -238,9 +238,104 @@ namespace Philanski.Backend.Testing
         }
 
 
+        //testing all timesheetmethods
+
+        [Fact]
+        public async Task TestingTimesheetRepoMethods()
+        {
+
+            var options = new DbContextOptionsBuilder<PhilanskiManagementSolutionsContext>()
+                 .UseInMemoryDatabase(databaseName: "TestDB3")
+                 .Options;
+
+
+            TimeSheet timesheet1 = new TimeSheet();
+            timesheet1.Date = DateTime.Now;
+            timesheet1.EmployeeId = 1;
+            timesheet1.Id = 1;
+            timesheet1.RegularHours = 40.00m;
+
+
+            TimeSheet timesheet2 = new TimeSheet();
+            timesheet2.Date = DateTime.Now;
+            timesheet2.EmployeeId = 2;
+            timesheet2.Id = 2;
+            timesheet2.RegularHours = 30.00m;
 
 
 
+            TimeSheet updatedtimesheet2 = new TimeSheet();
+            updatedtimesheet2.Date = timesheet2.Date;
+            updatedtimesheet2.EmployeeId = 2;
+            updatedtimesheet2.Id = 2;
+            updatedtimesheet2.RegularHours = 35.00m;
+
+
+
+            // Run the test against one instance of the context
+            using (var context = new PhilanskiManagementSolutionsContext(options))
+            {
+                var repo = new Repository(context);
+                repo.CreateTimeSheet(timesheet1);
+                await repo.Save();
+                repo.CreateTimeSheet(timesheet2);
+                await repo.Save();
+
+
+
+
+            }
+
+            // Use a separate instance of the context to verify correct data was saved to database
+            using (var context = new PhilanskiManagementSolutionsContext(options))
+            {
+                var repo = new Repository(context);
+
+                List<TimeSheet> testtimesheetlist = new List<TimeSheet>();
+
+                //testing get all timesheets
+                testtimesheetlist = repo.GetAllTimeSheets();
+                Assert.Equal(2, testtimesheetlist.Count());
+
+
+                //TESTinG Task<int> GetTimeSheetIdByDateAndEmpId(DateTime date, int employeeId);
+                int testtimesheetid = await repo.GetTimeSheetIdByDateAndEmpId(timesheet1.Date, 1);
+
+                Assert.Equal(1, testtimesheetid);
+
+
+                //testing  Task<TimeSheet> GetTimeSheetByID(int id);
+
+                TimeSheet timesheetfromgetbyid = await repo.GetTimeSheetByID(1);
+                Assert.Equal(timesheetfromgetbyid.Date, timesheet1.Date);
+
+
+                // testing  List<TimeSheet> GetTimeSheetsByEmployeeId(int employeeId);
+
+                List<TimeSheet> emp2timesheets = repo.GetTimeSheetsByEmployeeId(2);
+                Assert.Single(emp2timesheets);
+
+                //testing List<TimeSheet> GetEmployeeTimeSheetWeekFromDate(DateTime date, int employeeId);
+
+                List<TimeSheet> timesheetsbydate = repo.GetEmployeeTimeSheetWeekFromDate(timesheet2.Date, 2);
+                Assert.Single(timesheetsbydate);
+
+                //testing void UpdateTimeSheet(TimeSheet timesheet);
+
+                repo.UpdateTimeSheet(updatedtimesheet2);
+
+                TimeSheet testingifitupdated = await repo.GetTimeSheetByID(2);
+
+                Assert.Equal(35.00m, testingifitupdated.RegularHours);
+
+                context.Database.EnsureDeleted();
+            }
+
+
+
+        }
+
+        //testing getalldepartmnetsidbymanager repo method
         public class UnitTest2
         {
             [Fact]
