@@ -270,6 +270,14 @@ namespace Philanski.Backend.Testing
             updatedtimesheet2.Id = 2;
             updatedtimesheet2.RegularHours = 35.00m;
 
+            TimeSheetApproval TSA = new TimeSheetApproval();
+            TSA.WeekEnd = DateTime.Parse("07/29/2018 14:50:50.42");
+            TSA.WeekStart = DateTime.Parse("07/22/2018 14:50:50.42");
+            TSA.WeekTotalRegular = 56.00m;
+            TSA.Status = "0";
+            TSA.TimeSubmitted = DateTime.Now;
+            TSA.EmployeeId = 1;
+      
 
 
             // Run the test against one instance of the context
@@ -280,7 +288,8 @@ namespace Philanski.Backend.Testing
                 await repo.Save();
                 repo.CreateTimeSheet(timesheet2);
                 await repo.Save();
-
+                repo.CreateTimeSheetApproval(TSA);
+                await repo.Save();
 
 
 
@@ -327,6 +336,16 @@ namespace Philanski.Backend.Testing
                 TimeSheet testingifitupdated = await repo.GetTimeSheetByID(2);
 
                 Assert.Equal(35.00m, testingifitupdated.RegularHours);
+
+                var TSAs = repo.GetAllTimeSheetApprovals();
+                Assert.Single(TSAs);
+
+                TSAs = repo.GetAllTimeSheetsFromEmployee(TSA.EmployeeId);
+                Assert.Single(TSAs);
+
+                var TSAtest = await repo.GetTimeSheetApprovalById(1);
+                Assert.Equal(1, TSAtest.EmployeeId);
+
 
                 context.Database.EnsureDeleted();
             }

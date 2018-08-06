@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace Philanski.Frontend.MVC.Models
@@ -7,11 +8,15 @@ namespace Philanski.Frontend.MVC.Models
     public class TimeSheetApprovals
     {
         public int Id { get; set; }
+        [Display(Name = "Week Start")]
         public DateTime WeekStart { get; set; }
+        [Display(Name = "Week End")]
         public DateTime WeekEnd { get; set; }
         public decimal WeekTotalRegular { get; set; }
         public string Status { get; set; }
+        [Display(Name = "Approving Manager Id")]
         public int? ApprovingManagerId { get; set; }
+        [Display(Name = "Time Submitted")]
         public DateTime TimeSubmitted { get; set; }
         public int EmployeeId { get; set; }
 
