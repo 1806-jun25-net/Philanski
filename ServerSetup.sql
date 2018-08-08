@@ -68,8 +68,8 @@ set Status = 0, ApprovingManagerID = null
 where ID = 1
 
 
-Delete from AspNetUsers
-Where UserName = 'BobMarley@gmail.com'
+Delete from TimeSheetApprovals
+Where ID = 9
 
 ALTER TABLE Employee
 ADD FOREIGN KEY (WorksiteID) REFERENCES Worksite(ID);

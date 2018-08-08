@@ -1,0 +1,35 @@
+Project 2
+
+Management System that can be used to facilitate employee tracking. Allows Employees to view their details and previous timesheets. Allows manager to create employees and approve timesheets of employees
+
+
+Tech Stack
+Backend:
+made in .net core
+Database with 3NF and 2 many to many relationships. Made through junction tables
+Entity Framework Db first 
+Layered System 
+Mapper class that maps our dbcontext to our library
+Repository that handles all CRUD operations on our dbcontext objects. DI'd into our api controllers
+Web api that is RESTful. (GET, POST, PUT, DELETE)
+Open API specs and used Swagger UI for tests
+ASP.NET identity to handle authentication and authorization. Added an admin role
+UnitTesting in xunit
+
+Frontend MVC:
+MVC Framework in .NET core
+Http request factory. Builds URIs to send to our API (Httpclient DI'd into our controllers)
+We made web models
+Bootstrap (used space lab theme)
+Integration testing 
+
+Angular:
+Created a api service to handle all http requests using HttpClientModule (DI into our components)
+Bootstrap 
+Jasmine testing framework using Karma test runner
+
+
+CI using development branch and slack bot
+Continuous deployment using VSTS (3 build pipelines)
+sonarcloud
+and publish to azure
